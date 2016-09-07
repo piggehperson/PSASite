@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">Palmetto Scholars</string>
+
+    <!--app bar & tabs-->
+    <string name="toolbar_title_full">Palmetto Scholars Academy</string>
+    <string name="toolbar_title_long">Palmetto Scholars</string>
+    <string name="toolbar_title">PSA</string>
+    <string name="toolbar_subtitle">Rise Above</string>
+    <string name="toolbar_enrollnow">Enroll now</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="drawer_home">Home</string>
+    <string name="drawer_calendar">Calendar</string>
+    <string name="drawer_notifications">Announcements</string>
+    <string name="drawer_newsletter">Newsletter</string>
+    <string name="drawer_aboutus">About us</string>
+    <string name="drawer_teachers">Teachers</string>
+    <string name="drawer_parents">Parents</string>
+    <string name="drawer_students">Students</string>
+    <string name="drawer_resources">Resources</string>
+    <string name="drawer_contactus">Contact us</string>
+    <string name="drawer_settings">Settings</string>
+
+    <!--Strings used in home fragment layout-->
+    <string name="home_ourmission">Our mission</string>
+    <string name="home_missiontext">Palmetto Scholars Academy will provide a differentiated program designed to meet the educational needs
+        of intellectually gifted learners, address their distinctive social and emotional needs, promote individual character development,
+    and instill a life-long love of learning.</string>
+
+    <!--Strings used on Contact Us screen-->
+    <string name="contact_phone">Phone</string>
+    <string name="contact_phone_number">843&#8211;300&#8211;4118</string>
+    <string name="contact_phone_call">Call</string>
+    <string name="contact_phone_calling_disabled">Calling disabled</string>
+    <string name="contact_email">Email</string>
+    <string name="contact_email_address">info@palmettoscholarsacademy.org</string>
+    <string name="contact_email_send">Send email</string>
+    <string name="contact_twitter">PSA on Twitter</string>
+    <string name="contact_twitter_username">\@PSASchool</string>
+    <string name="contact_facebook">PSA on Facebook</string>
+
+    <string name="contact_social_open">Visit page</string>
+    <string name="contact_location">Address</string>
+    <string name="contact_location_address_street">7499 Dorchester Road</string>
+    <string name="contact_location_address_city">North Charleston, SC 29418</string>
+    <string name="contact_fax">Fax</string>
+    <string name="contact_fax_number">843&#8211;300&#8211;4123</string>
+
+    <!--Strings used for alerts-->
+    <!--Dialogs-->
+    <string name="dialog_action_ok">@android:string/ok</string>
+    <string name="dialog_permissiondenied_phone_title">Could not place call</string>
+    <string name="dialog_permissiondenied_phone_message">The Phone permission is required to place a call.</string>
+    <string name="dialog_errorcalling_title">Something went wrong</string>
+    <string name="dialog_errorcalling_message">There are no installed apps that can place calls.</string>
+    <string name="dialog_erroremailing_message">There are no installed apps that can send emails.</string>
+    <string name="dialog_errorinternet_message">There are no installed apps that can open web links.</string>
+    <!--Notifications-->
+    <string name="notif_announcement_text">PSA announcement</string>
+    <string name="notif_newsletter_title">New PSA newsletter</string>
+    <string name="notif_action_options">Options</string>
+
+
+    <!--Strings used for Settings-->
+    <string name="preference_pushnotifications_title">Notifications</string>
+    <string name="preference_pushnotifications_summary">Push notifications for announcements and newsletters</string>
+    <string name="preference_pushnotifications_key">preferencePushNotifications</string>
+
+    <!--Strings used for accessibility-->
+    <string name="accessibility_fab_enrollnow">Enroll now</string>
+    <string name="accessibility_fab_callphone">Call PSA</string>
+</resources>

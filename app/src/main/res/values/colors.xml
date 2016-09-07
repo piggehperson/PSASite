@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryLight">#7986CB</color>
+    <color name="colorAccent">#FF1744</color>
+    <color name="colorAccentLight">#FF5252</color>
+    <color name="colorAccentDark">#D50000</color>
+    <color name="colorAccentLighter">#FF8A80</color>
+
+    <color name="cardview_background_daynight">@color/cardview_light_background</color>
+
+    <color name="iconsDark">#8A000000</color>
+    <color name="iconsDarkDisabled">#42000000</color>
+
+    <color name="button_enrollnow_background">#fffafafa</color>
+
+    <color name="navigationdrawer_selecteditem">@color/colorPrimary</color>
+</resources>

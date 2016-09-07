@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cardview_background_daynight">@color/cardview_dark_background</color>
+
+    <color name="iconsDark">#FFFFFF</color>
+    <color name="iconsDarkDisabled">#4DFFFFFF</color>
+
+    <color name="navigationdrawer_selecteditem">#7986CB</color>
+</resources>
