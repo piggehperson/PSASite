@@ -51,10 +51,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_enrollment"
-        android:tint="@android:color/white"
+        android:tint="@color/icons_light_dynamic"
+        android:tintMode="src_in"
         android:contentDescription="@string/accessibility_fab_enrollnow"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
 

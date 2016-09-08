@@ -2,7 +2,6 @@ package com.piggeh.palmettoscholars.activities;
 
 import android.Manifest;
 import android.app.ActivityManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,13 +12,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -38,6 +37,8 @@ import android.widget.Toast;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.fragments.ContactFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
+import com.piggeh.palmettoscholars.fragments.SettingsFragment;
+import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
 import com.piggeh.palmettoscholars.utils.PSANotifications;
 
 public class MainActivity extends AppCompatActivity
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity
 
     //vars
     private int navigationPage = 0;
+    private int appbarState = AppBarStateChangeListener.STATE_IDLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +91,26 @@ public class MainActivity extends AppCompatActivity
             }
         });*/
 
+        /*if (navigationPage == PAGE_SETTINGS){
+            fab.hide();
+        }*/
+
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         appbarImage = (ImageView) findViewById(R.id.appbarImage);
+
+        /*if (appbarState == AppBarStateChangeListener.STATE_COLLAPSED
+                || navigationPage == PAGE_SETTINGS){
+            appBarLayout.setExpanded(false, false);
+        }*/
+
+        //set listener for appbar collapsed state changes
+        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, /*State*/int state) {
+                //Log.d(TAG, "App bar collapsed state changed to " + String.valueOf(state));
+                appbarState = state;
+            }
+        });
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         //tabLayout = (TabLayout) findViewById(R.id.tablayout);
@@ -117,7 +137,17 @@ public class MainActivity extends AppCompatActivity
         }
         //set up FAB & header
         setupFabForPage(navigationPage);
-        setupHeaderForPage(navigationPage);
+        setupAppbarForPage(navigationPage);
+
+        if (navigationPage == PAGE_SETTINGS){
+            appBarLayout.setExpanded(false);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    appBarLayout.setExpanded(false, false);
+                }
+            }, 1000);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //Overview screen
@@ -147,18 +177,16 @@ public class MainActivity extends AppCompatActivity
                         .commit();
                 //set page variable
                 navigationPage = PAGE_HOME;
-                //set toolbar title
-                /*collapsingToolbarLayout.setTitle(getString(R.string.toolbar_title));*/
 
                 //configure FAB & header for new page
                 setupFabForPage(PAGE_HOME);
-                setupHeaderForPage(PAGE_HOME);
+                setupAppbarForPage(PAGE_HOME);
 
                 //set selected item in drawer, for switching pages programmatically
                 navigationView.setCheckedItem(R.id.drawer_home);
 
                 //expand toolbar
-                appBarLayout.setExpanded(true);
+                /*appBarLayout.setExpanded(true);*/
 
                 Log.d(TAG, "Switched to Home page");
                 return true;
@@ -170,20 +198,39 @@ public class MainActivity extends AppCompatActivity
                         .commit();
                 //set page variable
                 navigationPage = PAGE_CONTACT_US;
-                //set toolbar title
-                /*collapsingToolbarLayout.setTitle(getString(R.string.drawer_contactus));*/
 
                 //configure FAB & header for new page
                 setupFabForPage(PAGE_CONTACT_US);
-                setupHeaderForPage(PAGE_CONTACT_US);
+                setupAppbarForPage(PAGE_CONTACT_US);
 
                 //set selected item in drawer, for switching pages programmatically
                 navigationView.setCheckedItem(R.id.drawer_contactus);
 
                 //expand toolbar
-                appBarLayout.setExpanded(true);
+                /*appBarLayout.setExpanded(true);*/
 
                 Log.d(TAG, "Switched to Contact page");
+                return true;
+            case PAGE_SETTINGS:
+                //switch fragment
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
+                        .replace(R.id.fragment_container, new SettingsFragment())
+                        .commit();
+                //set page variable
+                navigationPage = PAGE_SETTINGS;
+
+                //configure FAB & header for new page
+                setupFabForPage(PAGE_SETTINGS);
+                setupAppbarForPage(PAGE_SETTINGS);
+
+                //set selected item in drawer, for switching pages programmatically
+                navigationView.setCheckedItem(R.id.drawer_settings);
+
+                //collapse toolbar
+                appBarLayout.setExpanded(false);
+
+                Log.d(TAG, "Switched to Settings page");
                 return true;
         }
     }
@@ -217,47 +264,17 @@ public class MainActivity extends AppCompatActivity
                                 );
                         //notification manager
                         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                        //announcement notification
-                        /*NotificationCompat.Builder announcement = new NotificationCompat.Builder(getApplicationContext());
-                        announcement.setSmallIcon(R.drawable.notification_icon);
-                        announcement.setContentTitle("No homework forever");
-                        announcement.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                        announcement.setContentText(getString(R.string.notif_announcement_text));
-                        announcement.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-                        announcement.addAction(R.drawable.ic_notifications_off, getString(R.string.notif_action_options), settingsPendingIntent);
-                        announcement.setAutoCancel(true);
-                        announcement.setContentIntent(settingsPendingIntent);
-                        announcement.setDefaults(NotificationCompat.DEFAULT_VIBRATE|NotificationCompat.DEFAULT_SOUND);
-                        announcement.setLights(
-                                ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
-                                resources.getInteger(systemResources
-                                        .getIdentifier("config_defaultNotificationLedOn", "integer", "android")),
-                                resources.getInteger(systemResources
-                                        .getIdentifier("config_defaultNotificationLedOff", "integer", "android")));
 
-
-                        //newsletter notification
-                        NotificationCompat.Builder newsletter = new NotificationCompat.Builder(getApplicationContext());
-                        newsletter.setSmallIcon(R.drawable.ic_newsletter);
-                        newsletter.setContentTitle(getString(R.string.notif_newsletter_title));
-                        newsletter.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                        newsletter.setContentText("Title of newsletter");
-                        newsletter.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-                        newsletter.addAction(R.drawable.ic_notifications_off, getString(R.string.notif_action_options), settingsPendingIntent);
-                        newsletter.setAutoCancel(true);
-                        newsletter.setContentIntent(settingsPendingIntent);
-                        newsletter.setDefaults(NotificationCompat.DEFAULT_VIBRATE|NotificationCompat.DEFAULT_SOUND);
-                        newsletter.setLights(
-                                ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary),
-                                resources.getInteger(systemResources
-                                        .getIdentifier("config_defaultNotificationLedOn", "integer", "android")),
-                                resources.getInteger(systemResources
-                                        .getIdentifier("config_defaultNotificationLedOff", "integer", "android")));*/
-
-                        mNotificationManager.notify(1, PSANotifications.generateAnnouncement(getApplicationContext(), "No homework", settingsPendingIntent, settingsPendingIntent)/*announcement.build()*/);
+                        mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
+                                PSANotifications.generateAnnouncement(getApplicationContext(),
+                                        "No homework",
+                                        settingsPendingIntent,
+                                        settingsPendingIntent));
                         //mNotificationManager.notify(2, newsletter.build());
                     }
                 });
+                //fab.setVisibility(View.VISIBLE);
+                fab.show();
                 Log.d(TAG, "Set up FAB for Home page");
                 return true;
             case PAGE_CONTACT_US:
@@ -270,11 +287,28 @@ public class MainActivity extends AppCompatActivity
                         tryToCallPhone();
                     }
                 });
+                //fab.setVisibility(View.VISIBLE);
+                fab.show();
                 Log.d(TAG, "Set up FAB for Contact page");
+                return true;
+            case PAGE_SETTINGS:
+                //fab.setImageResource(R.drawable.ic_x);
+                fab.setContentDescription(getString(R.string.accessibility_fab_noaction));
+                fab.setOnClickListener(null);
+                fab.hide();
+                /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                    @Override
+                    public void onHidden(FloatingActionButton fab) {
+                        fab.setVisibility(View.INVISIBLE);
+                        super.onHidden(fab);
+                    }
+                });*/
+                Log.d(TAG, "Set up FAB for Settings page");
                 return true;
         }
     }
-    public boolean setupHeaderForPage(int page){
+    public boolean setupAppbarForPage(int page){
+        //AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
         switch (page){
             default:
                 Log.d(TAG, "Tried to set up header for unknown page");
@@ -282,12 +316,24 @@ public class MainActivity extends AppCompatActivity
             case PAGE_HOME:
                 collapsingToolbarLayout.setTitle(getString(R.string.toolbar_title));
                 appbarImage.setVisibility(View.INVISIBLE);
-                Log.d(TAG, "Set up header for Home page");
+                //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                appBarLayout.setExpanded(true);
+                Log.d(TAG, "Set up app bar for Home page");
                 return true;
             case PAGE_CONTACT_US:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_contactus));
+                //TODO: Maybe make banner image for Contact Us page
                 appbarImage.setVisibility(View.INVISIBLE);
-                Log.d(TAG, "Set up header for Contact page");
+                //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                appBarLayout.setExpanded(true);
+                Log.d(TAG, "Set up app bar for Contact page");
+                return true;
+            case PAGE_SETTINGS:
+                collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
+                appbarImage.setVisibility(View.INVISIBLE);
+                //appBarLayout.setExpanded(false);
+                //params.setScrollFlags(0);
+                Log.d(TAG, "Set up app bar for Settings page");
                 return true;
         }
     }
@@ -317,7 +363,11 @@ public class MainActivity extends AppCompatActivity
 
         //restore navigation page to set up FAB with
         navigationPage = savedInstanceState.getInt("navigation_page");
+        /*if (navigationPage != PAGE_SETTINGS){
+            appBarLayout.setExpanded(true, false);
+        }*/
         appBarLayout.setExpanded(true, false);
+
         //if app bar wasn't expanded before, collapse it
         /*if (savedInstanceState.getBoolean("appbar_expanded:, true")){
             Log.d(TAG, "App bar was expanded before, expanding");
@@ -328,7 +378,17 @@ public class MainActivity extends AppCompatActivity
         }*/
         //set up FAB & header
         setupFabForPage(navigationPage);
-        setupHeaderForPage(navigationPage);
+        setupAppbarForPage(navigationPage);
+
+        if (navigationPage == PAGE_SETTINGS){
+            /*new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    appBarLayout.setExpanded(false, false);
+                }
+            }, 100);*/
+            fab.hide();
+        }
     }
 
     @Override
@@ -341,6 +401,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.drawer_contactus:
                 switchNavigationPage(PAGE_CONTACT_US);
+                break;
+            case R.id.drawer_settings:
+                switchNavigationPage(PAGE_SETTINGS);
                 break;
         }
 

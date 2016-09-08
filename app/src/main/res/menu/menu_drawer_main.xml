@@ -28,11 +28,15 @@
         <item android:id="@+id/drawer_contactus"
             android:icon="@drawable/ic_send"
             android:title="@string/drawer_contactus"/>
-    </group>
-    <group android:id="@+id/drawer_settingsgroup"
-        android:checkableBehavior="none">
+
         <item android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/drawer_settings"/>
     </group>
+    <!--<group android:id="@+id/drawer_settingsgroup"
+        android:checkableBehavior="none">
+        <item android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/drawer_settings"/>
+    </group>-->
 </menu>

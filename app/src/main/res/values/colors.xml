@@ -12,6 +12,13 @@
 
     <color name="iconsDark">#8A000000</color>
     <color name="iconsDarkDisabled">#42000000</color>
+    <color name="iconsLight">#FFFFFF</color>
+    <color name="iconsLightDisabled">#4DFFFFFF</color>
+
+    <color name="iconsDarkDaynight">#8A000000</color>
+    <color name="iconsDarkDaynightDisabled">#42000000</color>
+    <color name="iconsLightDaynight">#FFFFFF</color>
+    <color name="iconsLightDaynightDisabled">#4DFFFFFF</color>
 
     <color name="button_enrollnow_background">#fffafafa</color>
 

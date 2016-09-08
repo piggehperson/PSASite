@@ -40,7 +40,7 @@
     <string name="contact_twitter">PSA on Twitter</string>
     <string name="contact_twitter_username">\@PSASchool</string>
     <string name="contact_facebook">PSA on Facebook</string>
-
+    <string name="contact_facebook_username">\@palmettoscholarsacademy</string>
     <string name="contact_social_open">Visit page</string>
     <string name="contact_location">Address</string>
     <string name="contact_location_address_street">7499 Dorchester Road</string>
@@ -54,21 +54,28 @@
     <string name="dialog_permissiondenied_phone_title">Could not place call</string>
     <string name="dialog_permissiondenied_phone_message">The Phone permission is required to place a call.</string>
     <string name="dialog_errorcalling_title">Something went wrong</string>
-    <string name="dialog_errorcalling_message">There are no installed apps that can place calls.</string>
+    <string name="dialog_errorcalling_message">There are no installed apps that can make phone calls.</string>
     <string name="dialog_erroremailing_message">There are no installed apps that can send emails.</string>
     <string name="dialog_errorinternet_message">There are no installed apps that can open web links.</string>
     <!--Notifications-->
+    <string name="notif_action_options">Options</string>
+    <string name="notif_announcement_title">New PSA announcement</string>
     <string name="notif_announcement_text">PSA announcement</string>
     <string name="notif_newsletter_title">New PSA newsletter</string>
-    <string name="notif_action_options">Options</string>
+    <string name="notif_newsletter_action_open_externally">Open in browser</string>
 
 
     <!--Strings used for Settings-->
-    <string name="preference_pushnotifications_title">Notifications</string>
-    <string name="preference_pushnotifications_summary">Push notifications for announcements and newsletters</string>
-    <string name="preference_pushnotifications_key">preferencePushNotifications</string>
+    <string name="preferencegroup_notif_title">Notifications</string>
+    <string name="preference_notif_announcements_title">Announcements</string>
+    <string name="preference_notif_announcements_summary">Notify me about school announcements</string>
+    <string name="preference_notif_announcements_key">preferenceNotifAnnouncements</string>
+    <string name="preference_notif_newsletter_title">Newsletters</string>
+    <string name="preference_notif_newsletter_summary">Notify me about new Principal\'s Desk Newsletters</string>
+    <string name="preference_notif_newsletter_key">preferenceNotifNewsletters</string>
 
     <!--Strings used for accessibility-->
     <string name="accessibility_fab_enrollnow">Enroll now</string>
     <string name="accessibility_fab_callphone">Call PSA</string>
+    <string name="accessibility_fab_noaction">No action</string>
 </resources>

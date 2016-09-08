@@ -61,6 +61,12 @@ public class ContactFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_contact, container, false);
     }
 
+    /*@Override
+    public void onStart(){
+        super.onStart();
+
+    }*/
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
