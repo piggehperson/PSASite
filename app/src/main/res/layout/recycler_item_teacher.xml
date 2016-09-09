@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/recycler_item_teacher_height"
+    android:id="@+id/relativeLayout_recycler_teacher"
+    android:background="?selectableItemBackground"
+    android:clickable="true">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/recycler_item_teacher_avatar_size"
+        android:layout_height="@dimen/recycler_item_teacher_avatar_size"
+        android:src="?colorAccent"
+        android:layout_margin="16dp"
+        android:id="@+id/teacherAvatar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="Name"
+        android:textColor="?android:textColorPrimary"
+        android:id="@+id/teacherName"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:lines="1"
+        android:textSize="16sp"
+        android:ellipsize="end" /><!--android:textSize="14sp"-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="Category"
+        android:textColor="?android:textColorSecondary"
+        android:id="@+id/teacherCategory"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:lines="1"
+        android:textSize="16sp"
+        android:ellipsize="end" /><!--android:textSize="14sp"-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_hiddenData"
+        android:visibility="gone"/>
+
+</RelativeLayout>

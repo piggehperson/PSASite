@@ -19,7 +19,7 @@ import com.piggeh.palmettoscholars.R;
  * create an instance of this fragment.
  */
 public class ContactFragment extends Fragment {
-    private static final String TAG = "HomeFragment";
+    private static final String TAG = "ContactFragment";
 
     private OnFragmentInteractionListener mListener;
 

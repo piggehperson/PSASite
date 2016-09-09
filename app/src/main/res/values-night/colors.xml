@@ -8,4 +8,6 @@
     <color name="iconsLightDaynightDisabled">#42000000</color>
 
     <color name="navigationdrawer_selecteditem">#7986CB</color>
+
+    <color name="dividers">#1FFFFFFF</color>
 </resources>

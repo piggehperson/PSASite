@@ -18,6 +18,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -38,12 +39,14 @@ import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.fragments.ContactFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
 import com.piggeh.palmettoscholars.fragments.SettingsFragment;
+import com.piggeh.palmettoscholars.fragments.TeachersFragment;
 import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
 import com.piggeh.palmettoscholars.utils.PSANotifications;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        HomeFragment.OnFragmentInteractionListener {
+        HomeFragment.OnFragmentInteractionListener,
+        TeachersFragment.OnTeacherClickListener {
     //constants
     private static final String TAG = "MainActivity";
     //modes
@@ -139,7 +142,7 @@ public class MainActivity extends AppCompatActivity
         setupFabForPage(navigationPage);
         setupAppbarForPage(navigationPage);
 
-        if (navigationPage == PAGE_SETTINGS){
+        /*if (navigationPage == PAGE_SETTINGS){
             appBarLayout.setExpanded(false);
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -147,7 +150,7 @@ public class MainActivity extends AppCompatActivity
                     appBarLayout.setExpanded(false, false);
                 }
             }, 1000);
-        }
+        }*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //Overview screen
@@ -211,6 +214,27 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(TAG, "Switched to Contact page");
                 return true;
+            case PAGE_TEACHERS:
+                //switch fragment
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
+                        .replace(R.id.fragment_container, new TeachersFragment())
+                        .commit();
+                //set page variable
+                navigationPage = PAGE_TEACHERS;
+
+                //configure FAB & header for new page
+                setupFabForPage(PAGE_TEACHERS);
+                setupAppbarForPage(PAGE_TEACHERS);
+
+                //set selected item in drawer, for switching pages programmatically
+                navigationView.setCheckedItem(R.id.drawer_teachers);
+
+                //expand toolbar
+                /*appBarLayout.setExpanded(true);*/
+
+                Log.d(TAG, "Switched to Teachers page");
+                return true;
             case PAGE_SETTINGS:
                 //switch fragment
                 getSupportFragmentManager().beginTransaction()
@@ -228,7 +252,7 @@ public class MainActivity extends AppCompatActivity
                 navigationView.setCheckedItem(R.id.drawer_settings);
 
                 //collapse toolbar
-                appBarLayout.setExpanded(false);
+                //appBarLayout.setExpanded(false);
 
                 Log.d(TAG, "Switched to Settings page");
                 return true;
@@ -247,7 +271,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(View view) {
                         Log.d(TAG, "FAB clicked, doing nothing for now");
-                        Toast.makeText(getApplicationContext(), "Enroll now", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(coordinatorLayout, "Enroll now", Snackbar.LENGTH_SHORT).show();
 
                         //resources
                         Resources resources = getResources();
@@ -291,11 +315,32 @@ public class MainActivity extends AppCompatActivity
                 fab.show();
                 Log.d(TAG, "Set up FAB for Contact page");
                 return true;
+            case PAGE_TEACHERS:
+                fab.setImageResource(R.drawable.ic_search);
+                fab.setContentDescription(getString(R.string.accessibility_fab_search));
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "FAB clicked, opening teacher search");
+                        //openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/teacherpages/");
+                        Snackbar.make(coordinatorLayout, "Search teachers", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+                //fab.setVisibility(View.VISIBLE);
+                fab.show();
+                Log.d(TAG, "Set up FAB for Teachers page");
+                return true;
             case PAGE_SETTINGS:
-                //fab.setImageResource(R.drawable.ic_x);
-                fab.setContentDescription(getString(R.string.accessibility_fab_noaction));
-                fab.setOnClickListener(null);
-                fab.hide();
+                fab.setImageResource(R.drawable.ic_check);
+                fab.setContentDescription(getString(R.string.accessibility_fab_done));
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "FAB clicked, going back");
+                        onBackPressed();
+                    }
+                });
+                //fab.hide();
                 /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
                     @Override
                     public void onHidden(FloatingActionButton fab) {
@@ -311,7 +356,7 @@ public class MainActivity extends AppCompatActivity
         //AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
         switch (page){
             default:
-                Log.d(TAG, "Tried to set up header for unknown page");
+                Log.d(TAG, "Tried to set up app bar for unknown page");
                 return false;
             case PAGE_HOME:
                 collapsingToolbarLayout.setTitle(getString(R.string.toolbar_title));
@@ -328,10 +373,18 @@ public class MainActivity extends AppCompatActivity
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Contact page");
                 return true;
+            case PAGE_TEACHERS:
+                collapsingToolbarLayout.setTitle(getString(R.string.drawer_teachers));
+                //TODO: Make banner image for Teachers page
+                appbarImage.setVisibility(View.INVISIBLE);
+                //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                appBarLayout.setExpanded(true);
+                Log.d(TAG, "Set up app bar for Teachers page");
+                return true;
             case PAGE_SETTINGS:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
                 appbarImage.setVisibility(View.INVISIBLE);
-                //appBarLayout.setExpanded(false);
+                appBarLayout.setExpanded(false);
                 //params.setScrollFlags(0);
                 Log.d(TAG, "Set up app bar for Settings page");
                 return true;
@@ -380,15 +433,20 @@ public class MainActivity extends AppCompatActivity
         setupFabForPage(navigationPage);
         setupAppbarForPage(navigationPage);
 
-        if (navigationPage == PAGE_SETTINGS){
-            /*new Handler().postDelayed(new Runnable() {
+        /*if (navigationPage == PAGE_SETTINGS){
+            *//*new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     appBarLayout.setExpanded(false, false);
                 }
-            }, 100);*/
+            }, 100);*//*
             fab.hide();
-        }
+        }*/
+    }
+
+    @Override
+    public void onTeacherClick(String teacherName){
+        Toast.makeText(this, "Teacher " + teacherName + " clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -404,6 +462,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.drawer_settings:
                 switchNavigationPage(PAGE_SETTINGS);
+                break;
+            case R.id.drawer_teachers:
+                switchNavigationPage(PAGE_TEACHERS);
                 break;
         }
 

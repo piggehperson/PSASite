@@ -8,8 +8,8 @@ android {
         applicationId "com.piggeh.palmettoscholars"
         minSdkVersion 22
         targetSdkVersion 24
-        versionCode 6
-        versionName "0.6"
+        versionCode 7
+        versionName "0.7"
     }
     buildTypes {
         release {
@@ -33,6 +33,7 @@ dependencies {
     compile 'com.android.support:percent:24.2.0'
     compile 'com.android.support:preference-v7:24.2.0'
     compile 'com.android.support:preference-v14:24.2.0'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     /*compile 'com.github.kolavar:android-support-v4-preferencefragment:+'*/
     /*compile 'com.takisoft.fix:preference-v7:24.2.0.0'*/
 }

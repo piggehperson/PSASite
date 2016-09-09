@@ -17,4 +17,7 @@
     <dimen name="appbar_fullheight_small">128dp</dimen>
     <dimen name="appbar_fullheight_normal">136dp</dimen>
     <dimen name="appbar_fullheight_large">144dp</dimen>
+
+    <dimen name="recycler_item_teacher_height">72dp</dimen>
+    <dimen name="recycler_item_teacher_avatar_size">40dp</dimen>
 </resources>

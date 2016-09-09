@@ -23,4 +23,6 @@
     <color name="button_enrollnow_background">#fffafafa</color>
 
     <color name="navigationdrawer_selecteditem">@color/colorPrimary</color>
+
+    <color name="dividers">#1F000000</color>
 </resources>

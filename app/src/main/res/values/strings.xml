@@ -11,6 +11,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--drawer & menus-->
     <string name="drawer_home">Home</string>
     <string name="drawer_calendar">Calendar</string>
     <string name="drawer_notifications">Announcements</string>
@@ -22,6 +23,8 @@
     <string name="drawer_resources">Resources</string>
     <string name="drawer_contactus">Contact us</string>
     <string name="drawer_settings">Settings</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_search">Search</string>
 
     <!--Strings used in home fragment layout-->
     <string name="home_ourmission">Our mission</string>
@@ -47,6 +50,20 @@
     <string name="contact_location_address_city">North Charleston, SC 29418</string>
     <string name="contact_fax">Fax</string>
     <string name="contact_fax_number">843&#8211;300&#8211;4123</string>
+    
+    <!--Strings used on Teachers screen-->
+    <!--Categories-->
+    <string name="teachers_category_english">English</string>
+    <string name="teachers_category_fine_arts">Fine arts</string>
+    <string name="teachers_category_foreign_languages">Foreign languages</string>
+    <string name="teachers_category_math">Math</string>
+    <string name="teachers_category_science">Science</string>
+    <string name="teachers_category_social_science">Social science</string>
+    <!--Prefixes: %s is the teacher's name-->
+    <string name="teachers_prefix_ms">Ms. %s</string>
+    <string name="teachers_prefix_mrs">Mrs. %s</string>
+    <string name="teachers_prefix_mr">Mr. %s</string>
+    <string name="teachers_prefix_dr">Dr. %s</string>
 
     <!--Strings used for alerts-->
     <!--Dialogs-->
@@ -78,4 +95,7 @@
     <string name="accessibility_fab_enrollnow">Enroll now</string>
     <string name="accessibility_fab_callphone">Call PSA</string>
     <string name="accessibility_fab_noaction">No action</string>
+    <string name="accessibility_fab_done">Done</string>
+    <string name="accessibility_fab_openexternally">Open webpage in browser</string>
+    <string name="accessibility_fab_search">Search</string>
 </resources>
