@@ -9,8 +9,9 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="@dimen/recycler_item_teacher_avatar_size"
         android:layout_height="@dimen/recycler_item_teacher_avatar_size"
-        android:src="?colorAccent"
-        android:layout_margin="16dp"
+        android:src="@drawable/avatar_missing"
+        android:layout_margin="@dimen/list_item_padding_sides"
+        android:transitionName="avatar"
         android:id="@+id/teacherAvatar"/>
 
     <TextView
@@ -22,8 +23,8 @@
         android:id="@+id/teacherName"
         android:layout_alignParentTop="true"
         android:layout_marginStart="72dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/list_item_padding_sides"
+        android:layout_marginTop="@dimen/list_item_padding_sides"
         android:lines="1"
         android:textSize="16sp"
         android:ellipsize="end" /><!--android:textSize="14sp"-->
@@ -37,10 +38,10 @@
         android:id="@+id/teacherCategory"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="72dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="@dimen/list_item_padding_sides"
+        android:layout_marginBottom="@dimen/list_item_padding_sides"
         android:lines="1"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:ellipsize="end" /><!--android:textSize="14sp"-->
 
     <TextView

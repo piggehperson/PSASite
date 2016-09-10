@@ -6,6 +6,9 @@ package com.piggeh.palmettoscholars.classes;
 public class TeacherConstants {
     //constants
     public static final String KEY_NAME = "name";
+    public static final String KEY_INDEX = "teacher_index";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_AVATAR = "avatar";
     //prefixes
     public static final String KEY_PREFIX = "prefix";
     public static final int PREFIX_MS = 0;

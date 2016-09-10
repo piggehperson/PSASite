@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.fragments.ContactFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
 import com.piggeh.palmettoscholars.fragments.SettingsFragment;
@@ -130,14 +131,75 @@ public class MainActivity extends AppCompatActivity
 
         fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
 
-        if (navigationPage == PAGE_HOME){
+        if (getIntent().getIntExtra("navigation_page", -1) != -1){
+            Log.d(TAG, "Launched with page data");
+            int page = getIntent().getIntExtra("navigation_page", PAGE_HOME);
+            switch (page){
+                default:
+                    if (savedInstanceState == null){
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new HomeFragment())
+                                .commit();
+                    }
+                    setupAppbarForPage(PAGE_HOME, true);
+                    setupFabForPage(PAGE_HOME);
+                    navigationView.setCheckedItem(R.id.drawer_home);
+                    navigationPage = PAGE_HOME;
+                    break;
+                case PAGE_CONTACT_US:
+                    if (savedInstanceState == null){
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new ContactFragment())
+                                .commit();
+                    }
+                    setupAppbarForPage(PAGE_CONTACT_US, true);
+                    setupFabForPage(PAGE_CONTACT_US);
+                    navigationView.setCheckedItem(R.id.drawer_contactus);
+                    navigationPage = PAGE_CONTACT_US;
+                    break;
+                case PAGE_TEACHERS:
+                    if (savedInstanceState == null){
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new TeachersFragment())
+                                .commit();
+                    }
+                    setupAppbarForPage(PAGE_TEACHERS, true);
+                    setupFabForPage(PAGE_TEACHERS);
+                    navigationView.setCheckedItem(R.id.drawer_teachers);
+                    navigationPage = PAGE_TEACHERS;
+                    break;
+                case PAGE_SETTINGS:
+                    if (savedInstanceState == null){
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new SettingsFragment())
+                                .commit();
+                    }
+                    setupAppbarForPage(PAGE_SETTINGS, true);
+                    setupFabForPage(PAGE_SETTINGS);
+                    navigationView.setCheckedItem(R.id.drawer_settings);
+                    navigationPage = PAGE_SETTINGS;
+                    break;
+            }
+        } else{
+            //launched normally
+            if (navigationPage == PAGE_HOME){
+                // Display the fragment as the main content.
+                if (savedInstanceState == null){
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new HomeFragment())
+                            .commit();
+                }
+            }
+        }
+
+        /*if (navigationPage == PAGE_HOME){
             // Display the fragment as the main content.
             if (savedInstanceState == null){
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new HomeFragment())
                         .commit();
             }
-        }
+        }*/
         //set up FAB & header
         setupFabForPage(navigationPage);
         setupAppbarForPage(navigationPage);
@@ -267,36 +329,6 @@ public class MainActivity extends AppCompatActivity
             case PAGE_HOME:
                 fab.setImageResource(R.drawable.ic_enrollment);
                 fab.setContentDescription(getString(R.string.accessibility_fab_enrollnow));
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "FAB clicked, doing nothing for now");
-                        Snackbar.make(coordinatorLayout, "Enroll now", Snackbar.LENGTH_SHORT).show();
-
-                        //resources
-                        Resources resources = getResources();
-                        Resources systemResources = Resources.getSystem();
-
-                        //notification settings intent
-                        Intent settingsIntent = new Intent(getApplicationContext(), MainActivity.class);
-                        PendingIntent settingsPendingIntent =
-                                PendingIntent.getActivity(
-                                        getApplicationContext(),
-                                        0,
-                                        settingsIntent,
-                                        PendingIntent.FLAG_UPDATE_CURRENT
-                                );
-                        //notification manager
-                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-                        mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
-                                PSANotifications.generateAnnouncement(getApplicationContext(),
-                                        "No homework",
-                                        settingsPendingIntent,
-                                        settingsPendingIntent));
-                        //mNotificationManager.notify(2, newsletter.build());
-                    }
-                });
                 //fab.setVisibility(View.VISIBLE);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Home page");
@@ -304,28 +336,13 @@ public class MainActivity extends AppCompatActivity
             case PAGE_CONTACT_US:
                 fab.setImageResource(R.drawable.ic_call);
                 fab.setContentDescription(getString(R.string.accessibility_fab_callphone));
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "FAB clicked, calling phone");
-                        tryToCallPhone();
-                    }
-                });
                 //fab.setVisibility(View.VISIBLE);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Contact page");
                 return true;
             case PAGE_TEACHERS:
-                fab.setImageResource(R.drawable.ic_search);
-                fab.setContentDescription(getString(R.string.accessibility_fab_search));
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "FAB clicked, opening teacher search");
-                        //openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/teacherpages/");
-                        Snackbar.make(coordinatorLayout, "Search teachers", Snackbar.LENGTH_SHORT).show();
-                    }
-                });
+                fab.setImageResource(R.drawable.ic_open_externally);
+                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
                 //fab.setVisibility(View.VISIBLE);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Teachers page");
@@ -333,26 +350,15 @@ public class MainActivity extends AppCompatActivity
             case PAGE_SETTINGS:
                 fab.setImageResource(R.drawable.ic_check);
                 fab.setContentDescription(getString(R.string.accessibility_fab_done));
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "FAB clicked, going back");
-                        onBackPressed();
-                    }
-                });
-                //fab.hide();
-                /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-                    @Override
-                    public void onHidden(FloatingActionButton fab) {
-                        fab.setVisibility(View.INVISIBLE);
-                        super.onHidden(fab);
-                    }
-                });*/
                 Log.d(TAG, "Set up FAB for Settings page");
                 return true;
         }
     }
     public boolean setupAppbarForPage(int page){
+        return setupAppbarForPage(page, false);
+    }
+
+    public boolean setupAppbarForPage(int page, boolean recreated){
         //AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
         switch (page){
             default:
@@ -384,7 +390,11 @@ public class MainActivity extends AppCompatActivity
             case PAGE_SETTINGS:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
                 appbarImage.setVisibility(View.INVISIBLE);
-                appBarLayout.setExpanded(false);
+                if (recreated){
+                    appBarLayout.setExpanded(true);
+                } else{
+                    appBarLayout.setExpanded(false);
+                }
                 //params.setScrollFlags(0);
                 Log.d(TAG, "Set up app bar for Settings page");
                 return true;
@@ -431,7 +441,7 @@ public class MainActivity extends AppCompatActivity
         }*/
         //set up FAB & header
         setupFabForPage(navigationPage);
-        setupAppbarForPage(navigationPage);
+        setupAppbarForPage(navigationPage, true);
 
         /*if (navigationPage == PAGE_SETTINGS){
             *//*new Handler().postDelayed(new Runnable() {
@@ -444,9 +454,62 @@ public class MainActivity extends AppCompatActivity
         }*/
     }
 
+    public void onFabClick(View view){
+        Log.d(TAG, "FAb clicked");
+        switch (navigationPage){
+            default:
+                Log.d(TAG, "Unknown page");
+                break;
+            case PAGE_HOME:
+                Log.d(TAG, "Enroll now");
+                Snackbar.make(coordinatorLayout, "Enroll now", Snackbar.LENGTH_SHORT).show();
+
+                /*//resources
+                Resources resources = getResources();
+                Resources systemResources = Resources.getSystem();*/
+
+                //notification settings intent
+                Intent settingsIntent = new Intent(getApplicationContext(), MainActivity.class);
+                settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+                PendingIntent settingsPendingIntent =
+                        PendingIntent.getActivity(
+                                getApplicationContext(),
+                                0,
+                                settingsIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                //notification manager
+                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
+                        PSANotifications.generateAnnouncement(getApplicationContext(),
+                                "No homework",
+                                settingsPendingIntent,
+                                settingsPendingIntent));
+                break;
+            case PAGE_CONTACT_US:
+                Log.d(TAG, "Calling phone");
+                tryToCallPhone();
+                break;
+            case PAGE_SETTINGS:
+                Log.d(TAG, "Going back");
+                onBackPressed();
+                break;
+            case PAGE_TEACHERS:
+                Log.d(TAG, "Opening teachers page externally");
+                openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/teacherpages/");
+                //Snackbar.make(coordinatorLayout, "Search teachers", Snackbar.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
     @Override
-    public void onTeacherClick(String teacherName){
-        Toast.makeText(this, "Teacher " + teacherName + " clicked", Toast.LENGTH_SHORT).show();
+    public void onTeacherClick(int teacherId){
+        Log.d(TAG, "Teacher index " + String.valueOf(teacherId) + " clicked");
+        Toast.makeText(this, "Teacher index " + String.valueOf(teacherId) + " clicked", Toast.LENGTH_SHORT).show();
+        Intent teacherDetail = new Intent(this, TeacherDetailActivity.class);
+        teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
+        startActivity(teacherDetail);
     }
 
     @Override

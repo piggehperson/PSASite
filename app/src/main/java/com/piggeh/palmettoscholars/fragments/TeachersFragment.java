@@ -1,6 +1,7 @@
 package com.piggeh.palmettoscholars.fragments;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -75,7 +76,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
-        recyclerView.addItemDecoration(new RecyclerItemDivider(getContext()));
+        //recyclerView.addItemDecoration(new RecyclerItemDivider(getContext()));
         // Inflate the layout for this fragment
         return root;
     }
@@ -86,10 +87,12 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
 
     }*/
 
-    public ArrayList<Bundle> getTeachersFromIndex(){
+    private ArrayList<Bundle> getTeachersFromIndex(){
         String[] names = getResources().getStringArray(R.array.teacher_index_names);
         int[] categories = getResources().getIntArray(R.array.teacher_index_categories);
         int[] prefixes = getResources().getIntArray(R.array.teacher_index_prefixes);
+        String[] emails = getResources().getStringArray(R.array.teacher_index_emails);
+        TypedArray avatars = getResources().obtainTypedArray(R.array.teacher_index_avatars);
 
         ArrayList<Bundle> bundles = new ArrayList<>();
         for(int loop = 0; loop + 1 < Math.min(names.length, Math.min(categories.length, prefixes.length)); loop = loop + 1){
@@ -97,6 +100,28 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
             bundle.putString(TeacherConstants.KEY_NAME, names[loop]);
             bundle.putInt(TeacherConstants.KEY_CATEGORY, categories[loop]);
             bundle.putInt(TeacherConstants.KEY_PREFIX, prefixes[loop]);
+            bundle.putString(TeacherConstants.KEY_EMAIL, emails[loop]);
+            bundle.putInt(TeacherConstants.KEY_AVATAR, avatars.getResourceId(loop, 0));
+            bundles.add(bundle);
+        }
+        return bundles;
+    }
+
+    public static ArrayList<Bundle> getTeachersFromIndex(Context context){
+        String[] names = context.getResources().getStringArray(R.array.teacher_index_names);
+        int[] categories = context.getResources().getIntArray(R.array.teacher_index_categories);
+        int[] prefixes = context.getResources().getIntArray(R.array.teacher_index_prefixes);
+        String[] emails = context.getResources().getStringArray(R.array.teacher_index_emails);
+        TypedArray avatars = context.getResources().obtainTypedArray(R.array.teacher_index_avatars);
+
+        ArrayList<Bundle> bundles = new ArrayList<>();
+        for(int loop = 0; loop + 1 < Math.min(names.length, Math.min(categories.length, prefixes.length)); loop = loop + 1){
+            Bundle bundle = new Bundle();
+            bundle.putString(TeacherConstants.KEY_NAME, names[loop]);
+            bundle.putInt(TeacherConstants.KEY_CATEGORY, categories[loop]);
+            bundle.putInt(TeacherConstants.KEY_PREFIX, prefixes[loop]);
+            bundle.putString(TeacherConstants.KEY_EMAIL, emails[loop]);
+            bundle.putInt(TeacherConstants.KEY_AVATAR, avatars.getResourceId(loop, 0));
             bundles.add(bundle);
         }
         return bundles;
@@ -104,7 +129,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
 
     @Override
     public void onRecyclerItemClick(View view, int position, String teacherName){
-        mListener.onTeacherClick(teacherName);
+        mListener.onTeacherClick(position);
     }
 
     /*@Override
@@ -142,6 +167,6 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
      */
     public interface OnTeacherClickListener {
         // TODO: Update argument type and name
-        void onTeacherClick(String teacherName);
+        void onTeacherClick(int teacherId);
     }
 }

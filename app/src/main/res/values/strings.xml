@@ -50,9 +50,10 @@
     <string name="contact_location_address_city">North Charleston, SC 29418</string>
     <string name="contact_fax">Fax</string>
     <string name="contact_fax_number">843&#8211;300&#8211;4123</string>
-    
+
     <!--Strings used on Teachers screen-->
     <!--Categories-->
+    <!--TODO: Make banner images for each subject-->
     <string name="teachers_category_english">English</string>
     <string name="teachers_category_fine_arts">Fine arts</string>
     <string name="teachers_category_foreign_languages">Foreign languages</string>
@@ -64,6 +65,11 @@
     <string name="teachers_prefix_mrs">Mrs. %s</string>
     <string name="teachers_prefix_mr">Mr. %s</string>
     <string name="teachers_prefix_dr">Dr. %s</string>
+    
+    <!--Strings used on Teacher Details screen-->
+    <string name="teacherdetail_title">Teacher info</string>
+    <string name="teacherdetail_room_label">Room number</string>
+    <string name="teacherdetail_bio_label">About me</string>
 
     <!--Strings used for alerts-->
     <!--Dialogs-->
@@ -98,4 +104,5 @@
     <string name="accessibility_fab_done">Done</string>
     <string name="accessibility_fab_openexternally">Open webpage in browser</string>
     <string name="accessibility_fab_search">Search</string>
+    <string name="accessibility_fab_email">Email teacher</string>
 </resources>

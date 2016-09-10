@@ -165,7 +165,8 @@ public class TeachersRecyclerAdapter extends RecyclerView.Adapter<TeachersRecycl
 
         //TODO: Get actual pictures of the teachers
         //viewHolder.getAvatarView().setImageDrawable(mSetAvatars.get(position));
-        viewHolder.getAvatarView().setImageResource(R.drawable.ic_face);
+        mSetTeacherData.get(position).getInt(TeacherConstants.KEY_AVATAR);
+        viewHolder.getAvatarView().setImageResource(mSetTeacherData.get(position).getInt(TeacherConstants.KEY_AVATAR));
     }
     // END_INCLUDE(recyclerViewOnBindViewHolder)
 

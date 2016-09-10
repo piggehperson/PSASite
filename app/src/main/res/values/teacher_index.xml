@@ -128,4 +128,36 @@
         <item>sharryn.whitmore@palmettoscholarsacademy.org</item>
         <item>mary.wood@palmettoscholarsacademy.org</item>
     </string-array>
+    <integer-array name="teacher_index_avatars">
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/hakamiun</item>
+        <item>@drawable/harris</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/loar</item>
+        <item>@drawable/mcallister</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/mcquatters</item>
+        <item>@drawable/mea</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/moseley</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/poetzscher</item>
+        <item>@drawable/ragland</item>
+        <item>@drawable/reese</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/sullivan</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/voigt</item>
+        <item>@drawable/avatar_missing</item>
+        <item>@drawable/avatar_missing</item>
+    </integer-array>
 </resources>
