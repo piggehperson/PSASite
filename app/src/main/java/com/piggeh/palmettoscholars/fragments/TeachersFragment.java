@@ -129,7 +129,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
 
     @Override
     public void onRecyclerItemClick(View view, int position, String teacherName){
-        mListener.onTeacherClick(position);
+        mListener.onTeacherClick(view, position);
     }
 
     /*@Override
@@ -167,6 +167,6 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
      */
     public interface OnTeacherClickListener {
         // TODO: Update argument type and name
-        void onTeacherClick(int teacherId);
+        void onTeacherClick(View view, int teacherId);
     }
 }

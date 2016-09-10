@@ -163,8 +163,6 @@ public class TeachersRecyclerAdapter extends RecyclerView.Adapter<TeachersRecycl
         //hidden data
         viewHolder.getHiddenData().setText(mSetTeacherData.get(position).getString(TeacherConstants.KEY_NAME));
 
-        //TODO: Get actual pictures of the teachers
-        //viewHolder.getAvatarView().setImageDrawable(mSetAvatars.get(position));
         mSetTeacherData.get(position).getInt(TeacherConstants.KEY_AVATAR);
         viewHolder.getAvatarView().setImageResource(mSetTeacherData.get(position).getInt(TeacherConstants.KEY_AVATAR));
     }

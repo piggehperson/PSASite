@@ -20,7 +20,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -31,6 +33,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -504,12 +507,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onTeacherClick(int teacherId){
+    public void onTeacherClick(View view, int teacherId){
         Log.d(TAG, "Teacher index " + String.valueOf(teacherId) + " clicked");
-        Toast.makeText(this, "Teacher index " + String.valueOf(teacherId) + " clicked", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Teacher index " + String.valueOf(teacherId) + " clicked", Toast.LENGTH_SHORT).show();
         Intent teacherDetail = new Intent(this, TeacherDetailActivity.class);
         teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
-        startActivity(teacherDetail);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    Pair.create(view.findViewById(R.id.teacherAvatar), "avatar")
+            );
+            startActivity(teacherDetail, options.toBundle());
+        } else{
+            startActivity(teacherDetail);
+        }
     }
 
     @Override

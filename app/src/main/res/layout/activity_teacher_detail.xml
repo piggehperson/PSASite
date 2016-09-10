@@ -149,7 +149,14 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:id="@+id/textView_bio"
                 android:layout_below="@id/linearLayout_bioHeader"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/linearLayout_bioHeader"
+                android:id="@+id/progressBar_loadingBio"
+                android:visibility="gone"/>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 

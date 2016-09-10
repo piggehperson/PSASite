@@ -1,7 +1,10 @@
 package com.piggeh.palmettoscholars.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.piggeh.palmettoscholars.R;
@@ -31,6 +35,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private CircleImageView avatarImage;
     private TextView emailView;
     private TextView bioView;
+    private ProgressBar bioProgressBar;
     //vars
     private int teacherIndex;
     private String teacherName;
@@ -39,6 +44,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private String teacherEmail;
     private Bundle teacherDataBundle;
     private int teacherAvatarId;
+    private String bio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         avatarImage = (CircleImageView) findViewById(R.id.avatarImageHeader);
         emailView = (TextView) findViewById(R.id.textView_emailAddress);
         bioView = (TextView) findViewById(R.id.textView_bio);
+        bioProgressBar = (ProgressBar) findViewById(R.id.progressBar_loadingBio);
 
         //get data from Intent
         teacherIndex = getIntent().getIntExtra(TeacherConstants.KEY_INDEX, 0);
@@ -70,6 +77,17 @@ public class TeacherDetailActivity extends AppCompatActivity {
 
         //set up views
         appBarLayout.setExpanded(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    supportFinishAfterTransition();
+                } else{
+                    finish();
+                }
+            }
+        });
 
         switch (teacherPrefix){
             case TeacherConstants.PREFIX_DR:
@@ -92,6 +110,19 @@ public class TeacherDetailActivity extends AppCompatActivity {
         emailView.setText(teacherEmail);
         //avatarImage.setImageDrawable(ContextCompat.getDrawable(this, teacherAvatarId));
         avatarImage.setImageResource(teacherAvatarId);
+        /*if (savedInstanceState == null){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    bioProgressBar.setVisibility(View.GONE);
+                    bioView.setVisibility(View.VISIBLE);
+                }
+            }, 1000);
+        } else{
+            bioProgressBar.setVisibility(View.GONE);
+            bioView.setVisibility(View.VISIBLE);
+            bioView.setText(savedInstanceState.getString("bio")*//*bio*//*);
+        }*/
     }
 
     public void onFabClick(View view){
@@ -117,4 +148,15 @@ public class TeacherDetailActivity extends AppCompatActivity {
                     .show();
         }
     }
+
+    /*@Override
+    public void onSaveInstanceState(Bundle outState){
+        outState.putString("bio", bio);
+        super.onSaveInstanceState(outState);
+    }
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        bio = savedInstanceState.getString("bio");
+    }*/
 }
