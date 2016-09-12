@@ -37,6 +37,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private TextView bioView;
     private ProgressBar bioProgressBar;
     //vars
+    private boolean launchedFromShortcut = false;
+
     private int teacherIndex;
     private String teacherName;
     private int teacherPrefix;
@@ -66,6 +68,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
         bioProgressBar = (ProgressBar) findViewById(R.id.progressBar_loadingBio);
 
         //get data from Intent
+        launchedFromShortcut = getIntent().getBooleanExtra("launched_from_shortcut", false);
+
         teacherIndex = getIntent().getIntExtra(TeacherConstants.KEY_INDEX, 0);
         //get data from bundle
         teacherDataBundle = TeachersFragment.getTeachersFromIndex(this).get(teacherIndex);
@@ -78,14 +82,20 @@ public class TeacherDetailActivity extends AppCompatActivity {
         //set up views
         appBarLayout.setExpanded(true);
 
+        if (launchedFromShortcut){
+            Log.d(TAG, "Launched from shortcut, showing X button");
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.toolbar_close);
+        }
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                onBackPressed();
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                     supportFinishAfterTransition();
                 } else{
                     finish();
-                }
+                }*/
             }
         });
 

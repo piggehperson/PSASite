@@ -7,12 +7,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -36,9 +34,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.classes.ConfigUtils;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.fragments.ContactFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
@@ -77,13 +75,14 @@ public class MainActivity extends AppCompatActivity
     private ImageView appbarImage;
 
     //vars
-    private int navigationPage = 0;
+    private int navigationPage = PAGE_HOME;
+    private int previousPage = PAGE_HOME;
     private int appbarState = AppBarStateChangeListener.STATE_IDLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawerlayout_main);
+        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -120,14 +119,27 @@ public class MainActivity extends AppCompatActivity
         });
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-        //tabLayout = (TabLayout) findViewById(R.id.tablayout);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_hamburger);
+
+        if (ConfigUtils.isTablet(this)){
+            //set up tablet layout
+            Log.d(TAG, "Settings up tablet layout");
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            drawerLayout.setDrawerElevation(0);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            drawerLayout.setScrimColor(ContextCompat.getColor(this, android.R.color.transparent));
+        } else{
+            //set up regular layout
+            Log.d(TAG, "Setting up regular layout");
+
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawerLayout.addDrawerListener(toggle);
+            toggle.syncState();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_hamburger);
+        }
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -223,7 +235,10 @@ public class MainActivity extends AppCompatActivity
             ActivityManager.TaskDescription description = new ActivityManager.TaskDescription(null, overviewIcon, ContextCompat.getColor(this, R.color.colorPrimary));
             setTaskDescription(description);
             //status bar
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
+            if (!ConfigUtils.isTablet(this)){
+                Log.d(TAG, "Isn't tablet, setting status bar to transparent");
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
+            }
         }
     }
 
@@ -232,6 +247,8 @@ public class MainActivity extends AppCompatActivity
             Log.d(TAG, "Selected page is already open, do nothing");
             return false;
         }
+
+        previousPage = navigationPage;
 
         switch (page){
             default:
@@ -393,10 +410,15 @@ public class MainActivity extends AppCompatActivity
             case PAGE_SETTINGS:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
                 appbarImage.setVisibility(View.INVISIBLE);
-                if (recreated){
+                if (ConfigUtils.isTablet(this)){
+                    Log.d(TAG, "Is tablet, not collapsing app bar");
                     appBarLayout.setExpanded(true);
                 } else{
-                    appBarLayout.setExpanded(false);
+                    if (recreated){
+                        appBarLayout.setExpanded(true);
+                    } else{
+                        appBarLayout.setExpanded(false);
+                    }
                 }
                 //params.setScrollFlags(0);
                 Log.d(TAG, "Set up app bar for Settings page");
@@ -404,17 +426,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //doesn't work
-    /*public boolean isAppbarFullyExpanded(){
-        *//*boolean fullyExpanded =
-                (appBarLayout.getHeight() - appBarLayout.getBottom()) == 0;*//*
-        return (appBarLayout.getHeight() - appBarLayout.getBottom()) == 0;
-    }*/
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         //save navigation page for setting up FAB again
         savedInstanceState.putInt("navigation_page", navigationPage);
+        savedInstanceState.putInt("previous_page", previousPage);
         //save whether app bar is expanded, so I can collapse it again if needed
         //savedInstanceState.putBoolean("appbar_expanded", isAppbarFullyExpanded());
         //workaround for collapsed title being in the wrong place after rotating
@@ -429,6 +445,7 @@ public class MainActivity extends AppCompatActivity
 
         //restore navigation page to set up FAB with
         navigationPage = savedInstanceState.getInt("navigation_page");
+        previousPage = savedInstanceState.getInt("previous_page");
         /*if (navigationPage != PAGE_SETTINGS){
             appBarLayout.setExpanded(true, false);
         }*/
@@ -513,12 +530,24 @@ public class MainActivity extends AppCompatActivity
         Intent teacherDetail = new Intent(this, TeacherDetailActivity.class);
         teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                    Pair.create(view.findViewById(R.id.teacherAvatar), "avatar")
+                    Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                    Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                    Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
             );
             startActivity(teacherDetail, options.toBundle());
         } else{
             startActivity(teacherDetail);
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                && !ConfigUtils.isTablet(this)){
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
         }
     }
 
@@ -541,19 +570,27 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if (!ConfigUtils.isTablet(this)){
+            Log.d(TAG, "Isn't tablet, closing drawer");
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START)
+                && !ConfigUtils.isTablet(this)) {
             Log.d(TAG, "Back pressed, closing nav drawer");
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if ( navigationPage != PAGE_HOME){
+            if (navigationPage == PAGE_SETTINGS){
+                //back to previous page
+                Log.d(TAG, "Back pressed, back to previous page");
+                switchNavigationPage(previousPage);
+            } else if ( navigationPage != PAGE_HOME){
                 //back to Home page
                 Log.d(TAG, "Back pressed, back to Home page");
                 switchNavigationPage(PAGE_HOME);
