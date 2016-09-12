@@ -129,6 +129,11 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.setDrawerElevation(0);
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             drawerLayout.setScrimColor(ContextCompat.getColor(this, android.R.color.transparent));
+
+            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+            params.setScrollFlags(0);
+
+            appBarLayout.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
         } else{
             //set up regular layout
             Log.d(TAG, "Setting up regular layout");
@@ -529,6 +534,7 @@ public class MainActivity extends AppCompatActivity
         //Toast.makeText(this, "Teacher index " + String.valueOf(teacherId) + " clicked", Toast.LENGTH_SHORT).show();
         Intent teacherDetail = new Intent(this, TeacherDetailActivity.class);
         teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
+        teacherDetail.putExtra("launched_from_shortcut", false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
@@ -568,6 +574,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.drawer_teachers:
                 switchNavigationPage(PAGE_TEACHERS);
                 break;
+            case R.id.drawer_calendar:
+                openWebUrl("https://calendar.google.com/calendar/embed?src=pvnh2dgi9jetb22q9ldj26co1k@group.calendar.google.com&ctz=America/New_York");
+                return false;
         }
 
         if (!ConfigUtils.isTablet(this)){
@@ -605,11 +614,21 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public boolean openWebUrl(String url){
+    private boolean openWebUrl(String url){
         Uri webpage = Uri.parse(url);
         Intent open = new Intent(Intent.ACTION_VIEW, webpage);
         if (open.resolveActivity(getPackageManager()) != null) {
             startActivity(open);
+            return true;
+        } else{
+            return false;
+        }
+    }
+    public static boolean openWebUrl(Context context, String url){
+        Uri webpage = Uri.parse(url);
+        Intent open = new Intent(Intent.ACTION_VIEW, webpage);
+        if (open.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(open);
             return true;
         } else{
             return false;

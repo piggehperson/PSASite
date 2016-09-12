@@ -105,6 +105,7 @@
     <string name="accessibility_fab_openexternally">Open webpage in browser</string>
     <string name="accessibility_fab_search">Search</string>
     <string name="accessibility_fab_email">Email teacher</string>
+    <string name="accessiblity_fab_refresh">Refresh</string>
 
     <string name="accessiblity_appbarimage">App bar background image</string>
 </resources>

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.adapters.TeachersRecyclerAdapter;
@@ -30,6 +31,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     private OnTeacherClickListener mListener;
 
     private RecyclerView recyclerView;
+    private ProgressBar progressBarLoadingTeachers;
     private TeachersRecyclerAdapter recyclerAdapter;
 
     public TeachersFragment() {
@@ -72,6 +74,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_teachers, container, false);
 
+        progressBarLoadingTeachers = (ProgressBar) root.findViewById(R.id.progressBar_loadingTeachers);
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView_teachers);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -104,6 +107,9 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
             bundle.putInt(TeacherConstants.KEY_AVATAR, avatars.getResourceId(loop, 0));
             bundles.add(bundle);
         }
+        //recycle lists
+        avatars.recycle();
+        //finish
         return bundles;
     }
 
@@ -124,6 +130,9 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
             bundle.putInt(TeacherConstants.KEY_AVATAR, avatars.getResourceId(loop, 0));
             bundles.add(bundle);
         }
+        //recycle lists
+        avatars.recycle();
+        //finish
         return bundles;
     }
 

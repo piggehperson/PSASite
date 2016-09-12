@@ -7,6 +7,8 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="drawer_size">320dp</dimen>
 
+    <dimen name="appbar_elevation">4dp</dimen>
+
     <dimen name="appbar_height">@dimen/appbar_height_normal</dimen>
     <dimen name="appbar_height_small">48dp</dimen>
     <dimen name="appbar_height_normal">56dp</dimen>
