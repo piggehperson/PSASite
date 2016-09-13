@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.classes.ConfigUtils;
@@ -241,16 +242,18 @@ public class MainActivity extends AppCompatActivity
         setupFabForPage(navigationPage);
         setupAppbarForPage(navigationPage);
 
-        /*if (navigationPage == PAGE_SETTINGS){
-            appBarLayout.setExpanded(false);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    appBarLayout.setExpanded(false, false);
-                }
-            }, 1000);
-        }*/
+        //show Demo App popup
+        if (getResources().getBoolean(R.bool.is_demo)
+                && savedInstanceState == null){
+            Log.d(TAG, "Showing Demo App popup");
+            AlertDialog.Builder demoApp = new AlertDialog.Builder(this);
+            demoApp.setTitle(R.string.dialog_demo_title);
+            demoApp.setMessage(R.string.dialog_demo_message);
+            demoApp.setPositiveButton(R.string.dialog_action_ok, null);
+            demoApp.show();
+        }
 
+        //set up Overview screen on Lollipop+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             //Overview screen
             Bitmap overviewIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.logo_flat);
@@ -624,6 +627,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         Log.d(TAG, "Navigation drawer item clicked");
         switch (item.getItemId()){
+            default:
+                Toast.makeText(this, R.string.popup_demo_comingsoon, Toast.LENGTH_SHORT).show();
+                return false;
             case R.id.drawer_home:
                 switchNavigationPage(PAGE_HOME);
                 break;

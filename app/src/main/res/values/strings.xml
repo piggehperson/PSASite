@@ -28,7 +28,7 @@
     <string name="menu_search">Search</string>
     <string name="menu_sort">Sort by</string>
     <string name="menu_sort_name">Alphabetically</string>
-    <string name="menu_sort_category">Subject</string>
+    <string name="menu_sort_category">By subject</string>
 
     <!--Strings used in home fragment layout-->
     <string name="home_ourmission">Our mission</string>
@@ -96,7 +96,8 @@
     <string name="notif_announcement_text">PSA announcement</string>
     <string name="notif_newsletter_title">New PSA newsletter</string>
     <string name="notif_newsletter_action_open_externally">Open in browser</string>
-
+    <!--Snackbars & Toasts-->
+    <string name="popup_demo_comingsoon">Coming soon</string>
 
     <!--Strings used for Settings-->
     <string name="preferencegroup_notif_title">Notifications</string>
