@@ -205,6 +205,17 @@ public class MainActivity extends AppCompatActivity
                     navigationView.setCheckedItem(R.id.drawer_settings);
                     navigationPage = PAGE_SETTINGS;
                     break;
+                case PAGE_RESOURCES:
+                    if (savedInstanceState == null){
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new ResourcesFragment())
+                                .commit();
+                    }
+                    setupAppbarForPage(PAGE_RESOURCES, true);
+                    setupFabForPage(PAGE_RESOURCES);
+                    navigationView.setCheckedItem(R.id.drawer_resources);
+                    navigationPage = PAGE_RESOURCES;
+                    break;
             }
         } else{
             //launched normally
