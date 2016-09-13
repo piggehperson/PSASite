@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.piggeh.palmettoscholars"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 24
         versionCode 12
         versionName "0.12"
