@@ -80,11 +80,14 @@ public class MainActivity extends AppCompatActivity
     private int navigationPage = PAGE_HOME;
     private int previousPage = PAGE_HOME;
     private int appbarState = AppBarStateChangeListener.STATE_IDLE;
+    private boolean isTablet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        isTablet = ConfigUtils.isTablet(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (ConfigUtils.isTablet(this)){
+        if (isTablet){
             //set up tablet layout
             Log.d(TAG, "Settings up tablet layout");
 
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity
             AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
             params.setScrollFlags(0);
 
-            appBarLayout.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
+            //appBarLayout.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
         } else{
             //set up regular layout
             Log.d(TAG, "Setting up regular layout");
@@ -243,7 +246,7 @@ public class MainActivity extends AppCompatActivity
             ActivityManager.TaskDescription description = new ActivityManager.TaskDescription(null, overviewIcon, ContextCompat.getColor(this, R.color.colorPrimary));
             setTaskDescription(description);
             //status bar
-            if (!ConfigUtils.isTablet(this)){
+            if (!isTablet){
                 Log.d(TAG, "Isn't tablet, setting status bar to transparent");
                 getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
             }
@@ -446,7 +449,7 @@ public class MainActivity extends AppCompatActivity
             case PAGE_SETTINGS:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
                 appbarImage.setVisibility(View.INVISIBLE);
-                if (ConfigUtils.isTablet(this)){
+                if (isTablet){
                     Log.d(TAG, "Is tablet, not collapsing app bar");
                     appBarLayout.setExpanded(true);
                 } else{
@@ -562,6 +565,10 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Opening teachers page externally");
                 openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/teacherpages/");
                 //Snackbar.make(coordinatorLayout, "Search teachers", Snackbar.LENGTH_SHORT).show();
+                break;
+            case PAGE_RESOURCES:
+                Log.d(TAG, "Opening resources page externally");
+                openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/quick-links/");
                 break;
         }
     }
