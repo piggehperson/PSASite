@@ -20,6 +20,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -40,6 +41,7 @@ import com.piggeh.palmettoscholars.classes.ConfigUtils;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.fragments.ContactFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
+import com.piggeh.palmettoscholars.fragments.ResourcesFragment;
 import com.piggeh.palmettoscholars.fragments.SettingsFragment;
 import com.piggeh.palmettoscholars.fragments.TeachersFragment;
 import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
@@ -48,20 +50,18 @@ import com.piggeh.palmettoscholars.utils.PSANotifications;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
-        TeachersFragment.OnTeacherClickListener {
+        TeachersFragment.OnTeacherClickListener,
+        ResourcesFragment.OnResourceClickListener {
     //constants
     private static final String TAG = "MainActivity";
     //modes
     public static final int PAGE_HOME = 0;
-    public static final int PAGE_ENROLLMENT = 1;
-    public static final int PAGE_ABOUT_US = 2;
-    public static final int PAGE_NOTIFICATIONS = 3;
-    public static final int PAGE_TEACHERS = 4;
-    public static final int PAGE_PARENTS = 5;
-    public static final int PAGE_STUDENTS = 6;
-    public static final int PAGE_CONTACT_US = 7;
-    public static final int PAGE_NEWSLETTER = 8;
-    public static final int PAGE_SETTINGS = 9;
+    public static final int PAGE_NOTIFICATIONS = 1;
+    public static final int PAGE_TEACHERS = 2;
+    public static final int PAGE_RESOURCES = 3;
+    public static final int PAGE_CONTACT_US = 4;
+    public static final int PAGE_NEWSLETTER = 5;
+    public static final int PAGE_SETTINGS = 6;
 
     //views
     public CoordinatorLayout coordinatorLayout;
@@ -344,6 +344,27 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(TAG, "Switched to Settings page");
                 return true;
+            case PAGE_RESOURCES:
+                //switch fragment
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
+                        .replace(R.id.fragment_container, new ResourcesFragment())
+                        .commit();
+                //set page variable
+                navigationPage = PAGE_RESOURCES;
+
+                //configure FAB & header for new page
+                setupFabForPage(PAGE_RESOURCES);
+                setupAppbarForPage(PAGE_RESOURCES);
+
+                //set selected item in drawer, for switching pages programmatically
+                navigationView.setCheckedItem(R.id.drawer_resources);
+
+                //expand toolbar
+                /*appBarLayout.setExpanded(true);*/
+
+                Log.d(TAG, "Switched to Resources page");
+                return true;
         }
     }
 
@@ -377,6 +398,13 @@ public class MainActivity extends AppCompatActivity
                 fab.setImageResource(R.drawable.ic_check);
                 fab.setContentDescription(getString(R.string.accessibility_fab_done));
                 Log.d(TAG, "Set up FAB for Settings page");
+                return true;
+            case PAGE_RESOURCES:
+                fab.setImageResource(R.drawable.ic_open_externally);
+                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
+                //fab.setVisibility(View.VISIBLE);
+                fab.show();
+                Log.d(TAG, "Set up FAB for Resources page");
                 return true;
         }
     }
@@ -428,6 +456,13 @@ public class MainActivity extends AppCompatActivity
                 }
                 //params.setScrollFlags(0);
                 Log.d(TAG, "Set up app bar for Settings page");
+                return true;
+            case PAGE_RESOURCES:
+                collapsingToolbarLayout.setTitle(getString(R.string.drawer_resources));
+                appbarImage.setVisibility(View.INVISIBLE);
+                //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                appBarLayout.setExpanded(true);
+                Log.d(TAG, "Set up app bar for Resources page");
                 return true;
         }
     }
@@ -550,6 +585,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onResourceClick(View view, int position, String url){
+        openWebUrl(url);
+    }
+
+    @Override
     public void onResume(){
         super.onResume();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
@@ -578,6 +618,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.drawer_calendar:
                 openWebUrl("https://calendar.google.com/calendar/embed?src=pvnh2dgi9jetb22q9ldj26co1k@group.calendar.google.com&ctz=America/New_York");
                 return false;
+            case R.id.drawer_resources:
+                switchNavigationPage(PAGE_RESOURCES);
+                break;
         }
 
         if (!ConfigUtils.isTablet(this)){

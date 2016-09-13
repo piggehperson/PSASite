@@ -23,7 +23,8 @@
             android:text="Subheader"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="14sp"
-            android:textColor="?android:textColorSecondary"/>
+            android:textStyle="bold"
+            android:textColor="?colorPrimary"/><!--android:textColor="?android:textColorSecondary"-->
     </FrameLayout>
 
     <RelativeLayout
