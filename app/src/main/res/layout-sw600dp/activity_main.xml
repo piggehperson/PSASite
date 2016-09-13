@@ -63,10 +63,11 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:onClick="onFabClick"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="horizontal">
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
@@ -79,19 +80,18 @@
             app:itemIconTint="@color/navigation_drawer_icon"
             app:elevation="0dp"/>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/dividers"
+            android:id="@+id/pinned_drawer_divider"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/fragment_container"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_toEndOf="@id/nav_view"/><!--android:paddingStart="@dimen/drawer_size"-->
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/fragment_container"
-            android:background="@color/dividers"/>
-    </RelativeLayout>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" /><!--android:paddingStart="@dimen/drawer_size"-->
+    </LinearLayout>
 
     <!--<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
