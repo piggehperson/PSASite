@@ -539,14 +539,15 @@ public class MainActivity extends AppCompatActivity
                 break;
             case PAGE_HOME:
                 Log.d(TAG, "Enroll now");
-                Snackbar.make(coordinatorLayout, "Enroll now", Snackbar.LENGTH_SHORT).show();
+                openWebUrl("http://www.palmettoscholarsacademy.org/attend-psa/");
+                //Snackbar.make(coordinatorLayout, "Enroll now", Snackbar.LENGTH_SHORT).show();
 
                 /*//resources
                 Resources resources = getResources();
                 Resources systemResources = Resources.getSystem();*/
 
                 //notification settings intent
-                Intent settingsIntent = new Intent(getApplicationContext(), MainActivity.class);
+                /*Intent settingsIntent = new Intent(getApplicationContext(), MainActivity.class);
                 settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
                 PendingIntent settingsPendingIntent =
                         PendingIntent.getActivity(
@@ -562,7 +563,7 @@ public class MainActivity extends AppCompatActivity
                         PSANotifications.generateAnnouncement(getApplicationContext(),
                                 "No homework",
                                 settingsPendingIntent,
-                                settingsPendingIntent));
+                                settingsPendingIntent));*/
                 break;
             case PAGE_CONTACT_US:
                 Log.d(TAG, "Calling phone");
