@@ -4,7 +4,10 @@
     android:layout_height="@dimen/list_subheader_height"
     android:orientation="vertical"
     android:id="@+id/linearLayout_listSubheader"
-    android:padding="@dimen/list_item_padding_sides">
+    android:paddingTop="@dimen/list_item_padding_sides"
+    android:paddingBottom="@dimen/list_item_padding_sides"
+    android:paddingStart="@dimen/list_item_padding_sides"
+    android:paddingEnd="@dimen/list_item_padding_sides">
 
     <TextView
         android:layout_width="match_parent"
@@ -13,6 +16,7 @@
         android:text="Subheader"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textSize="14sp"
+        android:textStyle="bold"
         android:textColor="?android:textColorSecondary"/>
 
 </LinearLayout>
