@@ -46,7 +46,6 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
      * //@param param2 Parameter 2.
      * @return A new instance of fragment HomeFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static TeachersFragment newInstance(String argments) {
         TeachersFragment fragment = new TeachersFragment();
         Bundle args = new Bundle();
