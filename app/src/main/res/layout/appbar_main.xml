@@ -25,6 +25,7 @@
             android:src="@mipmap/logo_flat"
             android:id="@+id/appbarImage"
             android:visibility="invisible"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/accessiblity_appbarimage"
             app:layout_collapseMode="parallax"/>
 

@@ -119,16 +119,16 @@ public class MainActivity extends AppCompatActivity
         });
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (ConfigUtils.isTablet(this)){
             //set up tablet layout
             Log.d(TAG, "Settings up tablet layout");
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            drawerLayout.setDrawerElevation(0);
+            /*drawerLayout.setDrawerElevation(0);
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-            drawerLayout.setScrimColor(ContextCompat.getColor(this, android.R.color.transparent));
+            drawerLayout.setScrimColor(ContextCompat.getColor(this, android.R.color.transparent));*/
 
             AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
             params.setScrollFlags(0);
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity
             //set up regular layout
             Log.d(TAG, "Setting up regular layout");
 
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);

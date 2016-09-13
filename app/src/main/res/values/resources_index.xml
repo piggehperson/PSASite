@@ -3,6 +3,10 @@
     <integer-array name="resource_index_types">
         <item>0</item>
     </integer-array>
-
-
+    <string-array name="resource_index_titles">
+        <item>Quick links</item>
+    </string-array>
+    <string-array name="respurce_index_subtitles">
+        <item>null</item>
+    </string-array>
 </resources>
