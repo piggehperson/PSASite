@@ -43,6 +43,13 @@
         android:lines="1"
         android:textSize="14sp"
         android:ellipsize="end" /><!--android:textSize="14sp"-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividers"
+        android:id="@+id/divider"
+        android:layout_marginStart="72dp"
+        android:layout_alignParentBottom="true"/>
 
     <TextView
         android:layout_width="wrap_content"
