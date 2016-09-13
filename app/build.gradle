@@ -34,6 +34,7 @@ dependencies {
     compile 'com.android.support:preference-v7:24.2.0'
     compile 'com.android.support:preference-v14:24.2.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.android.support:customtabs:24.2.0'
     /*compile 'com.github.kolavar:android-support-v4-preferencefragment:+'*/
     /*compile 'com.takisoft.fix:preference-v7:24.2.0.0'*/
 }

@@ -1,5 +1,6 @@
 package com.piggeh.palmettoscholars.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,7 @@ public class ResourcesRecyclerAdapter extends RecyclerView.Adapter<ResourcesRecy
 
     private ArrayList<Bundle> mDataSet;
     private Context mContext;
+    private Activity mActivity;
     private static RecyclerItemClickListener mItemListener;
 
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
@@ -96,10 +98,11 @@ public class ResourcesRecyclerAdapter extends RecyclerView.Adapter<ResourcesRecy
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public ResourcesRecyclerAdapter(Context context, ArrayList<Bundle> dataSet, RecyclerItemClickListener itemListener) {
+    public ResourcesRecyclerAdapter(/*Context context*/Activity activity, ArrayList<Bundle> dataSet, RecyclerItemClickListener itemListener) {
         mDataSet = dataSet;
 
-        mContext = context;
+        //mContext = context;
+        mActivity = activity;
         mItemListener = itemListener;
     }
 
@@ -138,7 +141,7 @@ public class ResourcesRecyclerAdapter extends RecyclerView.Adapter<ResourcesRecy
             viewHolder.getResourceItemView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MainActivity.openWebUrl(mContext, mDataSet.get(position)
+                    MainActivity.openWebUrl(mActivity, mDataSet.get(position)
                     .getString(KEY_URL));
                 }
             });

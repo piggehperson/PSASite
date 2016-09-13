@@ -1,6 +1,7 @@
 package com.piggeh.palmettoscholars.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -673,13 +675,18 @@ public class MainActivity extends AppCompatActivity
 
     private boolean openWebUrl(String url){
         Uri webpage = Uri.parse(url);
-        Intent open = new Intent(Intent.ACTION_VIEW, webpage);
+        /*Intent open = new Intent(Intent.ACTION_VIEW, webpage);
         if (open.resolveActivity(getPackageManager()) != null) {
             startActivity(open);
             return true;
         } else{
             return false;
-        }
+        }*/
+        CustomTabsIntent.Builder customTabBuilder = new CustomTabsIntent.Builder();
+        customTabBuilder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        CustomTabsIntent customTabsIntent = customTabBuilder.build();
+        customTabsIntent.launchUrl(this, webpage);
+        return true;
     }
     public static boolean openWebUrl(Context context, String url){
         Uri webpage = Uri.parse(url);
@@ -690,6 +697,13 @@ public class MainActivity extends AppCompatActivity
         } else{
             return false;
         }
+    }
+    public static void openWebUrl(Activity activity, String url){
+        Uri webpage = Uri.parse(url);
+        CustomTabsIntent.Builder customTabBuilder = new CustomTabsIntent.Builder();
+        customTabBuilder.setToolbarColor(ContextCompat.getColor(activity.getApplicationContext(), R.color.colorPrimary));
+        CustomTabsIntent customTabsIntent = customTabBuilder.build();
+        customTabsIntent.launchUrl(activity, webpage);
     }
 
     private static final int PERMISSION_REQUEST_PHONE = 1;
