@@ -50,7 +50,8 @@ public class ResourcesRecyclerAdapter extends RecyclerView.Adapter<ResourcesRecy
         private final RelativeLayout resourceItemView;
         private final TextView titleTextView;
         private final TextView subtitleTextView;
-        private final TextView hiddenDataView;
+        //private final TextView hiddenDataView;
+        private final View divider;
 
         public ViewHolder(View v) {
             super(v);
@@ -70,7 +71,8 @@ public class ResourcesRecyclerAdapter extends RecyclerView.Adapter<ResourcesRecy
             resourceItemView = (RelativeLayout) v.findViewById(R.id.relativeLayout_resource_item);
             titleTextView = (TextView) v.findViewById(R.id.resourceTitle);
             subtitleTextView = (TextView) v.findViewById(R.id.resourceSubtitle);
-            hiddenDataView = (TextView) v.findViewById(R.id.textView_hiddenData);
+            //hiddenDataView = (TextView) v.findViewById(R.id.textView_hiddenData);
+            divider = v.findViewById(R.id.divider);
             //resourceItemView.setOnClickListener(this);
         }
 
@@ -82,7 +84,8 @@ public class ResourcesRecyclerAdapter extends RecyclerView.Adapter<ResourcesRecy
             return titleTextView;
         }
         public TextView getSubtitleTextView(){ return subtitleTextView; }
-        public TextView getHiddenData(){ return hiddenDataView; }
+        //public TextView getHiddenData(){ return hiddenDataView; }
+        public View getDivider(){ return divider; }
 
         /*@Override
         public void onClick(View v)
@@ -149,7 +152,14 @@ public class ResourcesRecyclerAdapter extends RecyclerView.Adapter<ResourcesRecy
 
 
         //hidden data
-        viewHolder.getHiddenData().setText(mDataSet.get(position).getString(TeacherConstants.KEY_NAME));
+        //viewHolder.getHiddenData().setText(mDataSet.get(position).getString(TeacherConstants.KEY_NAME));
+
+        //show divider if necessary
+        if (position < mDataSet.size() - 1){
+            if (mDataSet.get(position + 1).getInt(KEY_TYPE, TYPE_SUBHEADER) == TYPE_SUBHEADER){ //next item is a subheader
+                viewHolder.getDivider().setVisibility(View.VISIBLE);
+            }
+        }
     }
     // END_INCLUDE(recyclerViewOnBindViewHolder)
 

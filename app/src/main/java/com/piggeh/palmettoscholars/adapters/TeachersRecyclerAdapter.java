@@ -39,6 +39,7 @@ public class TeachersRecyclerAdapter extends RecyclerView.Adapter<TeachersRecycl
         private final TextView categoryTextView;
         private final CircleImageView avatarView;
         private final TextView hiddenDataView;
+        private final View divider;
 
         public ViewHolder(View v) {
             super(v);
@@ -57,6 +58,7 @@ public class TeachersRecyclerAdapter extends RecyclerView.Adapter<TeachersRecycl
             categoryTextView = (TextView) v.findViewById(R.id.teacherCategory);
             avatarView = (CircleImageView) v.findViewById(R.id.teacherAvatar);
             hiddenDataView = (TextView) v.findViewById(R.id.textView_hiddenData);
+            divider = v.findViewById(R.id.divider);
             rootView.setOnClickListener(this);
         }
 
@@ -69,6 +71,7 @@ public class TeachersRecyclerAdapter extends RecyclerView.Adapter<TeachersRecycl
             return avatarView;
         }
         public TextView getHiddenData(){ return hiddenDataView; }
+        public View getDivider(){return divider;}
 
         @Override
         public void onClick(View v)
@@ -162,6 +165,11 @@ public class TeachersRecyclerAdapter extends RecyclerView.Adapter<TeachersRecycl
 
         //hidden data
         viewHolder.getHiddenData().setText(mSetTeacherData.get(position).getString(TeacherConstants.KEY_NAME));
+
+        //hide divider if necessary
+        if (position == mSetTeacherData.size() - 1){
+            viewHolder.getDivider().setVisibility(View.INVISIBLE);
+        }
 
         mSetTeacherData.get(position).getInt(TeacherConstants.KEY_AVATAR);
         viewHolder.getAvatarView().setImageResource(mSetTeacherData.get(position).getInt(TeacherConstants.KEY_AVATAR));
