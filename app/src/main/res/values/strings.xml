@@ -23,6 +23,7 @@
     <string name="drawer_resources">Resources</string>
     <string name="drawer_contactus">Contact us</string>
     <string name="drawer_settings">Settings</string>
+    <string name="drawer_debug">Debug</string>
 
     <string name="menu_refresh">Refresh</string>
     <string name="menu_search">Search</string>

@@ -3,6 +3,7 @@ package com.piggeh.palmettoscholars.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -43,6 +44,7 @@ import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.classes.ConfigUtils;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.fragments.ContactFragment;
+import com.piggeh.palmettoscholars.fragments.DebugFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
 import com.piggeh.palmettoscholars.fragments.ResourcesFragment;
 import com.piggeh.palmettoscholars.fragments.SettingsFragment;
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     public static final int PAGE_CONTACT_US = 4;
     public static final int PAGE_NEWSLETTER = 5;
     public static final int PAGE_SETTINGS = 6;
+    public static final int PAGE_DEBUG = 7;
 
     //views
     public CoordinatorLayout coordinatorLayout;
@@ -384,6 +387,27 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(TAG, "Switched to Resources page");
                 return true;
+            case PAGE_DEBUG:
+                //switch fragment
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
+                        .replace(R.id.fragment_container, new DebugFragment())
+                        .commit();
+                //set page variable
+                navigationPage = PAGE_DEBUG;
+
+                //configure FAB & header for new page
+                setupFabForPage(PAGE_DEBUG);
+                setupAppbarForPage(PAGE_DEBUG);
+
+                //set selected item in drawer, for switching pages programmatically
+                navigationView.setCheckedItem(R.id.drawer_debug);
+
+                //expand toolbar
+                /*appBarLayout.setExpanded(true);*/
+
+                Log.d(TAG, "Switched to Debug page");
+                return true;
         }
     }
 
@@ -424,6 +448,13 @@ public class MainActivity extends AppCompatActivity
                 //fab.setVisibility(View.VISIBLE);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Resources page");
+                return true;
+            case PAGE_DEBUG:
+                fab.setImageResource(R.drawable.ic_notifications_on);
+                fab.setContentDescription("Test announcement notification");
+                //fab.setVisibility(View.VISIBLE);
+                fab.show();
+                Log.d(TAG, "Set up FAB for Debug page");
                 return true;
         }
     }
@@ -483,6 +514,13 @@ public class MainActivity extends AppCompatActivity
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Resources page");
                 return true;
+            case PAGE_DEBUG:
+                collapsingToolbarLayout.setTitle(getString(R.string.drawer_debug));
+                appbarImage.setVisibility(View.INVISIBLE);
+                //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                appBarLayout.setExpanded(true);
+                Log.d(TAG, "Set up app bar for Debug page");
+                return true;
         }
     }
 
@@ -494,7 +532,7 @@ public class MainActivity extends AppCompatActivity
         //save whether app bar is expanded, so I can collapse it again if needed
         //savedInstanceState.putBoolean("appbar_expanded", isAppbarFullyExpanded());
         //workaround for collapsed title being in the wrong place after rotating
-        appBarLayout.setExpanded(true, false);
+        //appBarLayout.setExpanded(true, false);
 
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -535,7 +573,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onFabClick(View view){
-        Log.d(TAG, "FAb clicked");
+        Log.d(TAG, "FAB clicked");
         switch (navigationPage){
             default:
                 Log.d(TAG, "Unknown page");
@@ -585,6 +623,10 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Opening resources page externally");
                 openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/quick-links/");
                 break;
+            case PAGE_DEBUG:
+                Log.d(TAG, "Testing Announcement notification");
+                testAnnouncementNotification();
+                break;
         }
     }
 
@@ -611,6 +653,80 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResourceClick(View view, int position, String url){
         openWebUrl(url);
+    }
+
+    public void testNotifications(View view){
+        switch (view.getId()){
+            case R.id.button_debug_announcement:
+                testAnnouncementNotification();
+                break;
+            case R.id.button_debug_newsletter:
+                testNewsletterNotification();
+                break;
+        }
+    }
+    private void testAnnouncementNotification(){
+        //notification settings intent
+        Intent settingsIntent = new Intent(this, MainActivity.class);
+        settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+        PendingIntent settingsPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        0,
+                        settingsIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        //notification content intent
+        Intent contentIntent = new Intent(this, MainActivity.class);
+        //settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+        PendingIntent contentPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        1,
+                        contentIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        //notification
+        Notification announcementNotif = PSANotifications.generateAnnouncement(this,
+                "No homework",
+                contentPendingIntent,
+                settingsPendingIntent);
+        //notification manager
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
+                announcementNotif);
+    }
+    private void testNewsletterNotification(){
+        //notification settings intent
+        Intent settingsIntent = new Intent(this, MainActivity.class);
+        settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+        PendingIntent settingsPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        0,
+                        settingsIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        //notification content intent
+        Intent contentIntent = new Intent(this, MainActivity.class);
+        //settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+        PendingIntent contentPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        1,
+                        contentIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        //notification
+        Notification newsletterNotif = PSANotifications.generateNewsletter(this,
+                "No homework",
+                contentPendingIntent,
+                contentPendingIntent,
+                settingsPendingIntent);
+        //notification manager
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_NEWSLETTER,
+                newsletterNotif);
     }
 
     @Override
@@ -648,9 +764,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.drawer_resources:
                 switchNavigationPage(PAGE_RESOURCES);
                 break;
+            case R.id.drawer_debug:
+                Log.d(TAG, "Opened Debug Mode page");
+                switchNavigationPage(PAGE_DEBUG);
+                break;
         }
 
-        if (!ConfigUtils.isTablet(this)){
+        if (!isTablet){
             Log.d(TAG, "Isn't tablet, closing drawer");
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -700,20 +820,13 @@ public class MainActivity extends AppCompatActivity
 
     private boolean openWebUrl(String url){
         Uri webpage = Uri.parse(url);
-        /*Intent open = new Intent(Intent.ACTION_VIEW, webpage);
-        if (open.resolveActivity(getPackageManager()) != null) {
-            startActivity(open);
-            return true;
-        } else{
-            return false;
-        }*/
         CustomTabsIntent.Builder customTabBuilder = new CustomTabsIntent.Builder();
         customTabBuilder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         CustomTabsIntent customTabsIntent = customTabBuilder.build();
         customTabsIntent.launchUrl(this, webpage);
         return true;
     }
-    public static boolean openWebUrl(Context context, String url){
+    public static boolean openWebUrlExternally(Context context, String url){
         Uri webpage = Uri.parse(url);
         Intent open = new Intent(Intent.ACTION_VIEW, webpage);
         if (open.resolveActivity(context.getPackageManager()) != null) {
