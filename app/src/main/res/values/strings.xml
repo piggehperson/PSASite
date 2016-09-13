@@ -11,6 +11,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--drawer & menus-->
     <string name="drawer_home">Home</string>
     <string name="drawer_calendar">Calendar</string>
     <string name="drawer_notifications">Announcements</string>
@@ -22,6 +23,12 @@
     <string name="drawer_resources">Resources</string>
     <string name="drawer_contactus">Contact us</string>
     <string name="drawer_settings">Settings</string>
+
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_sort">Sort by</string>
+    <string name="menu_sort_name">Alphabetically</string>
+    <string name="menu_sort_category">By subject</string>
 
     <!--Strings used in home fragment layout-->
     <string name="home_ourmission">Our mission</string>
@@ -40,7 +47,7 @@
     <string name="contact_twitter">PSA on Twitter</string>
     <string name="contact_twitter_username">\@PSASchool</string>
     <string name="contact_facebook">PSA on Facebook</string>
-
+    <string name="contact_facebook_username">\@palmettoscholarsacademy</string>
     <string name="contact_social_open">Visit page</string>
     <string name="contact_location">Address</string>
     <string name="contact_location_address_street">7499 Dorchester Road</string>
@@ -48,27 +55,68 @@
     <string name="contact_fax">Fax</string>
     <string name="contact_fax_number">843&#8211;300&#8211;4123</string>
 
+    <!--Strings used on Teachers screen-->
+    <!--Categories-->
+    <!--TODO: Make banner images for each subject-->
+    <string name="teachers_category_english">English</string>
+    <string name="teachers_category_fine_arts">Fine arts</string>
+    <string name="teachers_category_foreign_languages">Foreign languages</string>
+    <string name="teachers_category_math">Math</string>
+    <string name="teachers_category_science">Science</string>
+    <string name="teachers_category_social_science">Social science</string>
+    <!--Prefixes: %s is the teacher's name-->
+    <string name="teachers_prefix_ms">Ms. %s</string>
+    <string name="teachers_prefix_mrs">Mrs. %s</string>
+    <string name="teachers_prefix_mr">Mr. %s</string>
+    <string name="teachers_prefix_dr">Dr. %s</string>
+    
+    <!--Strings used on Teacher Details screen-->
+    <string name="teacherdetail_title">Teacher info</string>
+    <string name="teacherdetail_room_label">Room number</string>
+    <string name="teacherdetail_bio_label">About me</string>
+
     <!--Strings used for alerts-->
     <!--Dialogs-->
+    <string name="dialog_demo_title">Demo app</string>
+    <string name="dialog_demo_message">
+        This app is a demonstration of design and basic functionality for Peter\'s Palmetto Scholars Academy app. It is not feature complete,
+        and bugs and instability should be expected.
+    </string>
+
     <string name="dialog_action_ok">@android:string/ok</string>
     <string name="dialog_permissiondenied_phone_title">Could not place call</string>
     <string name="dialog_permissiondenied_phone_message">The Phone permission is required to place a call.</string>
     <string name="dialog_errorcalling_title">Something went wrong</string>
-    <string name="dialog_errorcalling_message">There are no installed apps that can place calls.</string>
+    <string name="dialog_errorcalling_message">There are no installed apps that can make phone calls.</string>
     <string name="dialog_erroremailing_message">There are no installed apps that can send emails.</string>
     <string name="dialog_errorinternet_message">There are no installed apps that can open web links.</string>
     <!--Notifications-->
+    <string name="notif_action_options">Options</string>
+    <string name="notif_announcement_title">New PSA announcement</string>
     <string name="notif_announcement_text">PSA announcement</string>
     <string name="notif_newsletter_title">New PSA newsletter</string>
-    <string name="notif_action_options">Options</string>
-
+    <string name="notif_newsletter_action_open_externally">Open in browser</string>
+    <!--Snackbars & Toasts-->
+    <string name="popup_demo_comingsoon">Coming soon</string>
 
     <!--Strings used for Settings-->
-    <string name="preference_pushnotifications_title">Notifications</string>
-    <string name="preference_pushnotifications_summary">Push notifications for announcements and newsletters</string>
-    <string name="preference_pushnotifications_key">preferencePushNotifications</string>
+    <string name="preferencegroup_notif_title">Notifications</string>
+    <string name="preference_notif_announcements_title">Announcements</string>
+    <string name="preference_notif_announcements_summary">Notify me about school announcements</string>
+    <string name="preference_notif_announcements_key">preferenceNotifAnnouncements</string>
+    <string name="preference_notif_newsletter_title">Newsletters</string>
+    <string name="preference_notif_newsletter_summary">Notify me about new Principal\'s Desk Newsletters</string>
+    <string name="preference_notif_newsletter_key">preferenceNotifNewsletters</string>
 
     <!--Strings used for accessibility-->
     <string name="accessibility_fab_enrollnow">Enroll now</string>
     <string name="accessibility_fab_callphone">Call PSA</string>
+    <string name="accessibility_fab_noaction">No action</string>
+    <string name="accessibility_fab_done">Done</string>
+    <string name="accessibility_fab_openexternally">Open webpage in browser</string>
+    <string name="accessibility_fab_search">Search</string>
+    <string name="accessibility_fab_email">Email teacher</string>
+    <string name="accessiblity_fab_refresh">Refresh</string>
+
+    <string name="accessiblity_appbarimage">App bar background image</string>
 </resources>

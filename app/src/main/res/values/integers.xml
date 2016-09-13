@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="fragment_fade_duration">300</integer>
+
+    <!--Teacher stuff-->
+    <!--Prefixes-->
+    <integer name="teachervals_prefix_ms">0</integer>
+    <integer name="teachervals_prefix_mrs">1</integer>
+    <integer name="teachervals_prefix_mr">2</integer>
+    <integer name="teachervals_prefix_dr">3</integer>
+    <!--Categories-->
+    <integer name="teachervals_category_english">0</integer>
+    <integer name="teachervals_category_fine_arts">1</integer>
+    <integer name="teachervals_category_foreign_languages">2</integer>
+    <integer name="teachervals_category_math">3</integer>
+    <integer name="teachervals_category_science">4</integer>
+    <integer name="teachervals_category_social_science">5</integer>
+</resources>

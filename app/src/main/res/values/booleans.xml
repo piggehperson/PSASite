@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="preference_pushnotifications_default">true</bool>
+    <bool name="is_demo">false</bool>
+
+    <!--Bools used for configuration checking-->
+    <bool name="configuration_istablet">false</bool>
+
+    <bool name="preference_notif_announcements_default">true</bool>
+    <bool name="preference_notif_newsletter_default">false</bool>
 </resources>

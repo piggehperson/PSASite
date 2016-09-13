@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="resource_index_types">
+        <item>0</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </integer-array>
+    <string-array name="resource_index_titles">
+        <item>Quick links</item>
+        <item>Student handbook</item>
+        <item>Lunch program</item>
+        <item>Newsletters archive</item>
+        <item>Parent Community Association</item>
+        <item>Powerschool parent portal</item>
+        <item>School activity contacts</item>
+        <item>Community service hours</item>
+        <item>PSA athletics</item>
+        <item>Parents</item>
+        <item>Volunteering and sign-ups</item>
+        <item>Carpool Assist</item>
+        <item>SchoolWheels bus service</item>
+    </string-array>
+    <string-array name="resource_index_subtitles">
+        <item>null</item>
+        <item>Google Docs</item>
+        <item>Web link</item>
+        <item>Web link</item>
+        <item>Web link</item>
+        <item>Powerschool</item>
+        <item>Web link</item>
+        <item>Web link</item>
+        <item>Web link</item>
+        <item>null</item>
+        <item>Web link</item>
+        <item>Web link</item>
+        <item>Web link</item>
+    </string-array>
+    <string-array name="resource_index_urls">
+        <item>null</item>
+        <item>https://docs.google.com/document/d/1dXS6HT82xQMruiDUq73a9YDXwfOg9_5R5BaDwKGeDJM/edit?usp=sharing</item>
+        <item>http://www.palmettoscholarsacademy.org/psa-parents/lunch-program/</item>
+        <item>http://www.palmettoscholarsacademy.org/psa-parents/newsletter/</item>
+        <item>http://www.palmettoscholarsacademy.org/support-psa/parent-association/</item>
+        <item>https://sis.scpcsd.sc.gov/guardian/home.html</item>
+        <item>http://www.palmettoscholarsacademy.org/student-zone-2/school-activity-contacts/</item>
+        <item>http://www.palmettoscholarsacademy.org/psa-parents/quick-links/log-hours/</item>
+        <item>http://gophoenixathletics.com/</item>
+        <item>null</item>
+        <item>http://www.palmettoscholarsacademy.org/support-psa/parent-volunteers/</item>
+        <item>http://carpoolassist.com/</item>
+        <item>https://www.schoolwheels.com/</item>
+    </string-array>
+</resources>

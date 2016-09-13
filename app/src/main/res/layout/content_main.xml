@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/coordinatorLayout">
+
+    <!--<include layout="@layout/appbar_main"/>-->
+    <android.support.design.widget.AppBarLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appBarLayout"
+        android:theme="@style/AppTheme.AppBar">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/collapsingToolbarLayout"
+            app:contentScrim="@color/colorPrimary"
+            app:title="@string/toolbar_title"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:scrimAnimationDuration="250">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/appbar_titlearea_height"
+                android:layout_marginTop="@dimen/appbar_height"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/appbar_fullheight"
+                android:src="@mipmap/logo_flat"
+                android:id="@+id/appbarImage"
+                android:visibility="invisible"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/accessiblity_appbarimage"
+                app:layout_collapseMode="parallax"/>
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:id="@+id/toolbar"
+                app:layout_collapseMode="pin"><!--app:navigationIcon="@mipmap/logo_flat"-->
+                <!--app:title="@string/toolbar_title"
+                app:subtitle="@string/toolbar_subtitle"-->
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_enrollment"
+        android:tint="@color/icons_light_dynamic"
+        android:tintMode="src_in"
+        android:contentDescription="@string/accessibility_fab_enrollnow"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:onClick="onFabClick"
+        android:pointerIcon="hand"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+</android.support.design.widget.CoordinatorLayout>

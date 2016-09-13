@@ -2,8 +2,12 @@
 <resources>
     <color name="cardview_background_daynight">@color/cardview_dark_background</color>
 
-    <color name="iconsDark">#FFFFFF</color>
-    <color name="iconsDarkDisabled">#4DFFFFFF</color>
+    <color name="iconsDarkDaynight">#FFFFFF</color>
+    <color name="iconsDarkDaynightDisabled">#4DFFFFFF</color>
+    <color name="iconsLightDaynight">#8A000000</color>
+    <color name="iconsLightDaynightDisabled">#42000000</color>
 
     <color name="navigationdrawer_selecteditem">#7986CB</color>
+
+    <color name="dividers">#1FFFFFFF</color>
 </resources>
