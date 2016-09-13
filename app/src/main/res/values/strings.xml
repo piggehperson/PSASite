@@ -23,8 +23,12 @@
     <string name="drawer_resources">Resources</string>
     <string name="drawer_contactus">Contact us</string>
     <string name="drawer_settings">Settings</string>
+
     <string name="menu_refresh">Refresh</string>
     <string name="menu_search">Search</string>
+    <string name="menu_sort">Sort by</string>
+    <string name="menu_sort_name">Alphabetically</string>
+    <string name="menu_sort_category">Subject</string>
 
     <!--Strings used in home fragment layout-->
     <string name="home_ourmission">Our mission</string>
@@ -73,6 +77,12 @@
 
     <!--Strings used for alerts-->
     <!--Dialogs-->
+    <string name="dialog_demo_title">Demo app</string>
+    <string name="dialog_demo_message">
+        This app is a demonstration of design and basic functionality for Peter\'s Palmetto Scholars Academy app. It is not feature complete,
+        and bugs and instability should be expected.
+    </string>
+
     <string name="dialog_action_ok">@android:string/ok</string>
     <string name="dialog_permissiondenied_phone_title">Could not place call</string>
     <string name="dialog_permissiondenied_phone_message">The Phone permission is required to place a call.</string>
