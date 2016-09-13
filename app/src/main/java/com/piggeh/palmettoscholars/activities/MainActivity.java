@@ -590,12 +590,25 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)
-                && !ConfigUtils.isTablet(this)) {
-            Log.d(TAG, "Back pressed, closing nav drawer");
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+        if (!ConfigUtils.isTablet(this)){
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                Log.d(TAG, "Back pressed, closing nav drawer");
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                if (navigationPage == PAGE_SETTINGS){
+                    //back to previous page
+                    Log.d(TAG, "Back pressed, back to previous page");
+                    switchNavigationPage(previousPage);
+                } else if ( navigationPage != PAGE_HOME){
+                    //back to Home page
+                    Log.d(TAG, "Back pressed, back to Home page");
+                    switchNavigationPage(PAGE_HOME);
+                } else{
+                    super.onBackPressed();
+                }
+            }
+        } else{
             if (navigationPage == PAGE_SETTINGS){
                 //back to previous page
                 Log.d(TAG, "Back pressed, back to previous page");
