@@ -19,11 +19,9 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -84,14 +82,14 @@ public class MainActivity extends AppCompatActivity
     private int navigationPage = PAGE_HOME;
     private int previousPage = PAGE_HOME;
     private int appbarState = AppBarStateChangeListener.STATE_IDLE;
-    private boolean isTablet = false;
+    private boolean isLarge = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        isTablet = ConfigUtils.isTablet(this);
+        isLarge = ConfigUtils.isLarge(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (isTablet){
+        if (isLarge){
             //set up tablet layout
             Log.d(TAG, "Settings up tablet layout");
 
@@ -263,7 +261,7 @@ public class MainActivity extends AppCompatActivity
             ActivityManager.TaskDescription description = new ActivityManager.TaskDescription(null, overviewIcon, ContextCompat.getColor(this, R.color.colorPrimary));
             setTaskDescription(description);
             //status bar
-            if (!isTablet){
+            if (!isLarge){
                 Log.d(TAG, "Isn't tablet, setting status bar to transparent");
                 getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
             }
@@ -494,7 +492,7 @@ public class MainActivity extends AppCompatActivity
             case PAGE_SETTINGS:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
                 appbarImage.setVisibility(View.INVISIBLE);
-                if (isTablet){
+                if (isLarge){
                     Log.d(TAG, "Is tablet, not collapsing app bar");
                     appBarLayout.setExpanded(true);
                 } else{
@@ -733,7 +731,7 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                && !ConfigUtils.isTablet(this)){
+                && !ConfigUtils.isLarge(this)){
             getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
         }
     }
@@ -770,7 +768,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        if (!isTablet){
+        if (!isLarge){
             Log.d(TAG, "Isn't tablet, closing drawer");
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -780,7 +778,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (!ConfigUtils.isTablet(this)){
+        if (!ConfigUtils.isLarge(this)){
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 Log.d(TAG, "Back pressed, closing nav drawer");
