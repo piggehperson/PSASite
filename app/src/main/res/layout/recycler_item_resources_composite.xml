@@ -24,7 +24,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="?colorPrimary"/><!--android:textColor="?android:textColorSecondary"-->
+            android:textColor="@color/colorPrimaryDayNight"/><!--android:textColor="?android:textColorSecondary"-->
     </FrameLayout>
 
     <RelativeLayout
