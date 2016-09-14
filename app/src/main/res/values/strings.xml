@@ -57,6 +57,7 @@
     <string name="contact_fax_number">843&#8211;300&#8211;4123</string>
 
     <!--Strings used on Teachers screen-->
+    <string name="no_connection">No connection</string>
     <!--Categories-->
     <!--TODO: Make banner images for each subject-->
     <string name="teachers_category_english">English</string>
