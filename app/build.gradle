@@ -38,3 +38,4 @@ dependencies {
     /*compile 'com.github.kolavar:android-support-v4-preferencefragment:+'*/
     /*compile 'com.takisoft.fix:preference-v7:24.2.0.0'*/
 }
+apply plugin: 'com.google.gms.google-services'
