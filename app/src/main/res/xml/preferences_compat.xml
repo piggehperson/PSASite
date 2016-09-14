@@ -6,7 +6,8 @@
             android:title="@string/preference_notif_announcements_title"
             android:summary="@string/preference_notif_announcements_summary"
             android:key="@string/preference_notif_announcements_key"
-            android:defaultValue="@bool/preference_notif_announcements_default"/>
+            android:defaultValue="@bool/preference_notif_announcements_default"
+            android:enabled="false"/>
 
         <android.support.v7.preference.SwitchPreferenceCompat
             android:title="@string/preference_notif_newsletter_title"
