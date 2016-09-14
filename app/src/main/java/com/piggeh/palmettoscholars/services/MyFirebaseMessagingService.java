@@ -61,40 +61,77 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+
+            if (remoteMessage.getData().get("title").equals("New PSA announcement")){
+                Log.d(TAG, "Message is for an Announcement");
+
+                Intent settingsIntent = new Intent(this, MainActivity.class);
+                settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
+                PendingIntent settingsPendingIntent =
+                        PendingIntent.getActivity(
+                                this,
+                                0,
+                                settingsIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                //notification content intent
+                Intent contentIntent = new Intent(this, MainActivity.class);
+                //settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+                PendingIntent contentPendingIntent =
+                        PendingIntent.getActivity(
+                                this,
+                                1,
+                                contentIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                //notification
+                Notification announcementNotif = PSANotifications.generateAnnouncement(this,
+                        remoteMessage.getData().get("message"),
+                        contentPendingIntent,
+                        settingsPendingIntent);
+                //notification manager
+                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
+                        announcementNotif);
+            }
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
-            Intent settingsIntent = new Intent(this, MainActivity.class);
-            settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
-            PendingIntent settingsPendingIntent =
-                    PendingIntent.getActivity(
-                            this,
-                            0,
-                            settingsIntent,
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                    );
-            //notification content intent
-            Intent contentIntent = new Intent(this, MainActivity.class);
-            //settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
-            PendingIntent contentPendingIntent =
-                    PendingIntent.getActivity(
-                            this,
-                            1,
-                            contentIntent,
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                    );
-            //notification
-            Notification announcementNotif = PSANotifications.generateAnnouncement(this,
-                    remoteMessage.getNotification().getBody(),
-                    contentPendingIntent,
-                    settingsPendingIntent);
-            //notification manager
-            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
-                    announcementNotif);
+            if (remoteMessage.getNotification().getTitle().equals("New PSA announcement")){
+                Log.d(TAG, "Message Notification is for an Announcement");
+
+                Intent settingsIntent = new Intent(this, MainActivity.class);
+                settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
+                PendingIntent settingsPendingIntent =
+                        PendingIntent.getActivity(
+                                this,
+                                0,
+                                settingsIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                //notification content intent
+                Intent contentIntent = new Intent(this, MainActivity.class);
+                //settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+                PendingIntent contentPendingIntent =
+                        PendingIntent.getActivity(
+                                this,
+                                1,
+                                contentIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                //notification
+                Notification announcementNotif = PSANotifications.generateAnnouncement(this,
+                        remoteMessage.getNotification().getBody(),
+                        contentPendingIntent,
+                        settingsPendingIntent);
+                //notification manager
+                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
+                        announcementNotif);
+            }
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
