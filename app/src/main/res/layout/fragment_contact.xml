@@ -27,6 +27,7 @@
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
                 android:tint="@color/icons_dark_daynight_dynamic"
+                android:tintMode="src_in"
                 android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"-->
@@ -75,6 +76,7 @@
                 style="@style/ClickableIconTiny"
                 android:layout_marginEnd="16dp"
                 android:tint="@color/icons_dark_daynight_dynamic"
+                android:tintMode="src_in"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
                 android:clickable="false"/>
@@ -123,6 +125,7 @@
                 style="@style/ClickableIconTiny"
                 android:layout_marginEnd="16dp"
                 android:tint="@color/icons_dark_daynight_dynamic"
+                android:tintMode="src_in"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
                 android:clickable="false"/>
@@ -170,6 +173,7 @@
                 style="@style/ClickableIconTiny"
                 android:layout_marginEnd="16dp"
                 android:tint="@color/icons_dark_daynight_dynamic"
+                android:tintMode="src_in"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
                 android:clickable="false"/>
@@ -209,6 +213,7 @@
                 style="@style/ClickableIconTiny"
                 android:layout_marginEnd="16dp"
                 android:tint="@color/icons_dark_daynight_dynamic"
+                android:tintMode="src_in"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
                 android:clickable="false"/>
