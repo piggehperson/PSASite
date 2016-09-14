@@ -16,6 +16,7 @@
 
 package com.piggeh.palmettoscholars.services;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -29,6 +30,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.MainActivity;
+import com.piggeh.palmettoscholars.utils.PSANotifications;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -64,6 +66,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+
+            Intent settingsIntent = new Intent(this, MainActivity.class);
+            settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
+            PendingIntent settingsPendingIntent =
+                    PendingIntent.getActivity(
+                            this,
+                            0,
+                            settingsIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+            //notification content intent
+            Intent contentIntent = new Intent(this, MainActivity.class);
+            //settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+            PendingIntent contentPendingIntent =
+                    PendingIntent.getActivity(
+                            this,
+                            1,
+                            contentIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+            //notification
+            Notification announcementNotif = PSANotifications.generateAnnouncement(this,
+                    remoteMessage.getNotification().getBody(),
+                    contentPendingIntent,
+                    settingsPendingIntent);
+            //notification manager
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
+                    announcementNotif);
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
