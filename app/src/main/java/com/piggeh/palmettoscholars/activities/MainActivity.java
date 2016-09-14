@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity
     private int previousPage = PAGE_HOME;
     private int appbarState = AppBarStateChangeListener.STATE_IDLE;
     private boolean isLarge = false;
+    private boolean hasTouch = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         isLarge = ConfigUtils.isLarge(this);
+        hasTouch = ConfigUtils.hasTouch(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

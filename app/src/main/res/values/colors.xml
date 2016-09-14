@@ -7,6 +7,7 @@
     <color name="colorAccentLight">#FF5252</color>
     <color name="colorAccentDark">#D50000</color>
     <color name="colorAccentLighter">#FF8A80</color>
+    <color name="colorBackgroundDark">#E0E0E0</color>
 
     <color name="cardview_background_daynight">@color/cardview_light_background</color>
 

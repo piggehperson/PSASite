@@ -7,6 +7,8 @@
     <color name="iconsLightDaynight">#8A000000</color>
     <color name="iconsLightDaynightDisabled">#42000000</color>
 
+    <color name="colorBackgroundDark">#000000</color>
+
     <color name="colorPrimaryDayNight">#7986CB</color>
 
     <color name="dividers">#1FFFFFFF</color>
