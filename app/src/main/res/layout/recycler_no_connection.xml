@@ -10,7 +10,7 @@
         android:id="@+id/imageView_noConnection"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_cloud_off"
-        android:tint="@color/icons_dark_daynight_dynamic"
+        android:tint="?android:textColorSecondary"
         android:layout_marginTop="32dp"
         android:tintMode="src_in"/>
     <TextView
