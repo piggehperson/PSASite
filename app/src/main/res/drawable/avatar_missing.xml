@@ -16,7 +16,7 @@
 
     <path
         android:name="person"
-        android:fillColor="#fafafa"
+        android:fillColor="#aaffffff"
         android:pathData="M12,12
         c2.21,0 4,-1.79 4,-4
         s-1.79,-4 -4,-4 -4,1.79 -4,4 1.79,4 4,4

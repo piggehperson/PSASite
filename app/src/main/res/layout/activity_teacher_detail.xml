@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="email address loaded from index"
+                android:text="email address"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:id="@+id/textView_emailAddress"
                 android:layout_marginStart="72dp"
@@ -127,6 +127,7 @@
                 android:pointerIcon="hand"
                 android:layout_marginStart="72dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:enabled="false"
                 android:layout_below="@id/textView_emailAddress"/>
             <View
                 android:layout_width="match_parent"
@@ -166,7 +167,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="bio loaded from website"
+                android:text="bio"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:id="@+id/textView_bio"
                 android:layout_marginStart="72dp"
@@ -179,7 +180,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/linearLayout_bioHeader"
                 android:id="@+id/progressBar_loadingBio"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <!--<LinearLayout
                 android:layout_width="match_parent"

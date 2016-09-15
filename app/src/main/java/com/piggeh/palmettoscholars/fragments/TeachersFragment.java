@@ -1,31 +1,41 @@
 package com.piggeh.palmettoscholars.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.activities.TeacherDetailActivity;
+import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
 import com.piggeh.palmettoscholars.adapters.TeachersRecyclerAdapter;
-import com.piggeh.palmettoscholars.classes.RecyclerItemDivider;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
+import com.piggeh.palmettoscholars.classes.TeacherData;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by peter on 9/8/2016.
@@ -38,9 +48,9 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBarLoadingTeachers;
-    private TeachersRecyclerAdapter recyclerAdapter;
+    private FirebaseRecyclerAdapter/*TeachersRecyclerAdapter*/ recyclerAdapter;
     private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+    private DatabaseReference teachersDatabaseReference;
 
     public TeachersFragment() {
         // Required empty public constructor
@@ -72,27 +82,140 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
         }*/
 
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("teachers");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        teachersDatabaseReference = database.getReference().child("teachers");
+
+        /*teachersNameQuery.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+
+                // A new comment has been added, add it to the displayed list
+                //Comment comment = dataSnapshot.getValue(Comment.class);
+
+                // ...
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
 
-        recyclerAdapter = new TeachersRecyclerAdapter(getTeachersFromIndex(),
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+                //Comment newComment = dataSnapshot.getValue(Comment.class);
+                String commentKey = dataSnapshot.getKey();
+
+                // ...
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so remove it.
+                String commentKey = dataSnapshot.getKey();
+
+                // ...
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+
+                // A comment has changed position, use the key to determine if we are
+                // displaying this comment and if so move it.
+                //Comment movedComment = dataSnapshot.getValue(Comment.class);
+                String commentKey = dataSnapshot.getKey();
+
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+                Toast.makeText(getContext(), "Failed to load teachers.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        /*teachersDatabaseReference.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user value
+                        //User user = dataSnapshot.getValue(User.class);
+
+                        // ...
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w(TAG, "onCancelled", databaseError.toException());
+                        // ...
+                    }
+                });*/
+
+        recyclerAdapter = new FirebaseRecyclerAdapter<TeacherData, FirebaseTeacherHolder>(TeacherData.class, R.layout.recycler_item_teacher, FirebaseTeacherHolder.class, teachersDatabaseReference) {
+            @Override
+            public void populateViewHolder(FirebaseTeacherHolder teacherHolder, final TeacherData teacherData, int position) {
+                if (progressBarLoadingTeachers.getVisibility() != View.GONE){
+                    progressBarLoadingTeachers.setVisibility(View.GONE);
+                }
+
+                teacherHolder.setName(teacherData.getName());
+                teacherHolder.setSubject(teacherData.getSubject());
+                teacherHolder.getHiddenDataView().setText(teacherData.getIdentifier());
+                //hide divider if necessary
+                if (position == recyclerAdapter.getItemCount() - 1){
+                    teacherHolder.getDivider().setVisibility(View.INVISIBLE);
+                } else{
+                    teacherHolder.getDivider().setVisibility(View.VISIBLE);
+                }
+                teacherHolder.getRootview().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        //teacherData.get
+                        Query queryRef = teachersDatabaseReference.orderByChild("name").equalTo(teacherData.getName());
+                        queryRef.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                                //System.out.println(snapshot.getKey());
+                                //snapshot.getRef().toString()
+                                Intent teacherDetail = new Intent(getContext(), TeacherDetailActivity.class);
+                                //teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
+                                teacherDetail.putExtra(TeacherConstants.KEY_INDEX, snapshot.getRef().toString());
+                                teacherDetail.putExtra("launched_from_shortcut", false);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                                    getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+                                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                                            Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                                            Pair.create(getActivity().findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                                            Pair.create(getActivity().findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                                    );
+                                    startActivity(teacherDetail, options.toBundle());
+                                } else{
+                                    startActivity(teacherDetail);
+                                }
+                            }
+                            @Override
+                            public void onChildRemoved(DataSnapshot snapshot){}
+                            @Override
+                            public void onCancelled(DatabaseError databaseError){
+                                Log.w(TAG, "Cancelled: " + databaseError.toString());
+                            }
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String string){}
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String string){}
+                        });
+                    }
+                });
+            }
+        };
+
+        /*recyclerAdapter = new TeachersRecyclerAdapter(getTeachersFromIndex(),
                 null,
                 getContext(),
-                this);
+                this);*/
     }
 
     @Override
@@ -115,6 +238,50 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
         super.onViewCreated(view, savedInstanceState);
 
     }*/
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        recyclerAdapter.cleanup();
+        /*mAdapter.cleanup();*/
+    }
+
+    public static final String SORT_MODE_NAME = "name";
+    public static final String SORT_MODE_CATEGORY = "category";
+
+    private ArrayList<Bundle> queryTeachers(String sortBy){
+        ArrayList<Bundle> bundles = new ArrayList<>();
+        String[] names;
+        int[] categories;
+        int[] prefixes;
+        String[] emails;
+        String[] subjects;
+        String[] bios;
+
+        if (sortBy.equals(SORT_MODE_NAME)){
+            //sort by name
+            Query teachersNameQuery = teachersDatabaseReference.orderByChild("name");
+
+            /*teachersNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot teacherSnapshot: dataSnapshot.getChildren()) {
+                        // TODO: handle the teacher
+                        Bundle bundle = new Bundle();
+                        bundle.putString("name", teacherSnapshot.get);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
+            });*/
+        }
+        return bundles;
+    }
 
     private ArrayList<Bundle> getTeachersFromIndex(){
         String[] names = getResources().getStringArray(R.array.teacher_index_names);
@@ -166,12 +333,6 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     public void onRecyclerItemClick(View view, int position, String teacherName){
         mListener.onTeacherClick(view, position);
     }
-
-    /*@Override
-    public void onStart(){
-        super.onStart();
-
-    }*/
 
     @Override
     public void onAttach(Context context) {

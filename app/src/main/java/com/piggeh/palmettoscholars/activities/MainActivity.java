@@ -638,7 +638,7 @@ public class MainActivity extends AppCompatActivity
         teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
         teacherDetail.putExtra("launched_from_shortcut", false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                     Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
                     Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
