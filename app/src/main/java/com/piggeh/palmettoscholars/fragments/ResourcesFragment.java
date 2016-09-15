@@ -66,6 +66,7 @@ public class ResourcesFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_teachers, container, false);
 
         progressBarLoadingResources = (ProgressBar) root.findViewById(R.id.progressBar_loadingTeachers);
+        progressBarLoadingResources.setVisibility(View.GONE);
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView_teachers);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
