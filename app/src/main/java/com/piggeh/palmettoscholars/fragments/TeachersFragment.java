@@ -23,6 +23,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -37,9 +38,6 @@ import com.piggeh.palmettoscholars.classes.TeacherData;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-/**
- * Created by peter on 9/8/2016.
- */
 public class TeachersFragment extends Fragment
 implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     private static final String TAG = "TeachersFragment";
@@ -80,79 +78,14 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
             *//*mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);*//*
         }*/
-
+        try{
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        } catch (DatabaseException e){
+            e.printStackTrace();
+        }
         database = FirebaseDatabase.getInstance();
+
         teachersDatabaseReference = database.getReference().child("teachers");
-
-        /*teachersNameQuery.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-
-                // A new comment has been added, add it to the displayed list
-                //Comment comment = dataSnapshot.getValue(Comment.class);
-
-                // ...
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                //Comment newComment = dataSnapshot.getValue(Comment.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                //Comment movedComment = dataSnapshot.getValue(Comment.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-                Toast.makeText(getContext(), "Failed to load teachers.",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });*/
-        /*teachersDatabaseReference.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get user value
-                        //User user = dataSnapshot.getValue(User.class);
-
-                        // ...
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w(TAG, "onCancelled", databaseError.toException());
-                        // ...
-                    }
-                });*/
 
         recyclerAdapter = new FirebaseRecyclerAdapter<TeacherData, FirebaseTeacherHolder>(TeacherData.class, R.layout.recycler_item_teacher, FirebaseTeacherHolder.class, teachersDatabaseReference) {
             @Override
