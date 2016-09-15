@@ -10,7 +10,7 @@ import com.piggeh.palmettoscholars.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public /*static*/ class FirebaseTeacherHolder extends RecyclerView.ViewHolder {
+public class FirebaseTeacherHolder extends RecyclerView.ViewHolder {
     View mView;
     //Context mContext;
 

@@ -10,14 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.adapters.ResourcesRecyclerAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by peter on 9/13/2016.
- */
 public class ResourcesFragment extends Fragment
         implements ResourcesRecyclerAdapter.RecyclerItemClickListener {
     private static final String TAG = "ContactFragment";
@@ -26,7 +26,10 @@ public class ResourcesFragment extends Fragment
 
     private RecyclerView recyclerView;
     private ProgressBar progressBarLoadingResources;
-    private ResourcesRecyclerAdapter recyclerAdapter;
+    //private ResourcesRecyclerAdapter recyclerAdapter;
+    private FirebaseRecyclerAdapter/*TeachersRecyclerAdapter*/ recyclerAdapter;
+    private FirebaseDatabase database;
+    private DatabaseReference resourcesDatabaseReference;
 
     public ResourcesFragment() {
         // Required empty public constructor
@@ -52,12 +55,12 @@ public class ResourcesFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            *//*mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);*//*
-        }*/
-        recyclerAdapter = new ResourcesRecyclerAdapter(getActivity(), getResourcesFromIndex(),
-                this);
+        /*recyclerAdapter = new ResourcesRecyclerAdapter(getActivity(), getResourcesFromIndex(),
+                this);*/
+
+        database = FirebaseDatabase.getInstance();
+
+        resourcesDatabaseReference = database.getReference().child("resources");
     }
 
     @Override
@@ -66,7 +69,7 @@ public class ResourcesFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_teachers, container, false);
 
         progressBarLoadingResources = (ProgressBar) root.findViewById(R.id.progressBar_loadingTeachers);
-        progressBarLoadingResources.setVisibility(View.GONE);
+        //progressBarLoadingResources.setVisibility(View.GONE);
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView_teachers);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

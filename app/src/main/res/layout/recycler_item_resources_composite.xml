@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:text="Subtitle"
+            android:text="Url"
             android:textColor="?android:textColorSecondary"
             android:id="@+id/resourceSubtitle"
             android:layout_alignParentBottom="true"
@@ -71,7 +71,7 @@
             android:layout_height="1dp"
             android:background="@color/dividers"
             android:id="@+id/divider"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
