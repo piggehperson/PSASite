@@ -61,7 +61,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private int teacherCategory;
     private String teacherEmail;
     private Bundle teacherDataBundle;
-    private int teacherAvatarId;
+    private String teacherAvatarUrl;
     private String bio;
 
     @Override
@@ -117,6 +117,13 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         bio = (String) dataSnapshot.getValue();
                         bioView.setText(bio);
                         bioProgressBar.setVisibility(View.GONE);
+                        break;
+                    case "avatar":
+                        teacherAvatarUrl = (String) dataSnapshot.getValue();
+                        if (!teacherAvatarUrl.equals("none")){
+                            avatarImage.setImageURI(Uri.parse(teacherAvatarUrl));
+                        }
+                        break;
                 }
             }
 
