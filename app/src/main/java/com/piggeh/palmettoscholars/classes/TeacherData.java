@@ -8,6 +8,7 @@ public class TeacherData {
     private String email;
     private String bio;
     private String identifier;
+    private String avatar;
 
     public TeacherData(){}
 
@@ -31,4 +32,7 @@ public class TeacherData {
 
     public void setIdentifier(String identifier){this.identifier = identifier;}
     public String getIdentifier(){return identifier;}
+
+    public void setAvatar(String avatar){this.avatar = avatar;}
+    public String getAvatar(){return avatar;}
 }

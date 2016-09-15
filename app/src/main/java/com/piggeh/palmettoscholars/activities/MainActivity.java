@@ -98,17 +98,9 @@ public class MainActivity extends AppCompatActivity
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        /*fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "FAB clicked, doing nothing for now");
-                Toast.makeText(getApplicationContext(), "Enroll now", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-        /*if (navigationPage == PAGE_SETTINGS){
-            fab.hide();
-        }*/
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            fab.bringToFront();
+        }
 
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         appbarImage = (ImageView) findViewById(R.id.appbarImage);
