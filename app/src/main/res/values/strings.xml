@@ -81,6 +81,7 @@
     <string name="firebase_loading">Loading&#8230;</string>
     <string name="firebase_error_loading_generic">Couldn\'t load data</string>
     <string name="firebase_error_loading_teachers">Couldn\'t load teacher list</string>
+    <string name="firebase_error_loading_teacher_data">Couldn\'t load teacher data</string>
     <string name="firebase_error_loading_resources">Couldn\'t load resources list</string>
 
     <!--Strings used for alerts-->

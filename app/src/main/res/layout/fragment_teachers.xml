@@ -21,4 +21,32 @@
         android:id="@+id/progressBar_loadingTeachers"
         android:layout_centerHorizontal="true"
         android:visibility="visible"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@color/colorBackgroundDark"
+        android:id="@+id/relativeLayout_error_loading"
+        android:visibility="gone">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:id="@+id/imageView_noConnection"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_cloud_off"
+            android:tint="?android:textColorSecondary"
+            android:layout_marginTop="32dp"
+            android:tintMode="src_in"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_noConnection"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageView_noConnection"
+            android:text="@string/firebase_error_loading_teachers"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAlignment="center"
+            android:textStyle="bold"/><!--android:textSize="18sp"-->
+    </RelativeLayout>
 </RelativeLayout>

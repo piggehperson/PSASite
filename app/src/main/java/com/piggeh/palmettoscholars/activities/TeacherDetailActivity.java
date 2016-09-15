@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private TextView bioView;
     private ProgressBar bioProgressBar;
     private Button emailButton;
+    private RelativeLayout connectionErrorLayout;
+    private RelativeLayout teacherDataLayout;
     //vars
     private boolean launchedFromShortcut = false;
 
@@ -81,6 +84,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
         bioView = (TextView) findViewById(R.id.textView_bio);
         bioProgressBar = (ProgressBar) findViewById(R.id.progressBar_loadingBio);
         emailButton = (Button) findViewById(R.id.button_contact_email);
+        connectionErrorLayout = (RelativeLayout) findViewById(R.id.relativeLayout_error_loading);
+        teacherDataLayout = (RelativeLayout) findViewById(R.id.relativeLayout_teacherInfo);
 
         //get data from Intent
         launchedFromShortcut = getIntent().getBooleanExtra("launched_from_shortcut", false);
@@ -132,7 +137,9 @@ public class TeacherDetailActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                Log.d(TAG, "onCancelled: " + firebaseError.toString());
+                teacherDataLayout.setVisibility(View.GONE);
+                connectionErrorLayout.setVisibility(View.VISIBLE);
             }
         });
 
