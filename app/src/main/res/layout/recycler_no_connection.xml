@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="160dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackgroundDark">
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:id="@+id/imageView_noConnection"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_cloud_off"
+        app:srcCompat="@drawable/ic_cloud_off"
         android:tint="?android:textColorSecondary"
         android:layout_marginTop="32dp"
         android:tintMode="src_in"/>

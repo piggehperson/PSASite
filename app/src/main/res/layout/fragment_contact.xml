@@ -19,14 +19,14 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:id="@+id/relativeLayout_phoneHeader">
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_call"
+                app:srcCompat="@drawable/ic_call"
                 style="@style/ClickableIconTiny"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
-                android:tint="@color/icons_dark_daynight_dynamic"
+                android:tint="@color/iconsDarkDaynight"
                 android:tintMode="src_in"
                 android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
@@ -69,13 +69,13 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:id="@+id/relativeLayout_emailHeader">
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_email"
+                app:srcCompat="@drawable/ic_email"
                 style="@style/ClickableIconTiny"
                 android:layout_marginEnd="16dp"
-                android:tint="@color/icons_dark_daynight_dynamic"
+                android:tint="@color/iconsDarkDaynight"
                 android:tintMode="src_in"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
@@ -118,13 +118,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout_locationHeader">
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_location"
+                app:srcCompat="@drawable/ic_location"
                 style="@style/ClickableIconTiny"
                 android:layout_marginEnd="16dp"
-                android:tint="@color/icons_dark_daynight_dynamic"
+                android:tint="@color/iconsDarkDaynight"
                 android:tintMode="src_in"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
@@ -166,13 +166,13 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:id="@+id/linearLayout_faxHeader">
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_printer"
+                app:srcCompat="@drawable/ic_printer"
                 style="@style/ClickableIconTiny"
                 android:layout_marginEnd="16dp"
-                android:tint="@color/icons_dark_daynight_dynamic"
+                android:tint="@color/iconsDarkDaynight"
                 android:tintMode="src_in"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
@@ -206,13 +206,13 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:id="@+id/linearLayout_twitterHeader">
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_twitter"
+                app:srcCompat="@drawable/ic_twitter"
                 style="@style/ClickableIconTiny"
                 android:layout_marginEnd="16dp"
-                android:tint="@color/icons_dark_daynight_dynamic"
+                android:tint="@color/iconsDarkDaynight"
                 android:tintMode="src_in"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"

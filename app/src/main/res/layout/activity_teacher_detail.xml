@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_email"
-        android:tint="@color/icons_light_dynamic"
+        android:tint="@color/iconsLight"
         android:tintMode="src_in"
         android:contentDescription="@string/accessibility_fab_email"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -86,15 +86,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:id="@+id/linearLayout_emailHeader">
-                <ImageView
+                <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_email"
                     style="@style/ClickableIconTiny"
                     android:layout_margin="16dp"
                     android:layout_centerVertical="true"
-                    android:tint="@color/icons_dark_daynight_dynamic"
+                    android:tint="@color/iconsDarkDaynight"
                     android:tintMode="src_in"
+                    app:srcCompat="@drawable/ic_email"
                     android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"-->
@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="email address"
+                android:text="@string/firebase_loading"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:id="@+id/textView_emailAddress"
                 android:layout_marginStart="72dp"
@@ -142,14 +142,14 @@
                 android:layout_height="56dp"
                 android:id="@+id/linearLayout_bioHeader"
                 android:layout_below="@id/divider">
-                <ImageView
+                <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_person"
+                    app:srcCompat="@drawable/ic_person"
                     style="@style/ClickableIconTiny"
                     android:layout_margin="16dp"
                     android:layout_centerVertical="true"
-                    android:tint="@color/icons_dark_daynight_dynamic"
+                    android:tint="@color/iconsDarkDaynight"
                     android:tintMode="src_in"
                     android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
@@ -167,7 +167,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="bio"
+                android:text="@string/firebase_loading"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:id="@+id/textView_bio"
                 android:layout_marginStart="72dp"
