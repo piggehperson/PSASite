@@ -95,37 +95,32 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                 }
 
                 //name
-                switch (teacherData.getPrefix()){
-                    case TeacherConstants.PREFIX_MS:
-                        teacherHolder.setName(String.format(
-                                getContext().getString(R.string.teachers_prefix_ms),
-                                teacherData.getName()
-                        ));
-                        break;
-                    case TeacherConstants.PREFIX_MRS:
-                        teacherHolder.setName(String.format(
-                                getContext().getString(R.string.teachers_prefix_mrs),
-                                teacherData.getName()
-                        ));
-                        break;
-                    case TeacherConstants.PREFIX_MR:
-                        teacherHolder.setName(String.format(
-                                getContext().getString(R.string.teachers_prefix_mr),
-                                teacherData.getName()
-                        ));
-                        break;
-                    case TeacherConstants.PREFIX_DR:
-                        teacherHolder.setName(String.format(
-                                getContext().getString(R.string.teachers_prefix_dr),
-                                teacherData.getName()
-                        ));
-                        break;
+                if (teacherData.getPrefix() == TeacherConstants.PREFIX_MS){
+                    teacherHolder.setName(String.format(
+                            getContext().getString(R.string.teachers_prefix_ms),
+                            teacherData.getName()
+                    ));
+                } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_MRS){
+                    teacherHolder.setName(String.format(
+                            getContext().getString(R.string.teachers_prefix_mrs),
+                            teacherData.getName()
+                    ));
+                } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_MR){
+                    teacherHolder.setName(String.format(
+                            getContext().getString(R.string.teachers_prefix_mr),
+                            teacherData.getName()
+                    ));
+                } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_DR){
+                    teacherHolder.setName(String.format(
+                            getContext().getString(R.string.teachers_prefix_dr),
+                            teacherData.getName()
+                    ));
+                } else{
+                    teacherHolder.setName(teacherData.getName());
                 }
 
-                //teacherHolder.setName(teacherData.getPrefix() + teacherData.getName());
-                //teacherHolder.setName(teacherData.getName());
                 teacherHolder.setSubject(teacherData.getSubject());
-                teacherHolder.getHiddenDataView().setText(teacherData.getIdentifier());
+                //teacherHolder.getHiddenDataView().setText(teacherData.getIdentifier());
                 //hide divider if necessary
                 if (position == recyclerAdapter.getItemCount() - 1){
                     teacherHolder.getDivider().setVisibility(View.INVISIBLE);

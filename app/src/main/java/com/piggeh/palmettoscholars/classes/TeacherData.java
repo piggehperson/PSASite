@@ -3,8 +3,8 @@ package com.piggeh.palmettoscholars.classes;
 public class TeacherData {
     private String name;
     private String subject;
-    private int category;
-    private int prefix;
+    private long category;
+    private long prefix;
     private String email;
     private String bio;
     private String identifier;
@@ -18,11 +18,11 @@ public class TeacherData {
     public void setSubject(String subject){this.subject = subject;}
     public String getSubject(){return subject;}
 
-    public void setCategory(int category){this.category = category;}
-    public int getCategory(){return category;}
+    public void setCategory(long category){this.category = category;}
+    public long getCategory(){return category;}
 
-    public void setPrefix(int prefix){this.prefix = prefix;}
-    public int getPrefix(){return prefix;}
+    public void setPrefix(long prefix){this.prefix = prefix;}
+    public long getPrefix(){return prefix;}
 
     public void setEmail(String email){this.email = email;}
     public String getEmail(){return email;}

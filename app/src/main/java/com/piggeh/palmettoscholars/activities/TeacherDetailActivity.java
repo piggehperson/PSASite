@@ -119,10 +119,10 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         bioProgressBar.setVisibility(View.GONE);
                         break;
                     case "avatar":
-                        teacherAvatarUrl = (String) dataSnapshot.getValue();
+                        /*teacherAvatarUrl = (String) dataSnapshot.getValue();
                         if (!teacherAvatarUrl.equals("none")){
                             avatarImage.setImageURI(Uri.parse(teacherAvatarUrl));
-                        }
+                        }*/
                         break;
                 }
             }
