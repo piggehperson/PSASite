@@ -161,7 +161,36 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                     progressBarLoadingTeachers.setVisibility(View.GONE);
                 }
 
-                teacherHolder.setName(teacherData.getName());
+                //name
+                switch (teacherData.getPrefix()){
+                    case TeacherConstants.PREFIX_MS:
+                        teacherHolder.setName(String.format(
+                                getContext().getString(R.string.teachers_prefix_ms),
+                                teacherData.getName()
+                        ));
+                        break;
+                    case TeacherConstants.PREFIX_MRS:
+                        teacherHolder.setName(String.format(
+                                getContext().getString(R.string.teachers_prefix_mrs),
+                                teacherData.getName()
+                        ));
+                        break;
+                    case TeacherConstants.PREFIX_MR:
+                        teacherHolder.setName(String.format(
+                                getContext().getString(R.string.teachers_prefix_mr),
+                                teacherData.getName()
+                        ));
+                        break;
+                    case TeacherConstants.PREFIX_DR:
+                        teacherHolder.setName(String.format(
+                                getContext().getString(R.string.teachers_prefix_dr),
+                                teacherData.getName()
+                        ));
+                        break;
+                }
+
+                //teacherHolder.setName(teacherData.getPrefix() + teacherData.getName());
+                //teacherHolder.setName(teacherData.getName());
                 teacherHolder.setSubject(teacherData.getSubject());
                 teacherHolder.getHiddenDataView().setText(teacherData.getIdentifier());
                 //hide divider if necessary

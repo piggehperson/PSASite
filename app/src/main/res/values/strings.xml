@@ -57,7 +57,6 @@
     <string name="contact_fax_number">843&#8211;300&#8211;4123</string>
 
     <!--Strings used on Teachers screen-->
-    <string name="no_connection">No connection</string>
     <!--Categories-->
     <!--TODO: Make banner images for each subject-->
     <string name="teachers_category_english">English</string>
@@ -73,12 +72,13 @@
     <string name="teachers_prefix_dr">Dr. %s</string>
     
     <!--Strings used on Teacher Details screen-->
-    <string name="teacherdetail_title">Teacher info</string>
+    <string name="teacherdetail_title">Teacher</string>
     <string name="teacherdetail_room_label">Room number</string>
     <string name="teacherdetail_bio_label">About me</string>
 
     <!--Strings for Firebase-related stuff-->
     <string name="firebase_loading">Loading&#8230;</string>
+    <string name="no_connection">No connection</string>
     <string name="firebase_error_loading_generic">Couldn\'t load data</string>
     <string name="firebase_error_loading_teachers">Couldn\'t load teacher list</string>
     <string name="firebase_error_loading_teacher_data">Couldn\'t load teacher data</string>
