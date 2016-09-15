@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.os.ParcelableCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,6 +51,8 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     private FirebaseRecyclerAdapter/*TeachersRecyclerAdapter*/ recyclerAdapter;
     private FirebaseDatabase database;
     private DatabaseReference teachersDatabaseReference;
+    private LinearLayoutManager layoutManager;
+    private Parcelable mListState;
 
     public TeachersFragment() {
         // Required empty public constructor
@@ -74,6 +78,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         /*try{
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         } catch (DatabaseException e){
@@ -83,87 +88,89 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
 
         teachersDatabaseReference = database.getReference().child("teachers");
 
-        recyclerAdapter = new FirebaseRecyclerAdapter<TeacherData, FirebaseTeacherHolder>(TeacherData.class, R.layout.recycler_item_teacher, FirebaseTeacherHolder.class, teachersDatabaseReference) {
-            @Override
-            public void populateViewHolder(FirebaseTeacherHolder teacherHolder, final TeacherData teacherData, int position) {
-                if (progressBarLoadingTeachers.getVisibility() != View.GONE){
-                    progressBarLoadingTeachers.setVisibility(View.GONE);
-                }
-
-                //name
-                if (teacherData.getPrefix() == TeacherConstants.PREFIX_MS){
-                    teacherHolder.setName(String.format(
-                            getContext().getString(R.string.teachers_prefix_ms),
-                            teacherData.getName()
-                    ));
-                } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_MRS){
-                    teacherHolder.setName(String.format(
-                            getContext().getString(R.string.teachers_prefix_mrs),
-                            teacherData.getName()
-                    ));
-                } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_MR){
-                    teacherHolder.setName(String.format(
-                            getContext().getString(R.string.teachers_prefix_mr),
-                            teacherData.getName()
-                    ));
-                } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_DR){
-                    teacherHolder.setName(String.format(
-                            getContext().getString(R.string.teachers_prefix_dr),
-                            teacherData.getName()
-                    ));
-                } else{
-                    teacherHolder.setName(teacherData.getName());
-                }
-
-                teacherHolder.setSubject(teacherData.getSubject());
-                //teacherHolder.getHiddenDataView().setText(teacherData.getIdentifier());
-                //hide divider if necessary
-                if (position == recyclerAdapter.getItemCount() - 1){
-                    teacherHolder.getDivider().setVisibility(View.INVISIBLE);
-                } else{
-                    teacherHolder.getDivider().setVisibility(View.VISIBLE);
-                }
-                teacherHolder.getRootview().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View view) {
-                        //teacherData.get
-                        Query queryRef = teachersDatabaseReference.orderByChild("name").equalTo(teacherData.getName());
-                        queryRef.addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                                //System.out.println(snapshot.getKey());
-                                //snapshot.getRef().toString()
-                                Intent teacherDetail = new Intent(getContext(), TeacherDetailActivity.class);
-                                //teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
-                                teacherDetail.putExtra(TeacherConstants.KEY_INDEX, snapshot.getRef().toString());
-                                teacherDetail.putExtra("launched_from_shortcut", false);
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                                    getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-                                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                                            Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
-                                            Pair.create(getActivity().findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
-                                            Pair.create(getActivity().findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
-                                    );
-                                    startActivity(teacherDetail, options.toBundle());
-                                } else{
-                                    startActivity(teacherDetail);
-                                }
-                            }
-                            @Override
-                            public void onChildRemoved(DataSnapshot snapshot){}
-                            @Override
-                            public void onCancelled(DatabaseError databaseError){
-                                Log.w(TAG, "Cancelled: " + databaseError.toString());
-                            }
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String string){}
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String string){}
-                        });
+        if (savedInstanceState == null){
+            recyclerAdapter = new FirebaseRecyclerAdapter<TeacherData, FirebaseTeacherHolder>(TeacherData.class, R.layout.recycler_item_teacher, FirebaseTeacherHolder.class, teachersDatabaseReference) {
+                @Override
+                public void populateViewHolder(FirebaseTeacherHolder teacherHolder, final TeacherData teacherData, int position) {
+                    if (progressBarLoadingTeachers.getVisibility() != View.GONE){
+                        progressBarLoadingTeachers.setVisibility(View.GONE);
                     }
-                });
-            }
-        };
+
+                    //name
+                    if (teacherData.getPrefix() == TeacherConstants.PREFIX_MS){
+                        teacherHolder.setName(String.format(
+                                getContext().getString(R.string.teachers_prefix_ms),
+                                teacherData.getName()
+                        ));
+                    } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_MRS){
+                        teacherHolder.setName(String.format(
+                                getContext().getString(R.string.teachers_prefix_mrs),
+                                teacherData.getName()
+                        ));
+                    } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_MR){
+                        teacherHolder.setName(String.format(
+                                getContext().getString(R.string.teachers_prefix_mr),
+                                teacherData.getName()
+                        ));
+                    } else if (teacherData.getPrefix() == TeacherConstants.PREFIX_DR){
+                        teacherHolder.setName(String.format(
+                                getContext().getString(R.string.teachers_prefix_dr),
+                                teacherData.getName()
+                        ));
+                    } else{
+                        teacherHolder.setName(teacherData.getName());
+                    }
+
+                    teacherHolder.setSubject(teacherData.getSubject());
+                    //teacherHolder.getHiddenDataView().setText(teacherData.getIdentifier());
+                    //hide divider if necessary
+                    if (position == recyclerAdapter.getItemCount() - 1){
+                        teacherHolder.getDivider().setVisibility(View.INVISIBLE);
+                    } else{
+                        teacherHolder.getDivider().setVisibility(View.VISIBLE);
+                    }
+                    teacherHolder.getRootview().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(final View view) {
+                            //teacherData.get
+                            Query queryRef = teachersDatabaseReference.orderByChild("name").equalTo(teacherData.getName());
+                            queryRef.addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                                    //System.out.println(snapshot.getKey());
+                                    //snapshot.getRef().toString()
+                                    Intent teacherDetail = new Intent(getContext(), TeacherDetailActivity.class);
+                                    //teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
+                                    teacherDetail.putExtra(TeacherConstants.KEY_INDEX, snapshot.getRef().toString());
+                                    teacherDetail.putExtra("launched_from_shortcut", false);
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                                        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+                                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                                                Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                                                Pair.create(getActivity().findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                                                Pair.create(getActivity().findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                                        );
+                                        startActivity(teacherDetail, options.toBundle());
+                                    } else{
+                                        startActivity(teacherDetail);
+                                    }
+                                }
+                                @Override
+                                public void onChildRemoved(DataSnapshot snapshot){}
+                                @Override
+                                public void onCancelled(DatabaseError databaseError){
+                                    Log.w(TAG, "Cancelled: " + databaseError.toString());
+                                }
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String string){}
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String string){}
+                            });
+                        }
+                    });
+                }
+            };
+        }
 
         /*recyclerAdapter = new TeachersRecyclerAdapter(getTeachersFromIndex(),
                 null,
@@ -178,20 +185,33 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
 
         progressBarLoadingTeachers = (ProgressBar) root.findViewById(R.id.progressBar_loadingTeachers);
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView_teachers);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        /*layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setAdapter(recyclerAdapter);*/
         recyclerView.setHasFixedSize(true);
         //recyclerView.addItemDecoration(new RecyclerItemDivider(getContext()));
         // Inflate the layout for this fragment
         return root;
     }
 
-    /*@Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        mListState = layoutManager.onSaveInstanceState();
+        outState.putParcelable("list_state", mListState);
+        super.onSaveInstanceState(outState);
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
 
-    }*/
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(recyclerAdapter);
+
+        if (mListState != null){
+            layoutManager.onRestoreInstanceState(savedInstanceState.getParcelable("list_state"));
+        }
+    }
 
     @Override
     public void onDestroy() {
