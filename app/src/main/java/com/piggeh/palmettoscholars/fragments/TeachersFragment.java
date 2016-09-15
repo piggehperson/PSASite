@@ -74,15 +74,11 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            *//*mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);*//*
-        }*/
-        try{
+        /*try{
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         } catch (DatabaseException e){
             e.printStackTrace();
-        }
+        }*/
         database = FirebaseDatabase.getInstance();
 
         teachersDatabaseReference = database.getReference().child("teachers");
@@ -185,6 +181,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setHasFixedSize(true);
         //recyclerView.addItemDecoration(new RecyclerItemDivider(getContext()));
         // Inflate the layout for this fragment
         return root;

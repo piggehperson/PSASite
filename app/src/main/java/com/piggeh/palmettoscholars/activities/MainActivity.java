@@ -38,6 +38,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.FirebaseDatabase;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.classes.ConfigUtils;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
@@ -246,6 +248,12 @@ public class MainActivity extends AppCompatActivity
             demoApp.setMessage(R.string.dialog_demo_message);
             demoApp.setPositiveButton(R.string.dialog_action_ok, null);
             demoApp.show();
+        }
+
+        try{
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        } catch (DatabaseException e){
+            e.printStackTrace();
         }
 
         //set up Overview screen on Lollipop+

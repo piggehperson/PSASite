@@ -1,20 +1,38 @@
 package com.piggeh.palmettoscholars.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.activities.MainActivity;
+import com.piggeh.palmettoscholars.activities.TeacherDetailActivity;
+import com.piggeh.palmettoscholars.adapters.FirebaseResourceHolder;
+import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
 import com.piggeh.palmettoscholars.adapters.ResourcesRecyclerAdapter;
+import com.piggeh.palmettoscholars.classes.ResourceData;
+import com.piggeh.palmettoscholars.classes.TeacherConstants;
+import com.piggeh.palmettoscholars.classes.TeacherData;
 
 import java.util.ArrayList;
 
@@ -61,6 +79,44 @@ public class ResourcesFragment extends Fragment
         database = FirebaseDatabase.getInstance();
 
         resourcesDatabaseReference = database.getReference().child("resources");
+
+        recyclerAdapter = new FirebaseRecyclerAdapter<ResourceData, FirebaseResourceHolder>(ResourceData.class, R.layout.recycler_item_resources_composite, FirebaseResourceHolder.class, resourcesDatabaseReference) {
+            @Override
+            public void populateViewHolder(FirebaseResourceHolder resourceHolder, final ResourceData resourceData, int position) {
+                if (progressBarLoadingResources.getVisibility() != View.GONE){
+                    progressBarLoadingResources.setVisibility(View.GONE);
+                }
+
+                //name
+                if (resourceData.getUrl() != null){
+                    //is resource
+                    resourceHolder.getDivider().setVisibility(View.GONE);
+                    resourceHolder.getSubheaderView().setVisibility(View.GONE);
+                    resourceHolder.getItemView().setVisibility(View.VISIBLE);
+
+                    resourceHolder.setTitle(resourceData.getTitle());
+                    resourceHolder.setUrl(resourceData.getUrl());
+
+                    resourceHolder.getItemView().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            MainActivity.openWebUrl(getActivity(), resourceData.getUrl());
+                        }
+                    });
+                } else{
+                    //is subheader
+                    if (position > 0){
+                        resourceHolder.getDivider().setVisibility(View.VISIBLE);
+                    } else{
+                        resourceHolder.getDivider().setVisibility(View.GONE);
+                    }
+                    resourceHolder.getSubheaderView().setVisibility(View.VISIBLE);
+                    resourceHolder.getItemView().setVisibility(View.GONE);
+
+                    resourceHolder.setSubheader(resourceData.getTitle());
+                }
+            }
+        };
     }
 
     @Override
@@ -74,6 +130,7 @@ public class ResourcesFragment extends Fragment
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setHasFixedSize(true);
         //recyclerView.addItemDecoration(new RecyclerItemDivider(getContext()));
         // Inflate the layout for this fragment
         return root;

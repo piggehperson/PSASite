@@ -21,12 +21,12 @@ public class FirebaseResourceHolder extends RecyclerView.ViewHolder {
     }
 
     public void setTitle(String title) {
-        TextView field = (TextView) mView.findViewById(R.id.teacherName);
+        TextView field = (TextView) mView.findViewById(R.id.resourceTitle);
         field.setText(title);
     }
 
     public void setUrl(String url) {
-        TextView field = (TextView) mView.findViewById(R.id.teacherCategory);
+        TextView field = (TextView) mView.findViewById(R.id.resourceSubtitle);
         field.setText(url);
     }
 

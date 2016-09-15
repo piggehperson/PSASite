@@ -5,13 +5,19 @@
     android:id="@+id/linearLayout_resources_root"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividers"
+        android:id="@+id/divider"
+        android:visibility="visible" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_subheader_height"
         android:orientation="vertical"
         android:id="@+id/frameLayout_resource_subheader"
-        android:paddingTop="@dimen/list_item_padding_sides"
-        android:paddingBottom="@dimen/list_item_padding_sides"
+
         android:paddingStart="@dimen/list_item_padding_sides"
         android:paddingEnd="@dimen/list_item_padding_sides"
         android:visibility="visible">
@@ -24,6 +30,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:layout_gravity="center"
             android:textColor="@color/colorPrimaryDayNight"/><!--android:textColor="?android:textColorSecondary"-->
     </FrameLayout>
 
@@ -66,13 +73,7 @@
             android:textSize="@dimen/list_2line_subtitle_textsize"
             android:ellipsize="end"/><!--android:textSize="14sp"-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/dividers"
-            android:id="@+id/divider"
-            android:visibility="visible"
-            android:layout_alignParentBottom="true"/>
+
 
     </RelativeLayout>
 
