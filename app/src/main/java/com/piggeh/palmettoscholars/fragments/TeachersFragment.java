@@ -197,7 +197,6 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     public void onDestroy() {
         super.onDestroy();
         recyclerAdapter.cleanup();
-        /*mAdapter.cleanup();*/
     }
 
     public static final String SORT_MODE_NAME = "name";

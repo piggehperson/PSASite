@@ -136,11 +136,11 @@ public class ResourcesFragment extends Fragment
         return root;
     }
 
-    /*@Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-
-    }*/
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        recyclerAdapter.cleanup();
+    }
 
     private ArrayList<Bundle> getResourcesFromIndex(){
         int[] types = getResources().getIntArray(R.array.resource_index_types);
