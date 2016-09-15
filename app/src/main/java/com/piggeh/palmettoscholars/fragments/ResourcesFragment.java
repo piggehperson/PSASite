@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -48,6 +49,8 @@ public class ResourcesFragment extends Fragment
     private FirebaseRecyclerAdapter/*TeachersRecyclerAdapter*/ recyclerAdapter;
     private FirebaseDatabase database;
     private DatabaseReference resourcesDatabaseReference;
+    private LinearLayoutManager layoutManager;
+    private Parcelable mListState;
 
     public ResourcesFragment() {
         // Required empty public constructor
@@ -73,6 +76,8 @@ public class ResourcesFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+
         /*recyclerAdapter = new ResourcesRecyclerAdapter(getActivity(), getResourcesFromIndex(),
                 this);*/
 
@@ -80,43 +85,45 @@ public class ResourcesFragment extends Fragment
 
         resourcesDatabaseReference = database.getReference().child("resources");
 
-        recyclerAdapter = new FirebaseRecyclerAdapter<ResourceData, FirebaseResourceHolder>(ResourceData.class, R.layout.recycler_item_resources_composite, FirebaseResourceHolder.class, resourcesDatabaseReference) {
-            @Override
-            public void populateViewHolder(FirebaseResourceHolder resourceHolder, final ResourceData resourceData, int position) {
-                if (progressBarLoadingResources.getVisibility() != View.GONE){
-                    progressBarLoadingResources.setVisibility(View.GONE);
-                }
-
-                //name
-                if (resourceData.getUrl() != null){
-                    //is resource
-                    resourceHolder.getDivider().setVisibility(View.GONE);
-                    resourceHolder.getSubheaderView().setVisibility(View.GONE);
-                    resourceHolder.getItemView().setVisibility(View.VISIBLE);
-
-                    resourceHolder.setTitle(resourceData.getTitle());
-                    resourceHolder.setUrl(resourceData.getUrl());
-
-                    resourceHolder.getItemView().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            MainActivity.openWebUrl(getActivity(), resourceData.getUrl());
-                        }
-                    });
-                } else{
-                    //is subheader
-                    if (position > 0){
-                        resourceHolder.getDivider().setVisibility(View.VISIBLE);
-                    } else{
-                        resourceHolder.getDivider().setVisibility(View.GONE);
+        if (savedInstanceState == null){
+            recyclerAdapter = new FirebaseRecyclerAdapter<ResourceData, FirebaseResourceHolder>(ResourceData.class, R.layout.recycler_item_resources_composite, FirebaseResourceHolder.class, resourcesDatabaseReference) {
+                @Override
+                public void populateViewHolder(FirebaseResourceHolder resourceHolder, final ResourceData resourceData, int position) {
+                    if (progressBarLoadingResources.getVisibility() != View.GONE){
+                        progressBarLoadingResources.setVisibility(View.GONE);
                     }
-                    resourceHolder.getSubheaderView().setVisibility(View.VISIBLE);
-                    resourceHolder.getItemView().setVisibility(View.GONE);
 
-                    resourceHolder.setSubheader(resourceData.getTitle());
+                    //name
+                    if (resourceData.getUrl() != null){
+                        //is resource
+                        resourceHolder.getDivider().setVisibility(View.GONE);
+                        resourceHolder.getSubheaderView().setVisibility(View.GONE);
+                        resourceHolder.getItemView().setVisibility(View.VISIBLE);
+
+                        resourceHolder.setTitle(resourceData.getTitle());
+                        resourceHolder.setUrl(resourceData.getUrl());
+
+                        resourceHolder.getItemView().setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                MainActivity.openWebUrl(getActivity(), resourceData.getUrl());
+                            }
+                        });
+                    } else{
+                        //is subheader
+                        if (position > 0){
+                            resourceHolder.getDivider().setVisibility(View.VISIBLE);
+                        } else{
+                            resourceHolder.getDivider().setVisibility(View.GONE);
+                        }
+                        resourceHolder.getSubheaderView().setVisibility(View.VISIBLE);
+                        resourceHolder.getItemView().setVisibility(View.GONE);
+
+                        resourceHolder.setSubheader(resourceData.getTitle());
+                    }
                 }
-            }
-        };
+            };
+        }
     }
 
     @Override
@@ -140,6 +147,25 @@ public class ResourcesFragment extends Fragment
     public void onDestroy() {
         super.onDestroy();
         recyclerAdapter.cleanup();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        mListState = layoutManager.onSaveInstanceState();
+        outState.putParcelable("list_state", mListState);
+        super.onSaveInstanceState(outState);
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(recyclerAdapter);
+
+        if (mListState != null){
+            layoutManager.onRestoreInstanceState(savedInstanceState.getParcelable("list_state"));
+        }
     }
 
     private ArrayList<Bundle> getResourcesFromIndex(){
