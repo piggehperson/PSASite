@@ -145,12 +145,33 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                                     teacherDetail.putExtra("launched_from_shortcut", false);
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                                         getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+                                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                                            if (getActivity().isInMultiWindowMode()){
+                                                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                                                        Pair.create(view.findViewById(R.id.teacherAvatar), "avatar")
+                                                );
+                                                startActivity(teacherDetail, options.toBundle());
+                                            } else{
+                                                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                                                        Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                                                        Pair.create(getActivity().findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                                                        Pair.create(getActivity().findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                                                );
+                                                startActivity(teacherDetail, options.toBundle());
+                                            }
+                                        } else{
+                                            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                                                    Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                                                    Pair.create(getActivity().findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                                                    Pair.create(getActivity().findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                                            );
+                                            startActivity(teacherDetail, options.toBundle());
+                                        }*/
                                         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                                                Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
-                                                Pair.create(getActivity().findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
-                                                Pair.create(getActivity().findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                                                Pair.create(view.findViewById(R.id.teacherAvatar), "avatar")
                                         );
                                         startActivity(teacherDetail, options.toBundle());
+                                        /*startActivity(teacherDetail, options.toBundle());*/
                                     } else{
                                         startActivity(teacherDetail);
                                     }
