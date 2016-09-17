@@ -3,16 +3,18 @@ package com.piggeh.palmettoscholars.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Notification;
+/*import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.PendingIntent;*/
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -53,10 +55,11 @@ import com.piggeh.palmettoscholars.fragments.SettingsFragment;
 import com.piggeh.palmettoscholars.fragments.TeachersFragment;
 import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
 import com.piggeh.palmettoscholars.services.MyFirebaseMessagingService;
-import com.piggeh.palmettoscholars.utils.PSANotifications;
+import com.piggeh.palmettoscholars.utils.PreferenceKeys;
+/*import com.piggeh.palmettoscholars.utils.PSANotifications;
 
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URL;*/
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -240,6 +243,21 @@ public class MainActivity extends AppCompatActivity
                             NotificationManagerCompat.from(this);
                     notificationManager2.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_ANNOUNCEMENT);
                     break;
+                case PAGE_NEWSLETTER:
+                    if (savedInstanceState == null){
+                        Toast.makeText(this, "Newsletter page coming soon", Toast.LENGTH_SHORT).show();getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new HomeFragment())
+                                .commit();
+                    }
+                    setupAppbarForPage(PAGE_HOME, true);
+                    setupFabForPage(PAGE_HOME);
+                    navigationView.setCheckedItem(R.id.drawer_home);
+                    navigationPage = PAGE_HOME;
+                    //dismiss notifications
+                    NotificationManagerCompat notificationManager3 =
+                            NotificationManagerCompat.from(this);
+                    notificationManager3.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_NEWSLETTER);
+                    break;
             }
         } else{
             //launched normally
@@ -280,6 +298,23 @@ public class MainActivity extends AppCompatActivity
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         } catch (DatabaseException e){
             e.printStackTrace();
+        }
+
+        //manage notification subscriptions
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean(PreferenceKeys.notifAnnouncements, getResources().getBoolean(R.bool.preference_notif_announcements_default))){
+            Log.d(TAG, "Subscribing to Announcements");
+            FirebaseMessaging.getInstance().subscribeToTopic("announcements");
+        } else{
+            Log.d(TAG, "Unsubscribing from Announcements");
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("announcements");
+        }
+        if (sharedPreferences.getBoolean(PreferenceKeys.notifNewsletters, getResources().getBoolean(R.bool.preference_notif_newsletter_default))){
+            Log.d(TAG, "Subscribing to Newsletter");
+            FirebaseMessaging.getInstance().subscribeToTopic("newsletters");
+        } else{
+            Log.d(TAG, "Unsubscribing from Newsletter");
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("newsletters");
         }
 
         //set up Overview screen on Lollipop+
@@ -607,30 +642,6 @@ public class MainActivity extends AppCompatActivity
             case PAGE_HOME:
                 Log.d(TAG, "Enroll now");
                 openWebUrl("http://www.palmettoscholarsacademy.org/attend-psa/");
-                //Snackbar.make(coordinatorLayout, "Enroll now", Snackbar.LENGTH_SHORT).show();
-
-                /*//resources
-                Resources resources = getResources();
-                Resources systemResources = Resources.getSystem();*/
-
-                //notification settings intent
-                /*Intent settingsIntent = new Intent(getApplicationContext(), MainActivity.class);
-                settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
-                PendingIntent settingsPendingIntent =
-                        PendingIntent.getActivity(
-                                getApplicationContext(),
-                                0,
-                                settingsIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
-                //notification manager
-                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-                mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
-                        PSANotifications.generateAnnouncement(getApplicationContext(),
-                                "No homework",
-                                settingsPendingIntent,
-                                settingsPendingIntent));*/
                 break;
             case PAGE_CONTACT_US:
                 Log.d(TAG, "Calling phone");
@@ -651,7 +662,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case PAGE_DEBUG:
                 Log.d(TAG, "Testing Announcement notification");
-                testAnnouncementNotification();
+                //testAnnouncementNotification();
                 break;
         }
     }
@@ -683,13 +694,13 @@ public class MainActivity extends AppCompatActivity
 
     public void testNotifications(View view){
         switch (view.getId()){
-            case R.id.button_debug_announcement:
+            /*case R.id.button_debug_announcement:
                 //testAnnouncementNotification();
                 //MyFirebaseMessagingService.
                 break;
             case R.id.button_debug_newsletter:
                 testNewsletterNotification();
-                break;
+                break;*/
             case R.id.button_debug_subscribe:
                 FirebaseMessaging.getInstance().subscribeToTopic("debug");
                 Toast.makeText(this, "Subscribed to debug notifications", Toast.LENGTH_SHORT).show();
@@ -713,7 +724,7 @@ public class MainActivity extends AppCompatActivity
                 }*/
         }
     }
-    private void testAnnouncementNotification(){
+    /*private void testAnnouncementNotification(){
         //notification settings intent
         Intent settingsIntent = new Intent(this, MainActivity.class);
         settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
@@ -743,8 +754,8 @@ public class MainActivity extends AppCompatActivity
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
                 announcementNotif);
-    }
-    private void testNewsletterNotification(){
+    }*/
+    /*private void testNewsletterNotification(){
         //notification settings intent
         Intent settingsIntent = new Intent(this, MainActivity.class);
         settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
@@ -775,7 +786,7 @@ public class MainActivity extends AppCompatActivity
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_NEWSLETTER,
                 newsletterNotif);
-    }
+    }*/
 
     @Override
     public void onResume(){

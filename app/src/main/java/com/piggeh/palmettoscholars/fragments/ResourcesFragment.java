@@ -150,44 +150,6 @@ public class ResourcesFragment extends Fragment
         }
     }
 
-    private ArrayList<Bundle> getResourcesFromIndex(){
-        int[] types = getResources().getIntArray(R.array.resource_index_types);
-        String[] titles = getResources().getStringArray(R.array.resource_index_titles);
-        String[] subtitles = getResources().getStringArray(R.array.resource_index_subtitles);
-        String[] urls = getResources().getStringArray(R.array.resource_index_urls);
-
-        ArrayList<Bundle> bundles = new ArrayList<>();
-        for(int loop = 0; loop + 1 < Math.min(titles.length, Math.min(types.length, subtitles.length)); loop = loop + 1){
-            Bundle bundle = new Bundle();
-            bundle.putInt(ResourcesRecyclerAdapter.KEY_TYPE, types[loop]);
-            bundle.putString(ResourcesRecyclerAdapter.KEY_TITLE, titles[loop]);
-            bundle.putString(ResourcesRecyclerAdapter.KEY_SUBTITLE, subtitles[loop]);
-            bundle.putString(ResourcesRecyclerAdapter.KEY_URL, urls[loop]);
-            bundles.add(bundle);
-        }
-        //finish
-        return bundles;
-    }
-
-    public static ArrayList<Bundle> getResourcesFromIndex(Context context){
-        int[] types = context.getResources().getIntArray(R.array.resource_index_types);
-        String[] titles = context.getResources().getStringArray(R.array.resource_index_titles);
-        String[] subtitles = context.getResources().getStringArray(R.array.resource_index_subtitles);
-        String[] urls = context.getResources().getStringArray(R.array.resource_index_urls);
-
-        ArrayList<Bundle> bundles = new ArrayList<>();
-        for(int loop = 0; loop + 1 < Math.min(titles.length, Math.min(types.length, subtitles.length)); loop = loop + 1){
-            Bundle bundle = new Bundle();
-            bundle.putInt(ResourcesRecyclerAdapter.KEY_TYPE, types[loop]);
-            bundle.putString(ResourcesRecyclerAdapter.KEY_TITLE, titles[loop]);
-            bundle.putString(ResourcesRecyclerAdapter.KEY_SUBTITLE, subtitles[loop]);
-            bundle.putString(ResourcesRecyclerAdapter.KEY_URL, urls[loop]);
-            bundles.add(bundle);
-        }
-        //finish
-        return bundles;
-    }
-
     @Override
     public void onRecyclerItemClick(View view, int position, String url){
         mListener.onResourceClick(view, position, url);

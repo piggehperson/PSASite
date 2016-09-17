@@ -15,18 +15,6 @@
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:clipToPadding="false"
         android:clipChildren="false">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Announcement"
-            android:id="@+id/button_debug_announcement"
-            android:onClick="testNotifications"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Newsletter"
-            android:id="@+id/button_debug_newsletter"
-            android:onClick="testNotifications"/>
 
         <Button
             android:layout_width="wrap_content"

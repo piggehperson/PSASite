@@ -277,52 +277,6 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
         return bundles;
     }
 
-    private ArrayList<Bundle> getTeachersFromIndex(){
-        String[] names = getResources().getStringArray(R.array.teacher_index_names);
-        int[] categories = getResources().getIntArray(R.array.teacher_index_categories);
-        int[] prefixes = getResources().getIntArray(R.array.teacher_index_prefixes);
-        String[] emails = getResources().getStringArray(R.array.teacher_index_emails);
-        TypedArray avatars = getResources().obtainTypedArray(R.array.teacher_index_avatars);
-
-        ArrayList<Bundle> bundles = new ArrayList<>();
-        for(int loop = 0; loop + 1 < Math.min(names.length, Math.min(categories.length, prefixes.length)); loop = loop + 1){
-            Bundle bundle = new Bundle();
-            bundle.putString(TeacherConstants.KEY_NAME, names[loop]);
-            bundle.putInt(TeacherConstants.KEY_CATEGORY, categories[loop]);
-            bundle.putInt(TeacherConstants.KEY_PREFIX, prefixes[loop]);
-            bundle.putString(TeacherConstants.KEY_EMAIL, emails[loop]);
-            bundle.putInt(TeacherConstants.KEY_AVATAR, avatars.getResourceId(loop, 0));
-            bundles.add(bundle);
-        }
-        //recycle lists
-        avatars.recycle();
-        //finish
-        return bundles;
-    }
-
-    public static ArrayList<Bundle> getTeachersFromIndex(Context context){
-        String[] names = context.getResources().getStringArray(R.array.teacher_index_names);
-        int[] categories = context.getResources().getIntArray(R.array.teacher_index_categories);
-        int[] prefixes = context.getResources().getIntArray(R.array.teacher_index_prefixes);
-        String[] emails = context.getResources().getStringArray(R.array.teacher_index_emails);
-        TypedArray avatars = context.getResources().obtainTypedArray(R.array.teacher_index_avatars);
-
-        ArrayList<Bundle> bundles = new ArrayList<>();
-        for(int loop = 0; loop + 1 < Math.min(names.length, Math.min(categories.length, prefixes.length)); loop = loop + 1){
-            Bundle bundle = new Bundle();
-            bundle.putString(TeacherConstants.KEY_NAME, names[loop]);
-            bundle.putInt(TeacherConstants.KEY_CATEGORY, categories[loop]);
-            bundle.putInt(TeacherConstants.KEY_PREFIX, prefixes[loop]);
-            bundle.putString(TeacherConstants.KEY_EMAIL, emails[loop]);
-            bundle.putInt(TeacherConstants.KEY_AVATAR, avatars.getResourceId(loop, 0));
-            bundles.add(bundle);
-        }
-        //recycle lists
-        avatars.recycle();
-        //finish
-        return bundles;
-    }
-
     @Override
     public void onRecyclerItemClick(View view, int position, String teacherName){
         mListener.onTeacherClick(view, position);
