@@ -27,5 +27,18 @@
             android:text="Newsletter"
             android:id="@+id/button_debug_newsletter"
             android:onClick="testNotifications"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subscribe to debug notifications"
+            android:id="@+id/button_debug_subscribe"
+            android:onClick="testNotifications"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unsubscribe from debug notifications"
+            android:id="@+id/button_debug_unsubscribe"
+            android:onClick="testNotifications"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

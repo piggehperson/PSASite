@@ -21,6 +21,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
@@ -40,6 +41,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.classes.ConfigUtils;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
@@ -50,7 +52,11 @@ import com.piggeh.palmettoscholars.fragments.ResourcesFragment;
 import com.piggeh.palmettoscholars.fragments.SettingsFragment;
 import com.piggeh.palmettoscholars.fragments.TeachersFragment;
 import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
+import com.piggeh.palmettoscholars.services.MyFirebaseMessagingService;
 import com.piggeh.palmettoscholars.utils.PSANotifications;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "MainActivity";
     //modes
     public static final int PAGE_HOME = 0;
-    public static final int PAGE_NOTIFICATIONS = 1;
+    public static final int PAGE_ANNOUNCEMENTS = 1;
     public static final int PAGE_TEACHERS = 2;
     public static final int PAGE_RESOURCES = 3;
     public static final int PAGE_CONTACT_US = 4;
@@ -202,6 +208,11 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_SETTINGS);
                     navigationView.setCheckedItem(R.id.drawer_settings);
                     navigationPage = PAGE_SETTINGS;
+
+                    //dismiss notifications
+                    NotificationManagerCompat notificationManager =
+                            NotificationManagerCompat.from(this);
+                    notificationManager.cancelAll();
                     break;
                 case PAGE_RESOURCES:
                     if (savedInstanceState == null){
@@ -213,6 +224,21 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_RESOURCES);
                     navigationView.setCheckedItem(R.id.drawer_resources);
                     navigationPage = PAGE_RESOURCES;
+                    break;
+                case PAGE_ANNOUNCEMENTS:
+                    if (savedInstanceState == null){
+                        Toast.makeText(this, "Announcements page coming soon", Toast.LENGTH_SHORT).show();getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new HomeFragment())
+                                .commit();
+                    }
+                    setupAppbarForPage(PAGE_HOME, true);
+                    setupFabForPage(PAGE_HOME);
+                    navigationView.setCheckedItem(R.id.drawer_home);
+                    navigationPage = PAGE_HOME;
+                    //dismiss notifications
+                    NotificationManagerCompat notificationManager2 =
+                            NotificationManagerCompat.from(this);
+                    notificationManager2.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_ANNOUNCEMENT);
                     break;
             }
         } else{
@@ -658,11 +684,33 @@ public class MainActivity extends AppCompatActivity
     public void testNotifications(View view){
         switch (view.getId()){
             case R.id.button_debug_announcement:
-                testAnnouncementNotification();
+                //testAnnouncementNotification();
+                //MyFirebaseMessagingService.
                 break;
             case R.id.button_debug_newsletter:
                 testNewsletterNotification();
                 break;
+            case R.id.button_debug_subscribe:
+                FirebaseMessaging.getInstance().subscribeToTopic("debug");
+                Toast.makeText(this, "Subscribed to debug notifications", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.button_debug_unsubscribe:
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("debug");
+                Toast.makeText(this, "Unsubscribed from debug notifications", Toast.LENGTH_SHORT).show();
+                break;
+            /*case R.id.button_debug_httppost:
+                Log.d(TAG, "Trying HTTP POST");
+                try {
+                    URL url = new URL("https://fcm.googleapis.com/fcm/send");
+                    HttpURLConnection client = (HttpURLConnection) url.openConnection();
+                    client.setRequestMethod("POST");
+                    //client.setRequestMode("POST");
+                    //client.setRequestProperty(“Key”,”Value”);
+                    client.addRequestProperty("");
+                    client.setDoOutput(true);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }*/
         }
     }
     private void testAnnouncementNotification(){
