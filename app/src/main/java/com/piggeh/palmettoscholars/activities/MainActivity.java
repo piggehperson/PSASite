@@ -230,9 +230,10 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case PAGE_ANNOUNCEMENTS:
                     if (savedInstanceState == null){
-                        Toast.makeText(this, "Announcements page coming soon", Toast.LENGTH_SHORT).show();getSupportFragmentManager().beginTransaction()
+                        /*Toast.makeText(this, "Announcements page coming soon", Toast.LENGTH_SHORT).show();getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, new HomeFragment())
-                                .commit();
+                                .commit();*/
+                        openWebUrl("https://docs.google.com/document/d/1AVYG-oGyeHVFlNVwbXeZwR8t44Z-MCTmdSWwsmMN79k/edit");
                     }
                     setupAppbarForPage(PAGE_HOME, true);
                     setupFabForPage(PAGE_HOME);
@@ -827,6 +828,9 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Opened Debug Mode page");
                 switchNavigationPage(PAGE_DEBUG);
                 break;
+            case R.id.drawer_notifications:
+                openWebUrl("https://docs.google.com/document/d/1AVYG-oGyeHVFlNVwbXeZwR8t44Z-MCTmdSWwsmMN79k/edit");
+                return false;
         }
 
         if (!isLarge){
