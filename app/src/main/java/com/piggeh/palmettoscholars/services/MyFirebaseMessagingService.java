@@ -105,7 +105,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent settingsIntent = new Intent(this, MainActivity.class);
         settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
         settingsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, settingsIntent,
+        PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 1 /* Request code */, settingsIntent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -134,13 +134,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent contentIntent = new Intent(this, MainActivity.class);
         contentIntent.putExtra("navigation_page", MainActivity.PAGE_NEWSLETTER);
         contentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, contentIntent,
+        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 2 /* Request code */, contentIntent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Intent settingsIntent = new Intent(this, MainActivity.class);
         settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
         settingsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, settingsIntent,
+        PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 3 /* Request code */, settingsIntent,
                 PendingIntent.FLAG_ONE_SHOT);
 
 
