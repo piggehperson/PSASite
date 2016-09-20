@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity
                                 .replace(R.id.fragment_container, new HomeFragment())
                                 .commit();*/
                         openWebUrl("https://docs.google.com/document/d/1AVYG-oGyeHVFlNVwbXeZwR8t44Z-MCTmdSWwsmMN79k/edit");
+                        finish();
                     }
                     setupAppbarForPage(PAGE_HOME, true);
                     setupFabForPage(PAGE_HOME);
