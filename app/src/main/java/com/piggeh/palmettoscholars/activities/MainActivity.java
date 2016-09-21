@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity
     //views
     public CoordinatorLayout coordinatorLayout;
     //private TabLayout tabLayout;
-    private DrawerLayout drawerLayout;
+    //private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private FrameLayout fragmentContainer;
+    //private FrameLayout fragmentContainer;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton fab;
     private AppBarLayout appBarLayout;
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity
             //set up regular layout
             Log.d(TAG, "Setting up regular layout");
 
-            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
+        //fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
 
         if (getIntent().getIntExtra("navigation_page", -1) != -1){
             Log.d(TAG, "Launched with page data");
@@ -234,6 +234,9 @@ public class MainActivity extends AppCompatActivity
                                 .replace(R.id.fragment_container, new HomeFragment())
                                 .commit();*/
                         openWebUrl("https://docs.google.com/document/d/1AVYG-oGyeHVFlNVwbXeZwR8t44Z-MCTmdSWwsmMN79k/edit");
+                        NotificationManagerCompat notificationManager2 =
+                                NotificationManagerCompat.from(this);
+                        notificationManager2.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_ANNOUNCEMENT);
                         finish();
                     }
                     setupAppbarForPage(PAGE_HOME, true);
@@ -241,9 +244,9 @@ public class MainActivity extends AppCompatActivity
                     navigationView.setCheckedItem(R.id.drawer_home);
                     navigationPage = PAGE_HOME;
                     //dismiss notifications
-                    NotificationManagerCompat notificationManager2 =
+                    /*NotificationManagerCompat notificationManager2 =
                             NotificationManagerCompat.from(this);
-                    notificationManager2.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_ANNOUNCEMENT);
+                    notificationManager2.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_ANNOUNCEMENT);*/
                     break;
                 case PAGE_NEWSLETTER:
                     if (savedInstanceState == null){
