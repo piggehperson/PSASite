@@ -251,14 +251,14 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case PAGE_NEWSLETTER:
                     if (savedInstanceState == null){
-                        Toast.makeText(this, "Newsletter page coming soon", Toast.LENGTH_SHORT).show();getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new HomeFragment())
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new NewsletterFragment())
                                 .commit();
                     }
-                    setupAppbarForPage(PAGE_HOME, true);
-                    setupFabForPage(PAGE_HOME);
-                    navigationView.setCheckedItem(R.id.drawer_home);
-                    navigationPage = PAGE_HOME;
+                    setupAppbarForPage(PAGE_NEWSLETTER, true);
+                    setupFabForPage(PAGE_NEWSLETTER);
+                    navigationView.setCheckedItem(R.id.drawer_newsletter);
+                    navigationPage = PAGE_NEWSLETTER;
                     //dismiss notifications
                     NotificationManagerCompat notificationManager3 =
                             NotificationManagerCompat.from(this);
