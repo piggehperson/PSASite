@@ -50,6 +50,7 @@ import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.fragments.ContactFragment;
 import com.piggeh.palmettoscholars.fragments.DebugFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
+import com.piggeh.palmettoscholars.fragments.NewsletterFragment;
 import com.piggeh.palmettoscholars.fragments.ResourcesFragment;
 import com.piggeh.palmettoscholars.fragments.SettingsFragment;
 import com.piggeh.palmettoscholars.fragments.TeachersFragment;
@@ -474,6 +475,27 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(TAG, "Switched to Debug page");
                 return true;
+            case PAGE_NEWSLETTER:
+                //switch fragment
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
+                        .replace(R.id.fragment_container, new NewsletterFragment())
+                        .commit();
+                //set page variable
+                navigationPage = PAGE_NEWSLETTER;
+
+                //configure FAB & header for new page
+                setupFabForPage(PAGE_NEWSLETTER);
+                setupAppbarForPage(PAGE_NEWSLETTER);
+
+                //set selected item in drawer, for switching pages programmatically
+                navigationView.setCheckedItem(R.id.drawer_newsletter);
+
+                //expand toolbar
+                /*appBarLayout.setExpanded(true);*/
+
+                Log.d(TAG, "Switched to Newsletter page");
+                return true;
         }
     }
 
@@ -521,6 +543,13 @@ public class MainActivity extends AppCompatActivity
                 //fab.setVisibility(View.VISIBLE);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Debug page");
+                return true;
+            case PAGE_NEWSLETTER:
+                fab.setImageResource(R.drawable.ic_open_externally);
+                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
+                //fab.setVisibility(View.VISIBLE);
+                fab.show();
+                Log.d(TAG, "Set up FAB for Newsletter page");
                 return true;
         }
     }
@@ -586,6 +615,13 @@ public class MainActivity extends AppCompatActivity
                 //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Debug page");
+                return true;
+            case PAGE_NEWSLETTER:
+                collapsingToolbarLayout.setTitle(getString(R.string.drawer_newsletter));
+                appbarImage.setVisibility(View.INVISIBLE);
+                //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                appBarLayout.setExpanded(true);
+                Log.d(TAG, "Set up app bar for Newsletter page");
                 return true;
         }
     }
@@ -668,6 +704,10 @@ public class MainActivity extends AppCompatActivity
             case PAGE_DEBUG:
                 Log.d(TAG, "Testing Announcement notification");
                 //testAnnouncementNotification();
+                break;
+            case PAGE_NEWSLETTER:
+                Log.d(TAG, "Opening newsletters page externally");
+                openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/newsletter/");
                 break;
         }
     }
@@ -835,6 +875,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.drawer_notifications:
                 openWebUrl("https://docs.google.com/document/d/1AVYG-oGyeHVFlNVwbXeZwR8t44Z-MCTmdSWwsmMN79k/edit");
                 return false;
+            case R.id.drawer_newsletter:
+                switchNavigationPage(PAGE_NEWSLETTER);
+                break;
         }
 
         if (!isLarge){
