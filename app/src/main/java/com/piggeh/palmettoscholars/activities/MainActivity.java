@@ -799,14 +799,31 @@ public class MainActivity extends AppCompatActivity
         teacherDetail.putExtra("launched_from_shortcut", false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                    Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
-                    Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
-                    Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
-            );
-            startActivity(teacherDetail, options.toBundle());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                if (isInMultiWindowMode()){
+                    startActivity(teacherDetail);
+                    Log.d(TAG, "Opening teacher on Nougat+ in multiwindow");
+                } else{
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                            Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                            Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                            Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                    );
+                    startActivity(teacherDetail, options.toBundle());
+                    Log.d(TAG, "Opening teacher on Nougat+");
+                }
+            } else{
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                        Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                        Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                );
+                startActivity(teacherDetail, options.toBundle());
+                Log.d(TAG, "Opening teacher on Lollipop+");
+            }
         } else{
             startActivity(teacherDetail);
+            Log.d(TAG, "Opening teacher on Kitkat-");
         }
     }
 
