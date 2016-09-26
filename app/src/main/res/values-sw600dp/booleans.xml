@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Bools used for configuration checking-->
-    <bool name="configuration_istablet">true</bool>
+    <bool name="configuration_islarge">true</bool>
 </resources>

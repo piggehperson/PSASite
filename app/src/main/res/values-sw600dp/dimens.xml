@@ -2,4 +2,6 @@
 <resources>
     <dimen name="appbar_height">@dimen/appbar_height_large</dimen>
     <dimen name="appbar_fullheight">@dimen/appbar_fullheight_large</dimen>
+
+    <dimen name="inset_text_margin_start">@dimen/inset_text_margin_start_large</dimen>
 </resources>

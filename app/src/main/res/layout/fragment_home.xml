@@ -23,6 +23,13 @@
             app:layout_aspectRatio="178%"
             android:id="@+id/imageView_ourMission"
             android:src="@color/colorAccentLighter"/>
+        <TextView
+            android:layout_width="match_parent"
+            app:layout_widthPercent="100%"
+            app:layout_aspectRatio="178%"
+            android:text="Home page banner image"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         <TextView
             android:layout_width="match_parent"

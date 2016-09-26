@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_enrollment"
-        android:tint="@color/icons_light_dynamic"
+        android:tint="@color/iconsLight"
         android:tintMode="src_in"
         android:contentDescription="@string/accessibility_fab_enrollnow"
         android:layout_marginTop="@dimen/activity_vertical_margin"

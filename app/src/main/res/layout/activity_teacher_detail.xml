@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_email"
-        android:tint="@color/icons_light_dynamic"
+        android:tint="@color/iconsLight"
         android:tintMode="src_in"
         android:contentDescription="@string/accessibility_fab_email"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -77,99 +77,146 @@
         android:layout_height="match_parent"
         android:id="@+id/scrollView_teacherInfo"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:clipToPadding="false">
+            android:clipToPadding="false"
+            android:orientation="vertical"><!--android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:id="@+id/linearLayout_emailHeader">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_email"
-                    style="@style/ClickableIconTiny"
-                    android:layout_margin="16dp"
-                    android:layout_centerVertical="true"
-                    android:tint="@color/icons_dark_daynight_dynamic"
-                    android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"-->
+                android:layout_height="160dp"
+                android:background="@color/colorBackgroundDark"
+                android:id="@+id/relativeLayout_error_loading"
+                android:visibility="gone">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:id="@+id/imageView_noConnection"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/ic_cloud_off"
+                    android:tint="?android:textColorSecondary"
+                    android:layout_marginTop="32dp"
+                    android:tintMode="src_in"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView_emailHeader"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:text="@string/contact_email"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="72dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+                    android:id="@+id/textView_noConnection"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/imageView_noConnection"
+                    android:text="@string/firebase_error_loading_teacher_data"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textAlignment="center"
+                    android:textStyle="bold"/><!--android:textSize="18sp"-->
             </RelativeLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="email address loaded from index"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:id="@+id/textView_emailAddress"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_below="@id/linearLayout_emailHeader"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_contact_email"
-                android:text="@string/contact_email_send"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:onClick="onFabClick"
-                android:pointerIcon="hand"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_below="@id/textView_emailAddress"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/dividers"
-                android:layout_below="@id/button_contact_email"
-                android:id="@+id/divider"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:id="@+id/linearLayout_bioHeader"
-                android:layout_below="@id/divider">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_person"
-                    style="@style/ClickableIconTiny"
-                    android:layout_margin="16dp"
-                    android:layout_centerVertical="true"
-                    android:tint="@color/icons_dark_daynight_dynamic"
-                    android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout_teacherInfo"
+                android:visibility="visible">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:id="@+id/linearLayout_emailHeader">
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/ClickableIconTiny"
+                        android:layout_margin="16dp"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/iconsDarkDaynight"
+                        android:tintMode="src_in"
+                        app:srcCompat="@drawable/ic_email"
+                        android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView_emailHeader"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:text="@string/contact_email"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="72dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+                </RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView_bioHeader"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:text="@string/teacherdetail_bio_label"
-                    android:layout_centerVertical="true"
+                    android:text="@string/firebase_loading"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:id="@+id/textView_emailAddress"
                     android:layout_marginStart="72dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_below="@id/linearLayout_emailHeader"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button_contact_email"
+                    android:text="@string/contact_email_send"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:onClick="onFabClick"
+                    android:pointerIcon="hand"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:enabled="false"
+                    android:layout_below="@id/textView_emailAddress"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dividers"
+                    android:layout_below="@id/button_contact_email"
+                    android:id="@+id/divider"
+                    android:layout_marginStart="72dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:id="@+id/linearLayout_bioHeader"
+                    android:layout_below="@id/divider">
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_person"
+                        style="@style/ClickableIconTiny"
+                        android:layout_margin="16dp"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/iconsDarkDaynight"
+                        android:tintMode="src_in"
+                        android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView_bioHeader"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:text="@string/teacherdetail_bio_label"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="72dp"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/firebase_loading"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:id="@+id/textView_bio"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_below="@id/linearLayout_bioHeader"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/linearLayout_bioHeader"
+                    android:id="@+id/progressBar_loadingBio"
+                    android:visibility="visible"/>
             </RelativeLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="bio loaded from website"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:id="@+id/textView_bio"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_below="@id/linearLayout_bioHeader"/>
 
             <!--<LinearLayout
                 android:layout_width="match_parent"
@@ -239,14 +286,7 @@
                 android:id="@+id/textView_bio"
                 android:layout_below="@id/linearLayout_bioHeader"
                 android:layout_marginTop="8dp" />-->
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/linearLayout_bioHeader"
-                android:id="@+id/progressBar_loadingBio"
-                android:visibility="gone"/>
-        </RelativeLayout>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

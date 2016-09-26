@@ -23,6 +23,7 @@
     <string name="drawer_resources">Resources</string>
     <string name="drawer_contactus">Contact us</string>
     <string name="drawer_settings">Settings</string>
+    <string name="drawer_debug">Debug</string>
 
     <string name="menu_refresh">Refresh</string>
     <string name="menu_search">Search</string>
@@ -71,9 +72,17 @@
     <string name="teachers_prefix_dr">Dr. %s</string>
     
     <!--Strings used on Teacher Details screen-->
-    <string name="teacherdetail_title">Teacher info</string>
+    <string name="teacherdetail_title">Teacher</string>
     <string name="teacherdetail_room_label">Room number</string>
     <string name="teacherdetail_bio_label">About me</string>
+
+    <!--Strings for Firebase-related stuff-->
+    <string name="firebase_loading">Loading&#8230;</string>
+    <string name="no_connection">No connection</string>
+    <string name="firebase_error_loading_generic">Couldn\'t load data</string>
+    <string name="firebase_error_loading_teachers">Couldn\'t load teacher list</string>
+    <string name="firebase_error_loading_teacher_data">Couldn\'t load teacher data</string>
+    <string name="firebase_error_loading_resources">Couldn\'t load resources list</string>
 
     <!--Strings used for alerts-->
     <!--Dialogs-->

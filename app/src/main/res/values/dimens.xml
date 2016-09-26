@@ -35,6 +35,9 @@
 
     <dimen name="list_item_padding_sides">16dp</dimen>
     <dimen name="list_subheader_height">48dp</dimen>
-    <dimen name="recycler_item_teacher_height">72dp</dimen>
     <dimen name="recycler_item_teacher_avatar_size">40dp</dimen>
+
+    <dimen name="inset_text_margin_start">@dimen/inset_text_margin_start_small</dimen>
+    <dimen name="inset_text_margin_start_small">@dimen/activity_horizontal_margin</dimen>
+    <dimen name="inset_text_margin_start_large">72dp</dimen>
 </resources>

@@ -4,10 +4,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.piggeh.palmettoscholars.R;
 
 /**
@@ -27,44 +35,76 @@ public class ContactFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * //@param param1 Parameter 1.
-     * //@param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String argments) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        /*args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);*/
-        fragment.setArguments(args);
-        return fragment;
-    }
+    /*private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private ProgressBar progressBarLoadingContactInfo;
+    private TextView phoneView;
+    private TextView emailView;
+    private TextView streetView;
+    private TextView cityView;
+    private TextView faxView;
+    private TextView twitterView;
+
+    private String phoneDisplay;
+    private long phoneNumber;*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            /*mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);*/
-        }
+        /*setRetainInstance(true);
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference().child("contact");*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact, container, false);
+        return /*View mView = */inflater.inflate(R.layout.fragment_contact, container, false);
+        /*progressBarLoadingContactInfo = (ProgressBar) mView.findViewById(R.id.progressbar_loadingContactInfo);
+        phoneView = (TextView) mView.findViewById(R.id.textView_phoneNumber);
+        emailView = (TextView) mView.findViewById(R.id.textView_emailAddress);
+        streetView = (TextView) mView.findViewById(R.id.textView_locationStreet);
+        cityView = (TextView) mView.findViewById(R.id.textView_locationCity);
+        faxView = (TextView) mView.findViewById(R.id.textView_faxNumber);
+        twitterView = (TextView) mView.findViewById(R.id.textView_twitterUsername);
+        return mView;*/
     }
 
     /*@Override
-    public void onStart(){
-        super.onStart();
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
 
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                switch (dataSnapshot.getKey()){
+                    case "phone":
+                        phoneView.setText((String)dataSnapshot.getValue());
+                        break;
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, databaseError.toString());
+            }
+        });
     }*/
 
     @Override

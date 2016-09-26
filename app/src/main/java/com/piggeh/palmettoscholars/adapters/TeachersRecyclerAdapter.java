@@ -169,6 +169,8 @@ public class TeachersRecyclerAdapter extends RecyclerView.Adapter<TeachersRecycl
         //hide divider if necessary
         if (position == mSetTeacherData.size() - 1){
             viewHolder.getDivider().setVisibility(View.INVISIBLE);
+        } else{
+            viewHolder.getDivider().setVisibility(View.VISIBLE);
         }
 
         mSetTeacherData.get(position).getInt(TeacherConstants.KEY_AVATAR);

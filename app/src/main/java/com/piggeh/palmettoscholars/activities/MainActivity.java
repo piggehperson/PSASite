@@ -3,26 +3,28 @@ package com.piggeh.palmettoscholars.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+/*import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.PendingIntent;*/
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -39,16 +41,27 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.classes.ConfigUtils;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.fragments.ContactFragment;
+import com.piggeh.palmettoscholars.fragments.DebugFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
+import com.piggeh.palmettoscholars.fragments.NewsletterFragment;
 import com.piggeh.palmettoscholars.fragments.ResourcesFragment;
 import com.piggeh.palmettoscholars.fragments.SettingsFragment;
 import com.piggeh.palmettoscholars.fragments.TeachersFragment;
 import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
-import com.piggeh.palmettoscholars.utils.PSANotifications;
+import com.piggeh.palmettoscholars.services.MyFirebaseMessagingService;
+import com.piggeh.palmettoscholars.utils.PreferenceKeys;
+/*import com.piggeh.palmettoscholars.utils.PSANotifications;
+
+import java.net.HttpURLConnection;
+import java.net.URL;*/
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -59,19 +72,20 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "MainActivity";
     //modes
     public static final int PAGE_HOME = 0;
-    public static final int PAGE_NOTIFICATIONS = 1;
+    public static final int PAGE_ANNOUNCEMENTS = 1;
     public static final int PAGE_TEACHERS = 2;
     public static final int PAGE_RESOURCES = 3;
     public static final int PAGE_CONTACT_US = 4;
     public static final int PAGE_NEWSLETTER = 5;
     public static final int PAGE_SETTINGS = 6;
+    public static final int PAGE_DEBUG = 7;
 
     //views
     public CoordinatorLayout coordinatorLayout;
     //private TabLayout tabLayout;
-    private DrawerLayout drawerLayout;
+    //private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private FrameLayout fragmentContainer;
+    //private FrameLayout fragmentContainer;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton fab;
     private AppBarLayout appBarLayout;
@@ -81,31 +95,27 @@ public class MainActivity extends AppCompatActivity
     private int navigationPage = PAGE_HOME;
     private int previousPage = PAGE_HOME;
     private int appbarState = AppBarStateChangeListener.STATE_IDLE;
-    private boolean isTablet = false;
+    private boolean isLarge = false;
+    private boolean hasTouch = true;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        isTablet = ConfigUtils.isTablet(this);
+        isLarge = ConfigUtils.isLarge(this);
+        //hasTouch = ConfigUtils.hasTouch(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        /*fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "FAB clicked, doing nothing for now");
-                Toast.makeText(getApplicationContext(), "Enroll now", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-        /*if (navigationPage == PAGE_SETTINGS){
-            fab.hide();
-        }*/
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            fab.bringToFront();
+        }
 
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         appbarImage = (ImageView) findViewById(R.id.appbarImage);
@@ -127,7 +137,7 @@ public class MainActivity extends AppCompatActivity
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (isTablet){
+        if (isLarge){
             //set up tablet layout
             Log.d(TAG, "Settings up tablet layout");
 
@@ -144,7 +154,7 @@ public class MainActivity extends AppCompatActivity
             //set up regular layout
             Log.d(TAG, "Setting up regular layout");
 
-            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);
@@ -156,7 +166,7 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
+        //fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
 
         if (getIntent().getIntExtra("navigation_page", -1) != -1){
             Log.d(TAG, "Launched with page data");
@@ -183,6 +193,12 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_CONTACT_US);
                     navigationView.setCheckedItem(R.id.drawer_contactus);
                     navigationPage = PAGE_CONTACT_US;
+
+                    //analytics
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Contact Us");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
                     break;
                 case PAGE_TEACHERS:
                     if (savedInstanceState == null){
@@ -194,6 +210,12 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_TEACHERS);
                     navigationView.setCheckedItem(R.id.drawer_teachers);
                     navigationPage = PAGE_TEACHERS;
+
+                    //analytics
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putString(FirebaseAnalytics.Param.ITEM_NAME, "Teachers");
+                    bundle2.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, bundle2);
                     break;
                 case PAGE_SETTINGS:
                     if (savedInstanceState == null){
@@ -205,6 +227,17 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_SETTINGS);
                     navigationView.setCheckedItem(R.id.drawer_settings);
                     navigationPage = PAGE_SETTINGS;
+
+                    //dismiss notifications
+                    NotificationManagerCompat notificationManager =
+                            NotificationManagerCompat.from(this);
+                    notificationManager.cancelAll();
+
+                    //analytics
+                    Bundle bundle3 = new Bundle();
+                    bundle3.putString(FirebaseAnalytics.Param.ITEM_NAME, "Settings");
+                    bundle3.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle3);
                     break;
                 case PAGE_RESOURCES:
                     if (savedInstanceState == null){
@@ -216,6 +249,60 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_RESOURCES);
                     navigationView.setCheckedItem(R.id.drawer_resources);
                     navigationPage = PAGE_RESOURCES;
+
+                    //analytics
+                    Bundle bundle4 = new Bundle();
+                    bundle4.putString(FirebaseAnalytics.Param.ITEM_NAME, "Resources");
+                    bundle4.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle4);
+                    break;
+                case PAGE_ANNOUNCEMENTS:
+                    if (savedInstanceState == null){
+                        /*Toast.makeText(this, "Announcements page coming soon", Toast.LENGTH_SHORT).show();getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new HomeFragment())
+                                .commit();*/
+                        openWebUrl("https://docs.google.com/document/d/1AVYG-oGyeHVFlNVwbXeZwR8t44Z-MCTmdSWwsmMN79k/edit");
+                        NotificationManagerCompat notificationManager2 =
+                                NotificationManagerCompat.from(this);
+                        notificationManager2.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_ANNOUNCEMENT);
+
+                        //analytics
+                        Bundle bundle5 = new Bundle();
+                        bundle5.putString(FirebaseAnalytics.Param.ITEM_NAME, "Announcements");
+                        bundle5.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle5);
+
+                        finish();
+                    }
+                    /*setupAppbarForPage(PAGE_HOME, true);
+                    setupFabForPage(PAGE_HOME);
+                    navigationView.setCheckedItem(R.id.drawer_home);
+                    navigationPage = PAGE_HOME;
+                    //dismiss notifications
+                    *//*NotificationManagerCompat notificationManager2 =
+                            NotificationManagerCompat.from(this);
+                    notificationManager2.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_ANNOUNCEMENT);*/
+                    break;
+                case PAGE_NEWSLETTER:
+                    if (savedInstanceState == null){
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new NewsletterFragment())
+                                .commit();
+                    }
+                    setupAppbarForPage(PAGE_NEWSLETTER, true);
+                    setupFabForPage(PAGE_NEWSLETTER);
+                    navigationView.setCheckedItem(R.id.drawer_newsletter);
+                    navigationPage = PAGE_NEWSLETTER;
+                    //dismiss notifications
+                    NotificationManagerCompat notificationManager3 =
+                            NotificationManagerCompat.from(this);
+                    notificationManager3.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_NEWSLETTER);
+
+                    //analytics
+                    Bundle bundle6 = new Bundle();
+                    bundle6.putString(FirebaseAnalytics.Param.ITEM_NAME, "Newsletter");
+                    bundle6.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle6);
                     break;
             }
         } else{
@@ -251,6 +338,31 @@ public class MainActivity extends AppCompatActivity
             demoApp.setMessage(R.string.dialog_demo_message);
             demoApp.setPositiveButton(R.string.dialog_action_ok, null);
             demoApp.show();
+
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("debug");
+        }
+
+        try{
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        } catch (DatabaseException e){
+            e.printStackTrace();
+        }
+
+        //manage notification subscriptions
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean(PreferenceKeys.notifAnnouncements, getResources().getBoolean(R.bool.preference_notif_announcements_default))){
+            Log.d(TAG, "Subscribing to Announcements");
+            FirebaseMessaging.getInstance().subscribeToTopic("announcements");
+        } else{
+            Log.d(TAG, "Unsubscribing from Announcements");
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("announcements");
+        }
+        if (sharedPreferences.getBoolean(PreferenceKeys.notifNewsletters, getResources().getBoolean(R.bool.preference_notif_newsletter_default))){
+            Log.d(TAG, "Subscribing to Newsletter");
+            FirebaseMessaging.getInstance().subscribeToTopic("newsletters");
+        } else{
+            Log.d(TAG, "Unsubscribing from Newsletter");
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("newsletters");
         }
 
         //set up Overview screen on Lollipop+
@@ -260,7 +372,7 @@ public class MainActivity extends AppCompatActivity
             ActivityManager.TaskDescription description = new ActivityManager.TaskDescription(null, overviewIcon, ContextCompat.getColor(this, R.color.colorPrimary));
             setTaskDescription(description);
             //status bar
-            if (!isTablet){
+            if (!isLarge){
                 Log.d(TAG, "Isn't tablet, setting status bar to transparent");
                 getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
             }
@@ -298,6 +410,12 @@ public class MainActivity extends AppCompatActivity
                 //expand toolbar
                 /*appBarLayout.setExpanded(true);*/
 
+                //analytics
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Home");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+
                 Log.d(TAG, "Switched to Home page");
                 return true;
             case PAGE_CONTACT_US:
@@ -318,6 +436,12 @@ public class MainActivity extends AppCompatActivity
 
                 //expand toolbar
                 /*appBarLayout.setExpanded(true);*/
+
+                //analytics
+                Bundle bundle2 = new Bundle();
+                bundle2.putString(FirebaseAnalytics.Param.ITEM_NAME, "Contact Us");
+                bundle2.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle2);
 
                 Log.d(TAG, "Switched to Contact page");
                 return true;
@@ -340,6 +464,12 @@ public class MainActivity extends AppCompatActivity
                 //expand toolbar
                 /*appBarLayout.setExpanded(true);*/
 
+                //analytics
+                Bundle bundle3 = new Bundle();
+                bundle3.putString(FirebaseAnalytics.Param.ITEM_NAME, "Teachers");
+                bundle3.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle3);
+
                 Log.d(TAG, "Switched to Teachers page");
                 return true;
             case PAGE_SETTINGS:
@@ -360,6 +490,12 @@ public class MainActivity extends AppCompatActivity
 
                 //collapse toolbar
                 //appBarLayout.setExpanded(false);
+
+                //analytics
+                Bundle bundle4 = new Bundle();
+                bundle4.putString(FirebaseAnalytics.Param.ITEM_NAME, "Settings");
+                bundle4.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle4);
 
                 Log.d(TAG, "Switched to Settings page");
                 return true;
@@ -382,7 +518,61 @@ public class MainActivity extends AppCompatActivity
                 //expand toolbar
                 /*appBarLayout.setExpanded(true);*/
 
+                //analytics
+                Bundle bundle5 = new Bundle();
+                bundle5.putString(FirebaseAnalytics.Param.ITEM_NAME, "Resources");
+                bundle5.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle5);
+
                 Log.d(TAG, "Switched to Resources page");
+                return true;
+            case PAGE_DEBUG:
+                //switch fragment
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
+                        .replace(R.id.fragment_container, new DebugFragment())
+                        .commit();
+                //set page variable
+                navigationPage = PAGE_DEBUG;
+
+                //configure FAB & header for new page
+                setupFabForPage(PAGE_DEBUG);
+                setupAppbarForPage(PAGE_DEBUG);
+
+                //set selected item in drawer, for switching pages programmatically
+                navigationView.setCheckedItem(R.id.drawer_debug);
+
+                //expand toolbar
+                /*appBarLayout.setExpanded(true);*/
+
+                Log.d(TAG, "Switched to Debug page");
+                return true;
+            case PAGE_NEWSLETTER:
+                //switch fragment
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
+                        .replace(R.id.fragment_container, new NewsletterFragment())
+                        .commit();
+                //set page variable
+                navigationPage = PAGE_NEWSLETTER;
+
+                //configure FAB & header for new page
+                setupFabForPage(PAGE_NEWSLETTER);
+                setupAppbarForPage(PAGE_NEWSLETTER);
+
+                //set selected item in drawer, for switching pages programmatically
+                navigationView.setCheckedItem(R.id.drawer_newsletter);
+
+                //expand toolbar
+                /*appBarLayout.setExpanded(true);*/
+
+                //analytics
+                Bundle bundle6 = new Bundle();
+                bundle6.putString(FirebaseAnalytics.Param.ITEM_NAME, "Newsletter");
+                bundle6.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle6);
+
+                Log.d(TAG, "Switched to Newsletter page");
                 return true;
         }
     }
@@ -425,6 +615,20 @@ public class MainActivity extends AppCompatActivity
                 fab.show();
                 Log.d(TAG, "Set up FAB for Resources page");
                 return true;
+            case PAGE_DEBUG:
+                fab.setImageResource(R.drawable.ic_notifications_on);
+                fab.setContentDescription("Test announcement notification");
+                //fab.setVisibility(View.VISIBLE);
+                fab.show();
+                Log.d(TAG, "Set up FAB for Debug page");
+                return true;
+            case PAGE_NEWSLETTER:
+                fab.setImageResource(R.drawable.ic_open_externally);
+                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
+                //fab.setVisibility(View.VISIBLE);
+                fab.show();
+                Log.d(TAG, "Set up FAB for Newsletter page");
+                return true;
         }
     }
     public boolean setupAppbarForPage(int page){
@@ -463,7 +667,7 @@ public class MainActivity extends AppCompatActivity
             case PAGE_SETTINGS:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
                 appbarImage.setVisibility(View.INVISIBLE);
-                if (isTablet){
+                if (isLarge){
                     Log.d(TAG, "Is tablet, not collapsing app bar");
                     appBarLayout.setExpanded(true);
                 } else{
@@ -483,6 +687,20 @@ public class MainActivity extends AppCompatActivity
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Resources page");
                 return true;
+            case PAGE_DEBUG:
+                collapsingToolbarLayout.setTitle(getString(R.string.drawer_debug));
+                appbarImage.setVisibility(View.INVISIBLE);
+                //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                appBarLayout.setExpanded(true);
+                Log.d(TAG, "Set up app bar for Debug page");
+                return true;
+            case PAGE_NEWSLETTER:
+                collapsingToolbarLayout.setTitle(getString(R.string.drawer_newsletter));
+                appbarImage.setVisibility(View.INVISIBLE);
+                //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                appBarLayout.setExpanded(true);
+                Log.d(TAG, "Set up app bar for Newsletter page");
+                return true;
         }
     }
 
@@ -494,7 +712,7 @@ public class MainActivity extends AppCompatActivity
         //save whether app bar is expanded, so I can collapse it again if needed
         //savedInstanceState.putBoolean("appbar_expanded", isAppbarFullyExpanded());
         //workaround for collapsed title being in the wrong place after rotating
-        appBarLayout.setExpanded(true, false);
+        //appBarLayout.setExpanded(true, false);
 
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -535,7 +753,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onFabClick(View view){
-        Log.d(TAG, "FAb clicked");
+        Log.d(TAG, "FAB clicked");
         switch (navigationPage){
             default:
                 Log.d(TAG, "Unknown page");
@@ -543,30 +761,6 @@ public class MainActivity extends AppCompatActivity
             case PAGE_HOME:
                 Log.d(TAG, "Enroll now");
                 openWebUrl("http://www.palmettoscholarsacademy.org/attend-psa/");
-                //Snackbar.make(coordinatorLayout, "Enroll now", Snackbar.LENGTH_SHORT).show();
-
-                /*//resources
-                Resources resources = getResources();
-                Resources systemResources = Resources.getSystem();*/
-
-                //notification settings intent
-                /*Intent settingsIntent = new Intent(getApplicationContext(), MainActivity.class);
-                settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
-                PendingIntent settingsPendingIntent =
-                        PendingIntent.getActivity(
-                                getApplicationContext(),
-                                0,
-                                settingsIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
-                //notification manager
-                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-                mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
-                        PSANotifications.generateAnnouncement(getApplicationContext(),
-                                "No homework",
-                                settingsPendingIntent,
-                                settingsPendingIntent));*/
                 break;
             case PAGE_CONTACT_US:
                 Log.d(TAG, "Calling phone");
@@ -585,6 +779,14 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Opening resources page externally");
                 openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/quick-links/");
                 break;
+            case PAGE_DEBUG:
+                Log.d(TAG, "Testing Announcement notification");
+                //testAnnouncementNotification();
+                break;
+            case PAGE_NEWSLETTER:
+                Log.d(TAG, "Opening newsletters page externally");
+                openWebUrl("http://www.palmettoscholarsacademy.org/psa-parents/newsletter/");
+                break;
         }
     }
 
@@ -596,15 +798,32 @@ public class MainActivity extends AppCompatActivity
         teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
         teacherDetail.putExtra("launched_from_shortcut", false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                    Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
-                    Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
-                    Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
-            );
-            startActivity(teacherDetail, options.toBundle());
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                if (isInMultiWindowMode()){
+                    startActivity(teacherDetail);
+                    Log.d(TAG, "Opening teacher on Nougat+ in multiwindow");
+                } else{
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                            Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                            Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                            Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                    );
+                    startActivity(teacherDetail, options.toBundle());
+                    Log.d(TAG, "Opening teacher on Nougat+");
+                }
+            } else{
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        Pair.create(view.findViewById(R.id.teacherAvatar), "avatar"),
+                        Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                        Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                );
+                startActivity(teacherDetail, options.toBundle());
+                Log.d(TAG, "Opening teacher on Lollipop+");
+            }
         } else{
             startActivity(teacherDetail);
+            Log.d(TAG, "Opening teacher on Kitkat-");
         }
     }
 
@@ -613,11 +832,107 @@ public class MainActivity extends AppCompatActivity
         openWebUrl(url);
     }
 
+    public void testNotifications(View view){
+        switch (view.getId()){
+            /*case R.id.button_debug_announcement:
+                //testAnnouncementNotification();
+                //MyFirebaseMessagingService.
+                break;
+            case R.id.button_debug_newsletter:
+                testNewsletterNotification();
+                break;*/
+            case R.id.button_debug_subscribe:
+                FirebaseMessaging.getInstance().subscribeToTopic("debug");
+                Toast.makeText(this, "Subscribed to debug notifications", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.button_debug_unsubscribe:
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("debug");
+                Toast.makeText(this, "Unsubscribed from debug notifications", Toast.LENGTH_SHORT).show();
+                break;
+            /*case R.id.button_debug_httppost:
+                Log.d(TAG, "Trying HTTP POST");
+                try {
+                    URL url = new URL("https://fcm.googleapis.com/fcm/send");
+                    HttpURLConnection client = (HttpURLConnection) url.openConnection();
+                    client.setRequestMethod("POST");
+                    //client.setRequestMode("POST");
+                    //client.setRequestProperty(“Key”,”Value”);
+                    client.addRequestProperty("");
+                    client.setDoOutput(true);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }*/
+        }
+    }
+    /*private void testAnnouncementNotification(){
+        //notification settings intent
+        Intent settingsIntent = new Intent(this, MainActivity.class);
+        settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+        PendingIntent settingsPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        0,
+                        settingsIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        //notification content intent
+        Intent contentIntent = new Intent(this, MainActivity.class);
+        //settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+        PendingIntent contentPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        1,
+                        contentIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        //notification
+        Notification announcementNotif = PSANotifications.generateAnnouncement(this,
+                "No homework",
+                contentPendingIntent,
+                settingsPendingIntent);
+        //notification manager
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_ANNOUNCEMENT,
+                announcementNotif);
+    }*/
+    /*private void testNewsletterNotification(){
+        //notification settings intent
+        Intent settingsIntent = new Intent(this, MainActivity.class);
+        settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+        PendingIntent settingsPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        0,
+                        settingsIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        //notification content intent
+        Intent contentIntent = new Intent(this, MainActivity.class);
+        //settingsIntent.putExtra("navigation_page", PAGE_SETTINGS);
+        PendingIntent contentPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        1,
+                        contentIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        //notification
+        Notification newsletterNotif = PSANotifications.generateNewsletter(this,
+                "No homework",
+                contentPendingIntent,
+                contentPendingIntent,
+                settingsPendingIntent);
+        //notification manager
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(PSANotifications.NOTIFICATION_ID_NEWSLETTER,
+                newsletterNotif);
+    }*/
+
     @Override
     public void onResume(){
         super.onResume();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                && !ConfigUtils.isTablet(this)){
+                && !ConfigUtils.isLarge(this)){
             getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
         }
     }
@@ -648,9 +963,19 @@ public class MainActivity extends AppCompatActivity
             case R.id.drawer_resources:
                 switchNavigationPage(PAGE_RESOURCES);
                 break;
+            case R.id.drawer_debug:
+                Log.d(TAG, "Opened Debug Mode page");
+                switchNavigationPage(PAGE_DEBUG);
+                break;
+            case R.id.drawer_notifications:
+                openWebUrl("https://docs.google.com/document/d/1AVYG-oGyeHVFlNVwbXeZwR8t44Z-MCTmdSWwsmMN79k/edit");
+                return false;
+            case R.id.drawer_newsletter:
+                switchNavigationPage(PAGE_NEWSLETTER);
+                break;
         }
 
-        if (!ConfigUtils.isTablet(this)){
+        if (!isLarge){
             Log.d(TAG, "Isn't tablet, closing drawer");
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -660,7 +985,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (!ConfigUtils.isTablet(this)){
+        if (!ConfigUtils.isLarge(this)){
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 Log.d(TAG, "Back pressed, closing nav drawer");
@@ -700,20 +1025,13 @@ public class MainActivity extends AppCompatActivity
 
     private boolean openWebUrl(String url){
         Uri webpage = Uri.parse(url);
-        /*Intent open = new Intent(Intent.ACTION_VIEW, webpage);
-        if (open.resolveActivity(getPackageManager()) != null) {
-            startActivity(open);
-            return true;
-        } else{
-            return false;
-        }*/
         CustomTabsIntent.Builder customTabBuilder = new CustomTabsIntent.Builder();
         customTabBuilder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         CustomTabsIntent customTabsIntent = customTabBuilder.build();
         customTabsIntent.launchUrl(this, webpage);
         return true;
     }
-    public static boolean openWebUrl(Context context, String url){
+    public static boolean openWebUrlExternally(Context context, String url){
         Uri webpage = Uri.parse(url);
         Intent open = new Intent(Intent.ACTION_VIEW, webpage);
         if (open.resolveActivity(context.getPackageManager()) != null) {

@@ -158,6 +158,8 @@ public class ResourcesRecyclerAdapter extends RecyclerView.Adapter<ResourcesRecy
         if (position < mDataSet.size() - 1){
             if (mDataSet.get(position + 1).getInt(KEY_TYPE, TYPE_SUBHEADER) == TYPE_SUBHEADER){ //next item is a subheader
                 viewHolder.getDivider().setVisibility(View.VISIBLE);
+            } else{
+                viewHolder.getDivider().setVisibility(View.INVISIBLE);
             }
         }
     }
