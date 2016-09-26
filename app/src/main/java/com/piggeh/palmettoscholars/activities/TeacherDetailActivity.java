@@ -1,6 +1,7 @@
 package com.piggeh.palmettoscholars.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -32,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.fragments.TeachersFragment;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -93,6 +95,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         //databaseReference = FirebaseDatabase.getInstance().getReference(getIntent().getStringExtra(TeacherConstants.KEY_INDEX));
         Firebase myFirebaseRef = new Firebase(getIntent().getStringExtra(TeacherConstants.KEY_INDEX));
         Query queryRef = myFirebaseRef;
+        final Context context = this;
         queryRef.addChildEventListener(new com.firebase.client.ChildEventListener() {
             @Override
             public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
@@ -119,10 +122,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         bioProgressBar.setVisibility(View.GONE);
                         break;
                     case "avatar":
-                        /*teacherAvatarUrl = (String) dataSnapshot.getValue();
-                        if (!teacherAvatarUrl.equals("none")){
-                            avatarImage.setImageURI(Uri.parse(teacherAvatarUrl));
-                        }*/
+                        Picasso.with(context).load((String) dataSnapshot.getValue()).placeholder(R.drawable.avatar_missing).error(R.drawable.avatar_failed).into(avatarImage);
                         break;
                 }
             }

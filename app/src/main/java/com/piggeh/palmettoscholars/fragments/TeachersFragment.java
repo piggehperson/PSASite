@@ -3,6 +3,8 @@ package com.piggeh.palmettoscholars.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -36,6 +38,7 @@ import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
 import com.piggeh.palmettoscholars.adapters.TeachersRecyclerAdapter;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.classes.TeacherData;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -130,7 +133,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                         teacherHolder.getDivider().setVisibility(View.VISIBLE);
                     }
 
-
+                    Picasso.with(getContext()).load(teacherData.getAvatar()).placeholder(R.drawable.avatar_missing).error(R.drawable.avatar_failed).into(teacherHolder.getAvatarView());
 
                     teacherHolder.getRootview().setOnClickListener(new View.OnClickListener() {
                         @Override

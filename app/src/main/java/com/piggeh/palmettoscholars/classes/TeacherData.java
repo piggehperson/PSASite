@@ -1,7 +1,5 @@
 package com.piggeh.palmettoscholars.classes;
 
-import android.graphics.drawable.Drawable;
-
 public class TeacherData {
     private String name;
     private String subject;
@@ -11,7 +9,6 @@ public class TeacherData {
     private String bio;
     private String identifier;
     private String avatar;
-    private Drawable avatarImage;
 
     public TeacherData(){}
 
@@ -38,7 +35,4 @@ public class TeacherData {
 
     public void setAvatar(String avatar){this.avatar = avatar;}
     public String getAvatar(){return avatar;}
-
-    public void setAvatarImage(Drawable avatarImage){this.avatarImage = avatarImage;}
-    public Drawable getAvatarImage(){return avatarImage;}
 }
