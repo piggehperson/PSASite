@@ -5,6 +5,7 @@
 
     <!--Bools used for configuration checking-->
     <bool name="configuration_islarge">false</bool>
+    <bool name="configuration_isxlarge">false</bool>
 
     <bool name="preference_notif_announcements_default">true</bool>
     <bool name="preference_notif_newsletter_default">false</bool>

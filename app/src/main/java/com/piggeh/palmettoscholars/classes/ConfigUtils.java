@@ -11,6 +11,9 @@ public class ConfigUtils {
     public static boolean isLarge(Context context){
         return context.getResources().getBoolean(R.bool.configuration_islarge);
     }
+    public static boolean isXLarge(Context context){
+        return context.getResources().getBoolean(R.bool.configuration_isxlarge);
+    }
     public static boolean hasTouch(Context context){
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN);
     }

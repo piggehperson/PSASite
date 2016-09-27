@@ -4,12 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.adapters.HomeRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -24,6 +29,10 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView recyclerView;
+    private HomeRecyclerAdapter recyclerAdapter;
+    private LinearLayoutManager layoutManager;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -50,29 +59,50 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            /*mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);*/
-        }
+        recyclerAdapter = new HomeRecyclerAdapter(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        /*return inflater.inflate(R.layout.fragment_home, container, false);*/
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //progressBarLoadingResources.setVisibility(View.GONE);
+        recyclerView = (RecyclerView) root.findViewById(R.id.recycler_home);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setHasFixedSize(true);
+        //recyclerView.addItemDecoration(new RecyclerItemDivider(getContext()));
+        // Inflate the layout for this fragment
+        return root;
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState){
+        outState.putParcelable("recycler_state", layoutManager.onSaveInstanceState());
+        super.onSaveInstanceState(outState);
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(recyclerAdapter);
+
+        if (savedInstanceState != null){
+            layoutManager.onRestoreInstanceState(savedInstanceState.getParcelable("recycler_state"));
+        }
+    }
+
+    /*@Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        ImageView banner = (ImageView) view.findViewById(R.id.imageView_ourMission);
-        Picasso.with(getContext())
-                .load("http://www.palmettoscholarsacademy.org/wp-content/uploads/2016/07/school-exterior.jpg")
-                .fit()
-                .centerCrop()
-                .into(banner);
-    }
+
+    }*/
 
     @Override
     public void onAttach(Context context) {

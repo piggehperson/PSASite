@@ -37,6 +37,9 @@
         of intellectually gifted learners, address their distinctive social and emotional needs, promote individual character development,
     and instill a life-long love of learning.</string>
 
+    <string name="home_openhours_header">Open hours</string>
+    <string name="home_openhours">8:00 A.M. to 4:00 P.M. on weekdays\nClosed on weekends</string>
+
     <!--Strings used on Contact Us screen-->
     <string name="contact_phone">Phone</string>
     <string name="contact_phone_number">843&#8211;300&#8211;4118</string>
