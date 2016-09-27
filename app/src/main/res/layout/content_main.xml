@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/coordinatorLayout">
+    android:id="@+id/coordinatorLayout"
+    android:fitsSystemWindows="false">
 
     <!--<include layout="@layout/appbar_main"/>-->
     <android.support.design.widget.AppBarLayout android:layout_width="match_parent"
@@ -16,6 +17,7 @@
             android:layout_height="match_parent"
             android:id="@+id/collapsingToolbarLayout"
             app:contentScrim="@color/colorPrimary"
+            app:statusBarScrim="@android:color/transparent"
             app:title="@string/toolbar_title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="250">
@@ -67,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fragment_container"
+        android:fitsSystemWindows="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
