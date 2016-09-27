@@ -644,7 +644,9 @@ public class MainActivity extends AppCompatActivity
             case PAGE_HOME:
                 collapsingToolbarLayout.setTitle(getString(R.string.toolbar_title));
                 appbarImage.setVisibility(View.INVISIBLE);
-                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                if (!isLarge){
+                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                }
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Home page");
                 return true;
@@ -652,7 +654,9 @@ public class MainActivity extends AppCompatActivity
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_contactus));
                 //TODO: Maybe make banner image for Contact Us page
                 appbarImage.setVisibility(View.INVISIBLE);
-                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                if (!isLarge){
+                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                }
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Contact page");
                 return true;
@@ -660,7 +664,9 @@ public class MainActivity extends AppCompatActivity
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_teachers));
                 //TODO: Make banner image for Teachers page
                 appbarImage.setVisibility(View.INVISIBLE);
-                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                if (!isLarge){
+                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                }
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Teachers page");
                 return true;
@@ -677,20 +683,26 @@ public class MainActivity extends AppCompatActivity
                         appBarLayout.setExpanded(false);
                     }
                 }
-                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                if (!isLarge){
+                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                }
                 Log.d(TAG, "Set up app bar for Settings page");
                 return true;
             case PAGE_RESOURCES:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_resources));
                 appbarImage.setVisibility(View.INVISIBLE);
-                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                if (!isLarge){
+                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                }
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Resources page");
                 return true;
             case PAGE_DEBUG:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_debug));
                 appbarImage.setVisibility(View.INVISIBLE);
-                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                if (!isLarge){
+                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                }
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Debug page");
                 return true;
