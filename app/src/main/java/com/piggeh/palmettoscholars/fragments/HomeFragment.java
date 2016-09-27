@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.piggeh.palmettoscholars.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,17 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        ImageView banner = (ImageView) view.findViewById(R.id.imageView_ourMission);
+        Picasso.with(getContext())
+                .load("http://www.palmettoscholarsacademy.org/wp-content/uploads/2016/07/school-exterior.jpg")
+                .fit()
+                .centerCrop()
+                .into(banner);
     }
 
     @Override

@@ -58,6 +58,7 @@ import com.piggeh.palmettoscholars.fragments.TeachersFragment;
 import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
 import com.piggeh.palmettoscholars.services.MyFirebaseMessagingService;
 import com.piggeh.palmettoscholars.utils.PreferenceKeys;
+import com.squareup.picasso.Picasso;
 /*import com.piggeh.palmettoscholars.utils.PSANotifications;
 
 import java.net.HttpURLConnection;
@@ -651,32 +652,32 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Set up app bar for Home page");
                 return true;
             case PAGE_CONTACT_US:
-                collapsingToolbarLayout.setTitle(getString(R.string.drawer_contactus));
                 //TODO: Maybe make banner image for Contact Us page
                 appbarImage.setVisibility(View.INVISIBLE);
                 if (!isLarge){
+                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_contactus));
                     params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 }
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Contact page");
                 return true;
             case PAGE_TEACHERS:
-                collapsingToolbarLayout.setTitle(getString(R.string.drawer_teachers));
                 //TODO: Make banner image for Teachers page
                 appbarImage.setVisibility(View.INVISIBLE);
                 if (!isLarge){
+                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_teachers));
                     params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 }
                 appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Teachers page");
                 return true;
             case PAGE_SETTINGS:
-                collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
                 appbarImage.setVisibility(View.INVISIBLE);
                 if (isLarge){
                     Log.d(TAG, "Is tablet, not collapsing app bar");
                     appBarLayout.setExpanded(true);
                 } else{
+                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
                     if (recreated){
                         appBarLayout.setExpanded(true);
                     } else{
@@ -690,24 +691,35 @@ public class MainActivity extends AppCompatActivity
                 return true;
             case PAGE_RESOURCES:
                 collapsingToolbarLayout.setTitle(getString(R.string.drawer_resources));
-                appbarImage.setVisibility(View.INVISIBLE);
+                appBarLayout.setExpanded(true);
                 if (!isLarge){
                     params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                    appbarImage.setVisibility(View.VISIBLE);
+                    Picasso.with(this)
+                            .load("http://peterglaab.com/wp-content/uploads/2016/09/Resources-small.jpg")
+                            .into(appbarImage);
                 }
-                appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Resources page");
                 return true;
             case PAGE_DEBUG:
-                collapsingToolbarLayout.setTitle(getString(R.string.drawer_debug));
-                appbarImage.setVisibility(View.INVISIBLE);
+
+                appbarImage.setVisibility(View.VISIBLE);
                 if (!isLarge){
+                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_debug));
                     params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 }
                 appBarLayout.setExpanded(true);
+                Picasso.with(this)
+                        .load("https://media.giphy.com/media/UHKL9BtyM4WrK/giphy.gif")
+                        .fit()
+                        .centerCrop()
+                        .into(appbarImage);
                 Log.d(TAG, "Set up app bar for Debug page");
                 return true;
             case PAGE_NEWSLETTER:
-                collapsingToolbarLayout.setTitle(getString(R.string.drawer_newsletter));
+                if (!isLarge){
+                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_newsletter));
+                }
                 appbarImage.setVisibility(View.INVISIBLE);
                 params.setScrollFlags(0);
                 appBarLayout.setExpanded(true);
