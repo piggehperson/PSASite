@@ -39,6 +39,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
         private final CardView cardOurMission;
         private final CardView cardOpenHours;
+        private final CardView cardApplyNow;
 
         public ViewHolder(View v) {
             super(v);
@@ -54,6 +55,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             //v.setOnClickListener(this);
             cardOurMission = (CardView) v.findViewById(R.id.card_ourMission);
             cardOpenHours = (CardView) v.findViewById(R.id.card_openhours);
+            cardApplyNow = (CardView) v.findViewById(R.id.card_applyNow);
         }
 
         public CardView getCardOurMission() {
@@ -63,12 +65,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         public CardView getCardOpenHours() {
             return cardOpenHours;
         }
-        /*@Override
-        public void onClick(View v)
-        {
-            //mItemListener.onRecyclerItemClick(v, this.getAdapterPosition(), (String)getHiddenData().getText());
-            Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
-        }*/
+
+        public CardView getCardApplyNow() {
+            return cardApplyNow;
+        }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
 
@@ -98,6 +98,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             case 0:
                 viewHolder.getCardOurMission().setVisibility(View.VISIBLE);
                 viewHolder.getCardOpenHours().setVisibility(View.GONE);
+                viewHolder.getCardApplyNow().setVisibility(View.GONE);
                 ImageView banner = (ImageView) viewHolder.getCardOurMission().findViewById(R.id.imageView_ourMission);
                 Picasso.with(mContext)
                         .load("http://www.palmettoscholarsacademy.org/wp-content/uploads/2016/07/school-exterior.jpg")
@@ -108,11 +109,17 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             case 1:
                 viewHolder.getCardOurMission().setVisibility(View.GONE);
                 viewHolder.getCardOpenHours().setVisibility(View.VISIBLE);
+                viewHolder.getCardApplyNow().setVisibility(View.GONE);
 
                 //check current time against open hours
                 if (isPSAOpen()){
                     ((TextView)viewHolder.getCardOpenHours().findViewById(R.id.textView_hoursHeader)).setText(R.string.home_psa_is_open);
                 }
+                break;
+            case 2:
+                viewHolder.getCardOurMission().setVisibility(View.GONE);
+                viewHolder.getCardOpenHours().setVisibility(View.GONE);
+                viewHolder.getCardApplyNow().setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -121,7 +128,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return 2/*mDataSet.size()*/;
+        return 3/*mDataSet.size()*/;
     }
 
     private boolean isPSAOpen(){

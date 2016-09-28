@@ -607,6 +607,9 @@ public class MainActivity extends AppCompatActivity
             case PAGE_SETTINGS:
                 fab.setImageResource(R.drawable.ic_check);
                 fab.setContentDescription(getString(R.string.accessibility_fab_done));
+                if (isLarge){
+                    fab.hide();
+                }
                 Log.d(TAG, "Set up FAB for Settings page");
                 return true;
             case PAGE_RESOURCES:
