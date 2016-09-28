@@ -731,6 +731,13 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void openSettings(View view){
+        switchNavigationPage(PAGE_SETTINGS);
+    }
+    public void newsletterEmails(View view){
+        openWebUrl("https://palmettoscholarsacademy.us4.list-manage.com/subscribe?u=96897800bc040556edb4d8d9c&id=2c6db3f60b");
+    }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         //save navigation page for setting up FAB again

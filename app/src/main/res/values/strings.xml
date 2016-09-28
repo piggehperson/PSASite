@@ -43,8 +43,13 @@
     <string name="home_openhours_text">Open 8:00 A.M. to 4:00 P.M. Monday-Friday\nClosed on weekends</string>
     
     <string name="home_apply_title">Enroll for 6th-12th grade</string>
-    <string name="home_apply_text">PSA is open to all students in SC who are eligible for 6th – 12th grade.</string>
+    <string name="home_apply_text">PSA is open to all students in SC who are eligible for 6th – 12th grade</string>
     <string name="home_apply_now">Apply now</string>
+
+    <string name="home_newsletter_title">School newsletter</string>
+    <string name="home_newsletter_text">To stay updated, sign up for the weekly Principal\'s Desk Newsletter</string>
+    <string name="home_newsletter_email">Alert me by email</string>
+    <string name="home_newsletter_push">Alert me with app notifications</string>
 
     <!--Strings used on Contact Us screen-->
     <string name="contact_phone">Phone</string>

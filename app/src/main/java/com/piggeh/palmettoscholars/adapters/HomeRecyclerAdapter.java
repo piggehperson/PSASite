@@ -40,6 +40,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         private final CardView cardOurMission;
         private final CardView cardOpenHours;
         private final CardView cardApplyNow;
+        private final CardView cardNewsletters;
 
         public ViewHolder(View v) {
             super(v);
@@ -56,6 +57,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             cardOurMission = (CardView) v.findViewById(R.id.card_ourMission);
             cardOpenHours = (CardView) v.findViewById(R.id.card_openhours);
             cardApplyNow = (CardView) v.findViewById(R.id.card_applyNow);
+            cardNewsletters = (CardView) v.findViewById(R.id.card_newsletters);
         }
 
         public CardView getCardOurMission() {
@@ -68,6 +70,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
         public CardView getCardApplyNow() {
             return cardApplyNow;
+        }
+
+        public CardView getCardNewsletters() {
+            return cardNewsletters;
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
@@ -99,6 +105,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 viewHolder.getCardOurMission().setVisibility(View.VISIBLE);
                 viewHolder.getCardOpenHours().setVisibility(View.GONE);
                 viewHolder.getCardApplyNow().setVisibility(View.GONE);
+                viewHolder.getCardNewsletters().setVisibility(View.GONE);
                 ImageView banner = (ImageView) viewHolder.getCardOurMission().findViewById(R.id.imageView_ourMission);
                 Picasso.with(mContext)
                         .load("http://www.palmettoscholarsacademy.org/wp-content/uploads/2016/07/school-exterior.jpg")
@@ -110,6 +117,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 viewHolder.getCardOurMission().setVisibility(View.GONE);
                 viewHolder.getCardOpenHours().setVisibility(View.VISIBLE);
                 viewHolder.getCardApplyNow().setVisibility(View.GONE);
+                viewHolder.getCardNewsletters().setVisibility(View.GONE);
 
                 //check current time against open hours
                 if (isPSAOpen()){
@@ -120,6 +128,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 viewHolder.getCardOurMission().setVisibility(View.GONE);
                 viewHolder.getCardOpenHours().setVisibility(View.GONE);
                 viewHolder.getCardApplyNow().setVisibility(View.VISIBLE);
+                viewHolder.getCardNewsletters().setVisibility(View.GONE);
+                break;
+            case 3:
+                viewHolder.getCardOurMission().setVisibility(View.GONE);
+                viewHolder.getCardOpenHours().setVisibility(View.GONE);
+                viewHolder.getCardApplyNow().setVisibility(View.GONE);
+                viewHolder.getCardNewsletters().setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -128,7 +143,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return 3/*mDataSet.size()*/;
+        return 4/*mDataSet.size()*/;
     }
 
     private boolean isPSAOpen(){
