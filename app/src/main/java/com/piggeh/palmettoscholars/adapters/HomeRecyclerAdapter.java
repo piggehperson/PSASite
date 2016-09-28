@@ -18,7 +18,11 @@ import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.MainActivity;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by peter on 9/12/2016.
@@ -104,6 +108,11 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             case 1:
                 viewHolder.getCardOurMission().setVisibility(View.GONE);
                 viewHolder.getCardOpenHours().setVisibility(View.VISIBLE);
+
+                //check current time against open hours
+                if (isPSAOpen()){
+                    ((TextView)viewHolder.getCardOpenHours().findViewById(R.id.textView_hoursHeader)).setText(R.string.home_psa_is_open);
+                }
                 break;
         }
     }
@@ -113,5 +122,39 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     @Override
     public int getItemCount() {
         return 2/*mDataSet.size()*/;
+    }
+
+    private boolean isPSAOpen(){
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        if (day == Calendar.SUNDAY
+                || day == Calendar.SATURDAY){
+            return false;
+        }
+
+        try {
+            String string1 = "08";
+            Date time1 = new SimpleDateFormat("HH").parse(string1);
+            Calendar openCalendar = Calendar.getInstance();
+            openCalendar.setTime(time1);
+
+            String string2 = "16";
+            Date time2 = new SimpleDateFormat("HH").parse(string2);
+            Calendar closeCalendar = Calendar.getInstance();
+            closeCalendar.setTime(time2);
+            closeCalendar.add(Calendar.DATE, 1);
+
+            String someRandomTime = String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+            Date d = new SimpleDateFormat("HH").parse(someRandomTime);
+            Calendar calendar3 = Calendar.getInstance();
+            calendar3.setTime(d);
+            calendar3.add(Calendar.DATE, 1);
+
+            Date x = calendar3.getTime();
+            return (x.after(openCalendar.getTime()) && x.before(closeCalendar.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
