@@ -23,7 +23,8 @@
                 app:layout_widthPercent="100%"
                 app:layout_aspectRatio="178%"
                 android:id="@+id/imageView_ourMission"
-                android:src="@color/colorAccentLighter"/>
+                android:src="@color/colorAccentLighter"
+                android:contentDescription="@string/accessbility_home_banner"/>
 
             <TextView
                 android:layout_width="match_parent"
