@@ -35,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.TeacherDetailActivity;
 import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
-import com.piggeh.palmettoscholars.adapters.TeachersRecyclerAdapter;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.classes.TeacherData;
 import com.squareup.picasso.Picasso;
@@ -44,7 +43,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TeachersFragment extends Fragment
-implements TeachersRecyclerAdapter.RecyclerItemClickListener {
+/*implements TeachersRecyclerAdapter.RecyclerItemClickListener*/ {
     private static final String TAG = "TeachersFragment";
 
     private OnTeacherClickListener mListener;
@@ -245,7 +244,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     public static final String SORT_MODE_NAME = "name";
     public static final String SORT_MODE_CATEGORY = "category";
 
-    private ArrayList<Bundle> queryTeachers(String sortBy){
+    /*private ArrayList<Bundle> queryTeachers(String sortBy){
         ArrayList<Bundle> bundles = new ArrayList<>();
         String[] names;
         int[] categories;
@@ -258,7 +257,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
             //sort by name
             Query teachersNameQuery = teachersDatabaseReference.orderByChild("name");
 
-            /*teachersNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            *//*teachersNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot teacherSnapshot: dataSnapshot.getChildren()) {
@@ -274,15 +273,15 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                     Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                     // ...
                 }
-            });*/
+            });*//*
         }
         return bundles;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onRecyclerItemClick(View view, int position, String teacherName){
         mListener.onTeacherClick(view, position);
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {
