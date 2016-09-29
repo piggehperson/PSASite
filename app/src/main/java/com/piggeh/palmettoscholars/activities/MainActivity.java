@@ -697,10 +697,10 @@ public class MainActivity extends AppCompatActivity
                 appBarLayout.setExpanded(true);
                 if (!isLarge){
                     params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
-                    appbarImage.setVisibility(View.VISIBLE);
-                    Picasso.with(this)
+                    appbarImage.setVisibility(View.INVISIBLE);
+                    /*Picasso.with(this)
                             .load("http://peterglaab.com/wp-content/uploads/2016/09/Resources-small.jpg")
-                            .into(appbarImage);
+                            .into(appbarImage);*/
                 }
                 Log.d(TAG, "Set up app bar for Resources page");
                 return true;
