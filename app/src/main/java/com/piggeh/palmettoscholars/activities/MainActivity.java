@@ -339,8 +339,6 @@ public class MainActivity extends AppCompatActivity
             demoApp.setMessage(R.string.dialog_demo_message);
             demoApp.setPositiveButton(R.string.dialog_action_ok, null);
             demoApp.show();
-
-            FirebaseMessaging.getInstance().unsubscribeFromTopic("debug");
         }
 
         try{

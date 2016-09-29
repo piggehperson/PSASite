@@ -123,6 +123,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 if (isPSAOpen()){
                     ((TextView)viewHolder.getCardOpenHours().findViewById(R.id.textView_hoursHeader)).setText(R.string.home_psa_is_open);
                 }
+                ImageView frontDesk = (ImageView) viewHolder.getCardOpenHours().findViewById(R.id.imageView_openHours);
+                Picasso.with(mContext)
+                        .load("http://www.palmettoscholarsacademy.org/wp-content/uploads/2016/07/school-exterior.jpg")
+                        .fit()
+                        .centerCrop()
+                        .into(frontDesk);
                 break;
             case 2:
                 viewHolder.getCardOurMission().setVisibility(View.GONE);

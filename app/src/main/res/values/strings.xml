@@ -143,6 +143,5 @@
 
     <string name="accessiblity_appbarimage">App bar background image</string>
     <string name="accessbility_home_banner">Front of school building</string>
-
-
+    <string name="accessbility_home_hours">Front desk</string>
 </resources>
