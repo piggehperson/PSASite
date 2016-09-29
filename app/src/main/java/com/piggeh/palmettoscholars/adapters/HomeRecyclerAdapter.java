@@ -129,7 +129,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 }
                 ImageView frontDesk = (ImageView) viewHolder.getCardOpenHours().findViewById(R.id.imageView_openHours);
                 Picasso.with(mContext)
-                        .load("http://www.palmettoscholarsacademy.org/wp-content/uploads/2016/07/school-exterior.jpg")
+                        .load("http://peterglaab.com/wp-content/uploads/2016/09/BusinessHours2-small.jpg")
                         .fit()
                         .centerCrop()
                         .into(frontDesk);
