@@ -735,6 +735,9 @@ public class MainActivity extends AppCompatActivity
     public void newsletterEmails(View view){
         openWebUrl("https://palmettoscholarsacademy.us4.list-manage.com/subscribe?u=96897800bc040556edb4d8d9c&id=2c6db3f60b");
     }
+    public void psaStore(View view){
+        openWebUrl("http://psaphoenix.qbstores.com/");
+    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){

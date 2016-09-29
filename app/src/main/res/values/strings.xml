@@ -51,6 +51,10 @@
     <string name="home_newsletter_email">Alert me by email</string>
     <string name="home_newsletter_push">Alert me with app notifications</string>
 
+    <string name="home_merch_title">PSA merchandise</string>
+    <string name="home_merch_text">Support our Parent Community Association by buying spirit items such as sweaters, jackets, and  t-shirts</string>
+    <string name="home_merch_open">PSA store</string>
+
     <!--Strings used on Contact Us screen-->
     <string name="contact_phone">Phone</string>
     <string name="contact_phone_number">843&#8211;300&#8211;4118</string>
