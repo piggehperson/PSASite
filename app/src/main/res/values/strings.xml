@@ -71,6 +71,7 @@
     <string name="contact_location">Address</string>
     <string name="contact_location_address_street">7499 Dorchester Road</string>
     <string name="contact_location_address_city">North Charleston, SC 29418</string>
+    <string name="contact_location_address_full">7499 Dorchester Road\nNorth Charleston, SC 29418</string>
     <string name="contact_fax">Fax</string>
     <string name="contact_fax_number">843&#8211;300&#8211;4123</string>
 

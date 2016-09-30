@@ -34,10 +34,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:id="@+id/relativeLayout_phoneHeader">
-                <android.support.v7.widget.AppCompatImageView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_call"
+                    android:src="@drawable/ic_call"
                     style="@style/ClickableIconTiny"
                     android:layout_margin="16dp"
                     android:layout_centerVertical="true"

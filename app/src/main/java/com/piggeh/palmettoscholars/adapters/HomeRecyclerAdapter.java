@@ -128,6 +128,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                     ((TextView)viewHolder.getCardOpenHours().findViewById(R.id.textView_hoursHeader)).setText(R.string.home_psa_is_open);
                 }
                 ImageView frontDesk = (ImageView) viewHolder.getCardOpenHours().findViewById(R.id.imageView_openHours);
+                //TODO: Get a better picture of the front desk
+                //TODO: Get a picture of nobody at the front desk
                 Picasso.with(mContext)
                         .load("http://peterglaab.com/wp-content/uploads/2016/09/BusinessHours2-small.jpg")
                         .fit()
