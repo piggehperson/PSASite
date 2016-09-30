@@ -47,6 +47,7 @@
         android:id="@+id/button_contact_recycler"
         android:text="Action"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:onClick="contactButtonClicked"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin" />
     <View
