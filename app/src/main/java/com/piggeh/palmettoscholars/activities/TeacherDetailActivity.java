@@ -342,7 +342,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private void addShortcut(){
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setTitle(R.string.dialog_adding_shortcut);
+        progressDialog.setMessage(getString(R.string.dialog_adding_shortcut));
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         Intent shortcutIntent = new Intent(this, TeacherDetailActivity.class);
@@ -369,7 +370,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
-                int size = DPUtils.convertDpToPx(46);
+                int size = DPUtils.convertDpToPx(44);
                 addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(getApplicationContext(),
                         R.drawable.avatar_loading));
                 sendBroadcast(addIntent);
