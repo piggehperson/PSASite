@@ -2,16 +2,12 @@ package com.piggeh.palmettoscholars.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.os.ParcelableCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,28 +15,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.TeacherDetailActivity;
 import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.classes.TeacherData;
 import com.squareup.picasso.Picasso;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class TeachersFragment extends Fragment
 /*implements TeachersRecyclerAdapter.RecyclerItemClickListener*/ {
@@ -132,7 +121,7 @@ public class TeachersFragment extends Fragment
                         teacherHolder.getDivider().setVisibility(View.VISIBLE);
                     }
 
-                    Picasso.with(getContext()).load(teacherData.getAvatar()).placeholder(R.drawable.avatar_missing).error(R.drawable.avatar_failed).into(teacherHolder.getAvatarView());
+                    Picasso.with(getContext()).load(teacherData.getAvatar()).placeholder(R.drawable.avatar_loading).error(R.drawable.avatar_failed).into(teacherHolder.getAvatarView());
 
                     teacherHolder.getRootview().setOnClickListener(new View.OnClickListener() {
                         @Override

@@ -37,7 +37,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="@dimen/recycler_item_teacher_avatar_size"
             android:layout_height="@dimen/recycler_item_teacher_avatar_size"
-            android:src="@drawable/avatar_missing"
+            android:src="@drawable/avatar_loading"
             android:layout_marginStart="@dimen/list_item_padding_sides"
             android:layout_marginEnd="@dimen/list_item_padding_sides"
             android:layout_centerVertical="true"

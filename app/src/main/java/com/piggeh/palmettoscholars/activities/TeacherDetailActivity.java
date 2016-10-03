@@ -1,14 +1,10 @@
 package com.piggeh.palmettoscholars.activities;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,19 +16,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
-import com.piggeh.palmettoscholars.fragments.TeachersFragment;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -55,15 +44,15 @@ public class TeacherDetailActivity extends AppCompatActivity {
     //vars
     private boolean launchedFromShortcut = false;
 
-    private DatabaseReference databaseReference;
+    /*private DatabaseReference databaseReference;*/
 
-    private int teacherIndex;
+    /*private int teacherIndex;*/
     private String teacherName;
     private long teacherPrefix = 3;
-    private int teacherCategory;
+    /*private int teacherCategory;*/
     private String teacherEmail;
-    private Bundle teacherDataBundle;
-    private String teacherAvatarUrl;
+    /*private Bundle teacherDataBundle;
+    private String teacherAvatarUrl;*/
     private String bio;
 
     @Override
@@ -122,7 +111,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         bioProgressBar.setVisibility(View.GONE);
                         break;
                     case "avatar":
-                        Picasso.with(context).load((String) dataSnapshot.getValue()).placeholder(R.drawable.avatar_missing).error(R.drawable.avatar_failed).into(avatarImage);
+                        Picasso.with(context).load((String) dataSnapshot.getValue()).placeholder(R.drawable.avatar_loading).error(R.drawable.avatar_failed).into(avatarImage);
                         break;
                 }
             }

@@ -38,7 +38,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:id="@+id/avatarImageHeader"
-                android:src="@drawable/avatar_missing"
+                android:src="@drawable/avatar_loading"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:transitionName="avatar"
