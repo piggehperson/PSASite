@@ -10,12 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -213,15 +216,6 @@ public class TeacherDetailActivity extends AppCompatActivity {
             }
         });*/
 
-        //teacherIndex = getIntent().getIntExtra(TeacherConstants.KEY_INDEX, 0);
-        //get data from bundle
-        /*teacherDataBundle = TeachersFragment.getTeachersFromIndex(this).get(teacherIndex);
-        teacherName = teacherDataBundle.getString(TeacherConstants.KEY_NAME);
-        teacherPrefix = teacherDataBundle.getInt(TeacherConstants.KEY_PREFIX);
-        teacherCategory = teacherDataBundle.getInt(TeacherConstants.KEY_CATEGORY);
-        teacherEmail = teacherDataBundle.getString(TeacherConstants.KEY_EMAIL);
-        teacherAvatarId = teacherDataBundle.getInt(TeacherConstants.KEY_AVATAR);*/
-
         //set up views
         appBarLayout.setExpanded(true);
 
@@ -241,23 +235,6 @@ public class TeacherDetailActivity extends AppCompatActivity {
                 }*/
             }
         });
-
-        //emailView.setText(teacherEmail);
-        //avatarImage.setImageDrawable(ContextCompat.getDrawable(this, teacherAvatarId));
-        /*avatarImage.setImageResource(teacherAvatarId);*/
-        /*if (savedInstanceState == null){
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    bioProgressBar.setVisibility(View.GONE);
-                    bioView.setVisibility(View.VISIBLE);
-                }
-            }, 1000);
-        } else{
-            bioProgressBar.setVisibility(View.GONE);
-            bioView.setVisibility(View.VISIBLE);
-            bioView.setText(savedInstanceState.getString("bio")*//*bio*//*);
-        }*/
     }
 
     private void setupName(){
@@ -295,6 +272,40 @@ public class TeacherDetailActivity extends AppCompatActivity {
         }*/
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_teacher_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menu_add_shortcut_teacher:
+                addShortcut();
+                return true;
+        }
+
+        return false;
+    }
+
+    private String formatName(){
+            if (teacherPrefix == TeacherConstants.PREFIX_DR){
+                return String.format(getString(R.string.teachers_prefix_dr),
+                        teacherName);
+            } else if (teacherPrefix == TeacherConstants.PREFIX_MS){
+                return String.format(getString(R.string.teachers_prefix_ms),
+                        teacherName);
+            } else if (teacherPrefix == TeacherConstants.PREFIX_MRS){
+                return String.format(getString(R.string.teachers_prefix_mrs),
+                        teacherName);
+            } else{
+                return String.format(getString(R.string.teachers_prefix_mr),
+                        teacherName);
+            }
+    }
+
     public void onFabClick(View view){
         Log.d(TAG, "FAB clicked, emailing teacher");
         //define address
@@ -317,6 +328,25 @@ public class TeacherDetailActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.dialog_action_ok, null)
                     .show();
         }
+    }
+
+    private void addShortcut(){
+        Intent shortcutIntent = new Intent(this, TeacherDetailActivity.class);
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+        shortcutIntent.putExtra(TeacherConstants.KEY_INDEX, getIntent().getStringExtra(TeacherConstants.KEY_INDEX));
+        shortcutIntent.putExtra("launched_from_shortcut", true);
+
+        Intent addIntent = new Intent();
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, formatName());
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                        R.drawable.avatar_loading));
+        addIntent.putExtra("duplicate", false);
+        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        sendBroadcast(addIntent);
+
+        Toast.makeText(this, formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
     }
 
     /*@Override

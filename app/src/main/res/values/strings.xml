@@ -127,6 +127,7 @@
     <string name="notif_newsletter_action_open_externally">Open in browser</string>
     <!--Snackbars & Toasts-->
     <string name="popup_demo_comingsoon">Coming soon</string>
+    <string name="toast_shortcut_added"> added to Home screen</string>
 
     <!--Strings used for Settings-->
     <string name="preferencegroup_notif_title">Notifications</string>
