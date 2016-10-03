@@ -8,12 +8,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -118,7 +120,12 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         break;
                     case "bio":
                         bio = (String) dataSnapshot.getValue();
-                        bioView.setText(bio);
+                        //bioView.setText(bio);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                            bioView.setText(Html.fromHtml((String)dataSnapshot.getValue(), Html.FROM_HTML_MODE_COMPACT));
+                        } else{
+                            bioView.setText(Html.fromHtml((String)dataSnapshot.getValue()));
+                        }
                         bioProgressBar.setVisibility(View.GONE);
                         break;
                     case "avatar":

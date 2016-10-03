@@ -160,11 +160,10 @@
                     android:text="@string/contact_email_send"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:onClick="onFabClick"
-                    android:pointerIcon="hand"
                     android:layout_marginStart="72dp"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:enabled="false"
-                    android:layout_below="@id/textView_emailAddress"/>
+                    android:layout_below="@id/textView_emailAddress"/><!--android:pointerIcon="hand"-->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
