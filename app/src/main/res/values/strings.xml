@@ -119,6 +119,7 @@
     <string name="dialog_errorcalling_message">There are no installed apps that can make phone calls.</string>
     <string name="dialog_erroremailing_message">There are no installed apps that can send emails.</string>
     <string name="dialog_errorinternet_message">There are no installed apps that can open web links.</string>
+    <string name="dialog_adding_shortcut">Adding to Home screen</string>
     <!--Notifications-->
     <string name="notif_action_options">Options</string>
     <string name="notif_announcement_title">New PSA announcement</string>

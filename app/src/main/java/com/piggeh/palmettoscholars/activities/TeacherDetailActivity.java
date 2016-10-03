@@ -1,7 +1,12 @@
 package com.piggeh.palmettoscholars.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -24,8 +29,11 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.classes.CircleTransform;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
+import com.piggeh.palmettoscholars.utils.DPUtils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,8 +62,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private long teacherPrefix = 3;
     /*private int teacherCategory;*/
     private String teacherEmail;
-    /*private Bundle teacherDataBundle;
-    private String teacherAvatarUrl;*/
+    //private Bundle teacherDataBundle;
+    private String teacherAvatarUrl;
     private String bio;
 
     @Override
@@ -114,6 +122,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         bioProgressBar.setVisibility(View.GONE);
                         break;
                     case "avatar":
+                        teacherAvatarUrl = (String) dataSnapshot.getValue();
                         Picasso.with(context).load((String) dataSnapshot.getValue()).placeholder(R.drawable.avatar_loading).error(R.drawable.avatar_failed).into(avatarImage);
                         break;
                 }
@@ -331,23 +340,67 @@ public class TeacherDetailActivity extends AppCompatActivity {
     }
 
     private void addShortcut(){
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setTitle(R.string.dialog_adding_shortcut);
+        progressDialog.show();
+
         Intent shortcutIntent = new Intent(this, TeacherDetailActivity.class);
         shortcutIntent.setAction(Intent.ACTION_MAIN);
         shortcutIntent.putExtra(TeacherConstants.KEY_INDEX, getIntent().getStringExtra(TeacherConstants.KEY_INDEX));
         shortcutIntent.putExtra("launched_from_shortcut", true);
 
-        Intent addIntent = new Intent();
+        final Intent addIntent = new Intent();
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, formatName());
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                Intent.ShortcutIconResource.fromContext(getApplicationContext(),
-                        R.drawable.avatar_loading));
         addIntent.putExtra("duplicate", false);
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                int size = DPUtils.convertDpToPx(44);
+                addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
+                sendBroadcast(addIntent);
+
+                progressDialog.hide();
+                Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                int size = DPUtils.convertDpToPx(46);
+                addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                        R.drawable.avatar_loading));
+                sendBroadcast(addIntent);
+
+                progressDialog.hide();
+                Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            }
+        };
+
+        Picasso.with(this).load(teacherAvatarUrl).transform(new CircleTransform()).into(target);
+
+        /*int size = DPUtils.convertDpToPx(46);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(convertToBitmap(avatarImage.getDrawable(), ), size, size, false));
         sendBroadcast(addIntent);
 
-        Toast.makeText(this, formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+        progressDialog.hide();
+        Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();*/
     }
+
+    /*public Bitmap convertToBitmap(Drawable drawable, int widthPixels, int heightPixels) {
+        Bitmap mutableBitmap = Bitmap.createBitmap(widthPixels, heightPixels, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(mutableBitmap);
+        drawable.setBounds(0, 0, widthPixels, heightPixels);
+        drawable.draw(canvas);
+
+        return mutableBitmap;
+    }*/
 
     /*@Override
     public void onSaveInstanceState(Bundle outState){
