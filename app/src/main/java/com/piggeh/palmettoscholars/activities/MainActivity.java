@@ -1099,7 +1099,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Email button clicked");
 
                 //define address
-                String[] addresses =  new String[]{"info@palmettoscholarsacademy.org"};
+                String[] addresses =  new String[]{getString(R.string.contact_email_address)};
 
                 //make intent
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
