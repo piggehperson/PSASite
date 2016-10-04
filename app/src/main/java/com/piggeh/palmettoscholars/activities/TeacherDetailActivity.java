@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -374,11 +376,13 @@ public class TeacherDetailActivity extends AppCompatActivity {
         });
         progressDialog.show();
 
+        final int size = DPUtils.convertDpToPx(44);
+
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 try{
-                    int size = DPUtils.convertDpToPx(44);
+                    //int size = DPUtils.convertDpToPx(44);
                     addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
                     sendBroadcast(addIntent);
 
@@ -391,10 +395,19 @@ public class TeacherDetailActivity extends AppCompatActivity {
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
-                int size = DPUtils.convertDpToPx(44);
+                //int size = DPUtils.convertDpToPx(44);
                 try{
                     addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(getApplicationContext(),
-                            R.drawable.avatar_loading));
+                            R.mipmap.shortcut_no_avatar));
+                    //int size2 = DPUtils.convertDpToPx(44);
+                    /*addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
+                            Bitmap.createScaledBitmap(circleTransform(BitmapFactory.decodeResource(
+                                    getResources(),
+                                    R.drawable.avatar_loading)),
+                                    size,
+                                    size,
+                                    false));*/
+
                     sendBroadcast(addIntent);
 
                     progressDialog.dismiss();
@@ -438,4 +451,29 @@ public class TeacherDetailActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         bio = savedInstanceState.getString("bio");
     }*/
+    public Bitmap circleTransform(Bitmap source) {
+        int size = Math.min(source.getWidth(), source.getHeight());
+
+        int x = (source.getWidth() - size) / 2;
+        int y = (source.getHeight() - size) / 2;
+
+        Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+        if (squaredBitmap != source) {
+            source.recycle();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+        paint.setShader(shader);
+        paint.setAntiAlias(true);
+
+        float r = size/2f;
+        canvas.drawCircle(r, r, r, paint);
+
+        squaredBitmap.recycle();
+        return bitmap;
+    }
 }
