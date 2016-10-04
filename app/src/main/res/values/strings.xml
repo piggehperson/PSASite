@@ -113,6 +113,7 @@
     </string>
 
     <string name="dialog_action_ok">@android:string/ok</string>
+    <string name="dialog_action_cancel">@android:string/cancel</string>
     <string name="dialog_permissiondenied_phone_title">Could not place call</string>
     <string name="dialog_permissiondenied_phone_message">The Phone permission is required to place a call.</string>
     <string name="dialog_errorcalling_title">Something went wrong</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="is_demo">false</bool>
-    <bool name="debug_mode">true</bool>
+    <bool name="debug_mode">false</bool>
 
     <!--Bools used for configuration checking-->
     <bool name="configuration_islarge">false</bool>

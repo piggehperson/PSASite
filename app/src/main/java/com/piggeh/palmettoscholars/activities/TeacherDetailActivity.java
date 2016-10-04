@@ -2,6 +2,7 @@ package com.piggeh.palmettoscholars.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -346,44 +347,60 @@ public class TeacherDetailActivity extends AppCompatActivity {
         }
     }
 
+    public Intent addIntent;
     private void addShortcut(){
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(getString(R.string.dialog_adding_shortcut));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
 
         Intent shortcutIntent = new Intent(this, TeacherDetailActivity.class);
         shortcutIntent.setAction(Intent.ACTION_MAIN);
         shortcutIntent.putExtra(TeacherConstants.KEY_INDEX, getIntent().getStringExtra(TeacherConstants.KEY_INDEX));
         shortcutIntent.putExtra("launched_from_shortcut", true);
 
-        final Intent addIntent = new Intent();
+        /*final Intent */addIntent = new Intent();
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, formatName());
         addIntent.putExtra("duplicate", false);
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
 
+        progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getString(R.string.dialog_action_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                addIntent = null;
+                progressDialog.dismiss();
+            }
+        });
+        progressDialog.show();
+
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                int size = DPUtils.convertDpToPx(44);
-                addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
-                sendBroadcast(addIntent);
+                try{
+                    int size = DPUtils.convertDpToPx(44);
+                    addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
+                    sendBroadcast(addIntent);
 
-                progressDialog.hide();
-                Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
                 int size = DPUtils.convertDpToPx(44);
-                addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(getApplicationContext(),
-                        R.drawable.avatar_loading));
-                sendBroadcast(addIntent);
+                try{
+                    addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                            R.drawable.avatar_loading));
+                    sendBroadcast(addIntent);
 
-                progressDialog.hide();
-                Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
