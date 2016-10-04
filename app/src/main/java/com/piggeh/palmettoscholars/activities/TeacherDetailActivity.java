@@ -352,6 +352,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(getString(R.string.dialog_adding_shortcut));
+        progressDialog.setCancelable(false);
 
         Intent shortcutIntent = new Intent(this, TeacherDetailActivity.class);
         shortcutIntent.setAction(Intent.ACTION_MAIN);
