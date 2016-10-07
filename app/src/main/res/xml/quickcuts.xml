@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut shortcutId="quickcut_announcements"
+        icon="@drawable/qcut_announcements"
+        enabled="true"
+        shortcutShortLabel="@string/drawer_notifications"
+        shortcutLongLabel="@string/drawer_notifications">
+        <intent android:targetPackage="com.piggeh.palmettoscholars"
+            android:targetClass="com.piggeh.palmettoscholars.activities.MainActivity">
+            <extra android:name="navigation_page" android:value="1" />
+        </intent>
+    </shortcut>
+    <shortcut shortcutId="quickcut_teachers"
+        icon="@drawable/qcut_teachers"
+        enabled="true"
+        shortcutShortLabel="@string/drawer_teachers"
+        shortcutLongLabel="@string/drawer_teachers">
+        <intent android:targetPackage="com.piggeh.palmettoscholars"
+            android:targetClass="com.piggeh.palmettoscholars.activities.MainActivity">
+            <extra android:name="navigation_page" android:value="2" />
+        </intent>
+    </shortcut>
+    <shortcut shortcutId="quickcut_resources"
+        icon="@drawable/qcut_resources"
+        enabled="true"
+        shortcutShortLabel="@string/drawer_resources"
+        shortcutLongLabel="@string/drawer_resources">
+        <intent android:targetPackage="com.piggeh.palmettoscholars"
+            android:targetClass="com.piggeh.palmettoscholars.activities.MainActivity">
+            <extra android:name="navigation_page" android:value="3" />
+        </intent>
+    </shortcut>
+    <shortcut shortcutId="quickcut_newsletter"
+        icon="@drawable/qcut_newsletter"
+        enabled="true"
+        shortcutShortLabel="@string/drawer_newsletter"
+        shortcutLongLabel="@string/drawer_newsletter">
+        <intent android:targetPackage="com.piggeh.palmettoscholars"
+            android:targetClass="com.piggeh.palmettoscholars.activities.MainActivity">
+            <extra android:name="navigation_page" android:value="5" />
+        </intent>
+    </shortcut>
+</shortcuts>

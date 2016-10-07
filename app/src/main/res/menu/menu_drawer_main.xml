@@ -16,7 +16,7 @@
             android:id="@+id/drawer_calendar"
             android:icon="@drawable/ic_calendar"/>
         <item android:title="@string/drawer_resources"
-            android:icon="@drawable/ic_resources"
+            android:icon="@drawable/qcut_resources"
             android:id="@+id/drawer_resources"/>
         <item android:id="@+id/drawer_parents"
             android:icon="@drawable/ic_person"
