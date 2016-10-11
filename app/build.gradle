@@ -8,8 +8,8 @@ android {
         applicationId "com.piggeh.palmettoscholars"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 34
-        versionName "0.33"
+        versionCode 35
+        versionName "0.33.1"
     }
     buildTypes {
         release {
@@ -48,5 +48,6 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.5.0'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
+    /*compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'*/
 }
 apply plugin: 'com.google.gms.google-services'

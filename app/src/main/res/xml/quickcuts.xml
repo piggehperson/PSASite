@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut shortcutId="quickcut_announcements"
-        icon="@drawable/qcut_announcements"
+        icon="@mipmap/quickcut_fab_announcements"
         enabled="true"
         shortcutShortLabel="@string/drawer_notifications"
         shortcutLongLabel="@string/drawer_notifications">
@@ -11,7 +11,7 @@
         </intent>
     </shortcut>
     <shortcut shortcutId="quickcut_teachers"
-        icon="@drawable/qcut_teachers"
+        icon="@mipmap/quickcut_fab_teachers"
         enabled="true"
         shortcutShortLabel="@string/drawer_teachers"
         shortcutLongLabel="@string/drawer_teachers">
@@ -21,7 +21,7 @@
         </intent>
     </shortcut>
     <shortcut shortcutId="quickcut_resources"
-        icon="@drawable/qcut_resources"
+        icon="@mipmap/quickcut_fab_resources"
         enabled="true"
         shortcutShortLabel="@string/drawer_resources"
         shortcutLongLabel="@string/drawer_resources">
@@ -31,7 +31,7 @@
         </intent>
     </shortcut>
     <shortcut shortcutId="quickcut_newsletter"
-        icon="@drawable/qcut_newsletter"
+        icon="@mipmap/quickcut_fab_newsletter"
         enabled="true"
         shortcutShortLabel="@string/drawer_newsletter"
         shortcutLongLabel="@string/drawer_newsletter">
