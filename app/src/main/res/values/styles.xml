@@ -11,6 +11,10 @@
         <!--<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>-->
     </style>
 
+    <style name="tintIn">
+
+    </style>
+
     <style name="AppTheme.AppBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">

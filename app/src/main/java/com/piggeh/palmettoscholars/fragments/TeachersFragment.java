@@ -27,6 +27,7 @@ import com.google.firebase.database.Query;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.TeacherDetailActivity;
 import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
+import com.piggeh.palmettoscholars.classes.CircleTransform;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.classes.TeacherData;
 import com.squareup.picasso.Picasso;

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="tintIn">
+        <item name="android:tintMode">src_in</item>
+    </style>
+
     <style name="ClickableIcon">
         <item name="android:background">?selectableItemBackgroundBorderless</item>
         <item name="android:paddingStart">12dp</item>

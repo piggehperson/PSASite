@@ -23,8 +23,7 @@
             android:text="Subheader"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?android:textColorSecondary"/>
+            android:textStyle="bold" />
     </FrameLayout>
 
     <RelativeLayout
@@ -42,7 +41,7 @@
             android:layout_marginEnd="@dimen/list_item_padding_sides"
             android:layout_centerVertical="true"
             android:transitionName="avatar"
-            android:id="@+id/teacherAvatar"/>
+            android:id="@+id/teacherAvatar" />
 
         <TextView
             android:layout_width="match_parent"

@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:text="Url"
-            android:textColor="?android:textColorSecondary"
+
             android:id="@+id/resourceSubtitle"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/list_item_padding_sides"
