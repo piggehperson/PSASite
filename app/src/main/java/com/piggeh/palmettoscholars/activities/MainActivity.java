@@ -577,6 +577,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean setupFabForPage(int page){
+        final CoordinatorLayout.LayoutParams fabLayoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         switch (page){
             default:
                 Log.d(TAG, "Tried to set up FAB for unknown page");
@@ -584,14 +585,32 @@ public class MainActivity extends AppCompatActivity
             case PAGE_HOME:
                 fab.setImageResource(R.drawable.ic_enrollment);
                 fab.setContentDescription(getString(R.string.accessibility_fab_enrollnow));
+
+                if (!isLarge){
+                    /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                        @Override
+                        public void onHidden(FloatingActionButton fab) {
+                            super.onHidden(fab);
+                            fabLayoutParams.setAnchorId(View.NO_ID);
+                            fab.setLayoutParams(fabLayoutParams);
+                        }
+                    });*/fab.hide();
+                    fabLayoutParams.setAnchorId(View.NO_ID);
+                    fab.setLayoutParams(fabLayoutParams);
+                } else{
+                    fab.hide();
+                }
+                //fab.setVisibility(View.GONE);
                 //fab.setVisibility(View.VISIBLE);
-                fab.show();
+                //fab.show();
                 Log.d(TAG, "Set up FAB for Home page");
                 return true;
             case PAGE_CONTACT_US:
                 fab.setImageResource(R.drawable.ic_call);
                 fab.setContentDescription(getString(R.string.accessibility_fab_callphone));
                 //fab.setVisibility(View.VISIBLE);
+                fabLayoutParams.setAnchorId(R.id.appBarLayout);
+                fab.setLayoutParams(fabLayoutParams);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Contact page");
                 return true;
@@ -599,13 +618,43 @@ public class MainActivity extends AppCompatActivity
                 fab.setImageResource(R.drawable.ic_open_externally);
                 fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
                 //fab.setVisibility(View.VISIBLE);
-                fab.show();
+                //fab.show();
+                if (!isLarge){
+                    /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                        @Override
+                        public void onHidden(FloatingActionButton fab) {
+                            super.onHidden(fab);
+                            fabLayoutParams.setAnchorId(View.NO_ID);
+                            fab.setLayoutParams(fabLayoutParams);
+                        }
+                    });*/
+                    fab.hide();
+                    fabLayoutParams.setAnchorId(View.NO_ID);
+                    fab.setLayoutParams(fabLayoutParams);
+                } else{
+                    fab.hide();
+                }
                 Log.d(TAG, "Set up FAB for Teachers page");
                 return true;
             case PAGE_SETTINGS:
                 fab.setImageResource(R.drawable.ic_check);
                 fab.setContentDescription(getString(R.string.accessibility_fab_done));
-                if (isLarge){
+                /*if (isLarge){
+                    fab.hide();
+                }*/
+                if (!isLarge){
+                    /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                        @Override
+                        public void onHidden(FloatingActionButton fab) {
+                            super.onHidden(fab);
+                            fabLayoutParams.setAnchorId(View.NO_ID);
+                            fab.setLayoutParams(fabLayoutParams);
+                        }
+                    });*/
+                    fab.hide();
+                    fabLayoutParams.setAnchorId(View.NO_ID);
+                    fab.setLayoutParams(fabLayoutParams);
+                } else{
                     fab.hide();
                 }
                 Log.d(TAG, "Set up FAB for Settings page");
@@ -614,6 +663,9 @@ public class MainActivity extends AppCompatActivity
                 fab.setImageResource(R.drawable.ic_open_externally);
                 fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
                 //fab.setVisibility(View.VISIBLE);
+                //fab.show();
+                fabLayoutParams.setAnchorId(R.id.appBarLayout);
+                fab.setLayoutParams(fabLayoutParams);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Resources page");
                 return true;
@@ -621,6 +673,9 @@ public class MainActivity extends AppCompatActivity
                 fab.setImageResource(R.drawable.ic_notifications_on);
                 fab.setContentDescription("Test announcement notification");
                 //fab.setVisibility(View.VISIBLE);
+                //fab.show();
+                fabLayoutParams.setAnchorId(R.id.appBarLayout);
+                fab.setLayoutParams(fabLayoutParams);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Debug page");
                 return true;
@@ -628,6 +683,9 @@ public class MainActivity extends AppCompatActivity
                 fab.setImageResource(R.drawable.ic_open_externally);
                 fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
                 //fab.setVisibility(View.VISIBLE);
+                //fab.show();
+                fabLayoutParams.setAnchorId(R.id.appBarLayout);
+                fab.setLayoutParams(fabLayoutParams);
                 fab.show();
                 Log.d(TAG, "Set up FAB for Newsletter page");
                 return true;
