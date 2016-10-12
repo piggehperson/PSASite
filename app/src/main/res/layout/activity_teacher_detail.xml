@@ -18,7 +18,7 @@
             android:id="@+id/collapsingToolbarLayout"
             app:contentScrim="@color/colorPrimary"
             app:title="@string/teacherdetail_title"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="250">
 
             <Space
