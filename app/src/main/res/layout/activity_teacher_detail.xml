@@ -99,7 +99,7 @@
                     android:src="@drawable/ic_cloud_off"
                     android:tint="?android:textColorSecondary"
                     android:layout_marginTop="32dp"
-                    android:tintMode="src_in"/>
+                    style="@style/tintIn"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -129,7 +129,6 @@
                         android:layout_margin="16dp"
                         android:layout_centerVertical="true"
                         android:tint="@color/iconsDarkDaynight"
-                        android:tintMode="src_in"
                         android:src="@drawable/ic_email"
                         android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
@@ -185,7 +184,6 @@
                         android:layout_margin="16dp"
                         android:layout_centerVertical="true"
                         android:tint="@color/iconsDarkDaynight"
-                        android:tintMode="src_in"
                         android:clickable="false"/><!--android:tintMode="src_in"--><!--android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"-->
