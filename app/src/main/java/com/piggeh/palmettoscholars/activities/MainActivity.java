@@ -619,7 +619,7 @@ public class MainActivity extends AppCompatActivity
                     /*fab.hide();
                     fabLayoutParams.setAnchorId(View.NO_ID);
                     fab.setLayoutParams(fabLayoutParams);*/
-                    detachFab();
+                    attachFab();
                 } else{
                     fab.hide();
                 }
