@@ -9,7 +9,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 24
         versionCode 41
-        versionName "0.35.2"
+        versionName "0.36"
     }
     buildTypes {
         release {
@@ -48,7 +48,7 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.5.0'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
+    /*compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'*/
 }
 
 apply plugin: 'com.google.gms.google-services'
