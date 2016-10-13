@@ -348,6 +348,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         //manage notification subscriptions
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPreferences.getBoolean(PreferenceKeys.notifAnnouncements, getResources().getBoolean(R.bool.preference_notif_announcements_default))){
             Log.d(TAG, "Subscribing to Announcements");
