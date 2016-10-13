@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.utils.DPUtils;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -111,12 +112,24 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
                 viewHolder.getHeader().setText(R.string.contact_location);
                 viewHolder.getIcon().setImageResource(R.drawable.ic_location);
                 viewHolder.getText().setText(R.string.contact_location_address_full);
+                viewHolder.getText().setPaddingRelative(
+                        0,
+                        0,
+                        0,
+                        DPUtils.convertDpToPx(16)
+                );
                 viewHolder.getAction().setVisibility(View.GONE);;
                 break;
             case 3:
                 viewHolder.getHeader().setText(R.string.contact_fax);
                 viewHolder.getIcon().setImageResource(R.drawable.ic_printer);
                 viewHolder.getText().setText(R.string.contact_fax_number);
+                viewHolder.getText().setPaddingRelative(
+                        0,
+                        0,
+                        0,
+                        DPUtils.convertDpToPx(16)
+                );
                 viewHolder.getAction().setVisibility(View.GONE);
                 break;
             case 4:
