@@ -70,6 +70,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             } else if (remoteMessage.getData().get("title").equals("New PSA newsletter")){
                 Log.d(TAG, "Message is for a Newsletter");
                 notifyNewsletter(remoteMessage.getData().get("message"));
+            } else{
+                Log.d(TAG, "Message type not defined");
+                notifyUndefined(remoteMessage.getData().get("title"), remoteMessage.getData().get("message"));
             }
         } else{
             // Check if message contains a notification payload.
@@ -109,6 +112,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.BigTextStyle notifStyle = new NotificationCompat.BigTextStyle();
+        notifStyle.bigText(announcement);
+        notifStyle.setBigContentTitle(getString(R.string.notif_announcement_title));
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.notification_icon_nodpi)
                 .setContentTitle(getString(R.string.notif_announcement_title))
@@ -117,6 +125,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 .setContentIntent(contentPendingIntent)
+                .setStyle(notifStyle)
                 .addAction(R.drawable.ic_notifications_off,
                         getString(R.string.notif_action_options), settingsPendingIntent);
 
@@ -143,6 +152,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 3 /* Request code */, settingsIntent,
                 PendingIntent.FLAG_ONE_SHOT);
 
+        NotificationCompat.BigTextStyle notifStyle = new NotificationCompat.BigTextStyle();
+        notifStyle.bigText(title);
+        notifStyle.setBigContentTitle(getString(R.string.notif_newsletter_title));
+
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -153,6 +166,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 .setContentIntent(contentPendingIntent)
+                .setStyle(notifStyle)
                 .addAction(R.drawable.ic_notifications_off,
                         getString(R.string.notif_action_options), settingsPendingIntent);
 
@@ -164,29 +178,44 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(NOTIFICATION_ID_NEWSLETTER, notificationBuilder.build());
     }
 
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+    //school announcement notification
+    public static final int NOTIFICATION_ID_UNDEFINED = 0;
+    public void notifyUndefined(String title, String text) {
+        Intent contentIntent = new Intent(this, MainActivity.class);
+        //contentIntent.putExtra("navigation_page", MainActivity.PAGE_ANNOUNCEMENTS);
+        contentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, contentIntent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Intent settingsIntent = new Intent(this, MainActivity.class);
+        settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
+        settingsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 1 /* Request code */, settingsIntent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.BigTextStyle notifStyle = new NotificationCompat.BigTextStyle();
+        notifStyle.bigText(text);
+        notifStyle.setBigContentTitle(title);
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_notifications_on)
-                .setContentTitle("FCM Message")
-                .setContentText(messageBody)
+                .setSmallIcon(R.drawable.notification_icon_nodpi)
+                .setContentTitle(title)
+                .setContentText(text)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setContentIntent(contentPendingIntent)
+                .setStyle(notifStyle)
+                .addAction(R.drawable.ic_notifications_off,
+                        getString(R.string.notif_action_options), settingsPendingIntent);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // Get an instance of the NotificationManager service
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        // Build the notification and issues it with notification manager.
+        notificationManager.notify(NOTIFICATION_ID_UNDEFINED, notificationBuilder.build());
     }
 }
