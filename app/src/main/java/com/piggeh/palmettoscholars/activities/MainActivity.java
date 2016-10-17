@@ -473,7 +473,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Switched to Teachers page");
                 return true;
             case PAGE_SETTINGS:
-                //switch fragment
+                /*//switch fragment
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
                         .replace(R.id.fragment_container, new SettingsFragment())
@@ -497,7 +497,9 @@ public class MainActivity extends AppCompatActivity
                 bundle4.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle4);
 
-                Log.d(TAG, "Switched to Settings page");
+                Log.d(TAG, "Switched to Settings page");*/
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
                 return true;
             case PAGE_RESOURCES:
                 //switch fragment

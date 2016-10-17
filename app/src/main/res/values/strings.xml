@@ -42,7 +42,7 @@
     <string name="home_psa_is_closed">Business office is closed</string>
     <string name="home_openhours">Open hours</string>
     <string name="home_openhours_text">Open 8:00 A.M. to 4:00 P.M. Monday-Friday\nClosed on weekends</string>
-    
+
     <string name="home_apply_title">Enroll for 6th-12th grade</string>
     <string name="home_apply_text">PSA is open to all students in SC who are eligible for 6th – 12th grade</string>
     <string name="home_apply_now">Apply now</string>
@@ -90,7 +90,7 @@
     <string name="teachers_prefix_mrs">Mrs. %s</string>
     <string name="teachers_prefix_mr">Mr. %s</string>
     <string name="teachers_prefix_dr">Dr. %s</string>
-    
+
     <!--Strings used on Teacher Details screen-->
     <string name="teacherdetail_title">Teacher</string>
     <string name="teacherdetail_room_label">Room number</string>

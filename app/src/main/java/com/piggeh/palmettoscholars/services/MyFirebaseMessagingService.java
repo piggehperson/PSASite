@@ -32,6 +32,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.MainActivity;
+import com.piggeh.palmettoscholars.activities.SettingsActivity;
 import com.piggeh.palmettoscholars.utils.PSANotifications;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -105,7 +106,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, contentIntent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Intent settingsIntent = new Intent(this, MainActivity.class);
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
         settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
         settingsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 1 /* Request code */, settingsIntent,
@@ -146,7 +147,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 2 /* Request code */, contentIntent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Intent settingsIntent = new Intent(this, MainActivity.class);
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
         settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
         settingsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 3 /* Request code */, settingsIntent,
@@ -207,9 +208,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 .setContentIntent(contentPendingIntent)
-                .setStyle(notifStyle)
-                .addAction(R.drawable.ic_notifications_off,
-                        getString(R.string.notif_action_options), settingsPendingIntent);
+                .setStyle(notifStyle);
 
         // Get an instance of the NotificationManager service
         NotificationManagerCompat notificationManager =
