@@ -37,11 +37,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.FrameLayout;
+//import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
     private int appbarState = AppBarStateChangeListener.STATE_IDLE;
     private boolean isLarge = false;
     private boolean hasTouch = true;
-    private FirebaseAnalytics mFirebaseAnalytics;
+    //private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
 
         isLarge = ConfigUtils.isLarge(this);
         //hasTouch = ConfigUtils.hasTouch(this);
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -196,10 +196,10 @@ public class MainActivity extends AppCompatActivity
                     navigationPage = PAGE_CONTACT_US;
 
                     //analytics
-                    Bundle bundle = new Bundle();
+                    /*Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Contact Us");
                     bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);*/
                     break;
                 case PAGE_TEACHERS:
                     if (savedInstanceState == null){
@@ -213,10 +213,10 @@ public class MainActivity extends AppCompatActivity
                     navigationPage = PAGE_TEACHERS;
 
                     //analytics
-                    Bundle bundle2 = new Bundle();
+                    /*Bundle bundle2 = new Bundle();
                     bundle2.putString(FirebaseAnalytics.Param.ITEM_NAME, "Teachers");
                     bundle2.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, bundle2);
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, bundle2);*/
                     break;
                 case PAGE_SETTINGS:
                     if (savedInstanceState == null){
@@ -235,10 +235,10 @@ public class MainActivity extends AppCompatActivity
                     notificationManager.cancelAll();
 
                     //analytics
-                    Bundle bundle3 = new Bundle();
+                    /*Bundle bundle3 = new Bundle();
                     bundle3.putString(FirebaseAnalytics.Param.ITEM_NAME, "Settings");
                     bundle3.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle3);
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle3);*/
                     break;
                 case PAGE_RESOURCES:
                     if (savedInstanceState == null){
@@ -252,10 +252,10 @@ public class MainActivity extends AppCompatActivity
                     navigationPage = PAGE_RESOURCES;
 
                     //analytics
-                    Bundle bundle4 = new Bundle();
+                    /*Bundle bundle4 = new Bundle();
                     bundle4.putString(FirebaseAnalytics.Param.ITEM_NAME, "Resources");
                     bundle4.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle4);
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle4);*/
                     break;
                 case PAGE_ANNOUNCEMENTS:
                     if (savedInstanceState == null){
@@ -268,10 +268,10 @@ public class MainActivity extends AppCompatActivity
                         notificationManager2.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_ANNOUNCEMENT);
 
                         //analytics
-                        Bundle bundle5 = new Bundle();
+                        /*Bundle bundle5 = new Bundle();
                         bundle5.putString(FirebaseAnalytics.Param.ITEM_NAME, "Announcements");
                         bundle5.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle5);
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle5);*/
 
                         finish();
                     }
@@ -300,10 +300,10 @@ public class MainActivity extends AppCompatActivity
                     notificationManager3.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_NEWSLETTER);
 
                     //analytics
-                    Bundle bundle6 = new Bundle();
+                    /*Bundle bundle6 = new Bundle();
                     bundle6.putString(FirebaseAnalytics.Param.ITEM_NAME, "Newsletter");
                     bundle6.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle6);
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle6);*/
                     break;
             }
         } else{
@@ -411,10 +411,10 @@ public class MainActivity extends AppCompatActivity
                 /*appBarLayout.setExpanded(true);*/
 
                 //analytics
-                Bundle bundle = new Bundle();
+                /*Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Home");
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);*/
 
                 Log.d(TAG, "Switched to Home page");
                 return true;
@@ -438,10 +438,10 @@ public class MainActivity extends AppCompatActivity
                 /*appBarLayout.setExpanded(true);*/
 
                 //analytics
-                Bundle bundle2 = new Bundle();
+                /*Bundle bundle2 = new Bundle();
                 bundle2.putString(FirebaseAnalytics.Param.ITEM_NAME, "Contact Us");
                 bundle2.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle2);
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle2);*/
 
                 Log.d(TAG, "Switched to Contact page");
                 return true;
@@ -465,10 +465,10 @@ public class MainActivity extends AppCompatActivity
                 /*appBarLayout.setExpanded(true);*/
 
                 //analytics
-                Bundle bundle3 = new Bundle();
+                /*Bundle bundle3 = new Bundle();
                 bundle3.putString(FirebaseAnalytics.Param.ITEM_NAME, "Teachers");
                 bundle3.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle3);
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle3);*/
 
                 Log.d(TAG, "Switched to Teachers page");
                 return true;
@@ -521,10 +521,10 @@ public class MainActivity extends AppCompatActivity
                 /*appBarLayout.setExpanded(true);*/
 
                 //analytics
-                Bundle bundle5 = new Bundle();
+                /*Bundle bundle5 = new Bundle();
                 bundle5.putString(FirebaseAnalytics.Param.ITEM_NAME, "Resources");
                 bundle5.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle5);
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle5);*/
 
                 Log.d(TAG, "Switched to Resources page");
                 return true;
@@ -569,10 +569,10 @@ public class MainActivity extends AppCompatActivity
                 /*appBarLayout.setExpanded(true);*/
 
                 //analytics
-                Bundle bundle6 = new Bundle();
+                /*Bundle bundle6 = new Bundle();
                 bundle6.putString(FirebaseAnalytics.Param.ITEM_NAME, "Newsletter");
                 bundle6.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle6);
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle6);*/
 
                 Log.d(TAG, "Switched to Newsletter page");
                 return true;
