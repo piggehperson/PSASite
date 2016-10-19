@@ -31,6 +31,8 @@
     <string name="menu_sort_name">Alphabetically</string>
     <string name="menu_sort_category">By subject</string>
     <string name="menu_add_shortcut">Add to Home screen</string>
+    <string name="menu_open_externally">Open externally</string>
+    <string name="menu_open_in_browser">Open in browser</string>
 
     <!--Strings used in home fragment layout-->
     <string name="home_ourmission">Our mission</string>

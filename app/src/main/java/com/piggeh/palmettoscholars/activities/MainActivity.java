@@ -34,6 +34,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -387,6 +388,8 @@ public class MainActivity extends AppCompatActivity
 
         previousPage = navigationPage;
 
+        invalidateOptionsMenu();
+
         switch (page){
             default:
                 Log.d(TAG, "Tried to switch to unknown page");
@@ -580,24 +583,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void detachFab(){
-        final CoordinatorLayout.LayoutParams fabLayoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-        /*fab.hide(*//*new FloatingActionButton.OnVisibilityChangedListener() {
-            @Override
-            public void onHidden(FloatingActionButton fab) {
-                super.onHidden(fab);
-                fabLayoutParams.setAnchorId(View.NO_ID);
-                fab.setLayoutParams(fabLayoutParams);
-            }
-        }*//*);*/
-        fab.setVisibility(View.GONE);
-        fabLayoutParams.setAnchorId(View.NO_ID);
-        fab.setLayoutParams(fabLayoutParams);
+        if (isLarge){
+            fab.hide();
+        } else{
+            CoordinatorLayout.LayoutParams fabLayoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+            fab.setVisibility(View.GONE);
+            fabLayoutParams.setAnchorId(View.NO_ID);
+            fab.setLayoutParams(fabLayoutParams);
+        }
     }
     private void attachFab(){
-        CoordinatorLayout.LayoutParams fabLayoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-        fabLayoutParams.setAnchorId(R.id.appBarLayout);
-        fab.setLayoutParams(fabLayoutParams);
-        fab.show();
+        if (isLarge){
+            fab.show();
+        } else{
+            CoordinatorLayout.LayoutParams fabLayoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+            fabLayoutParams.setAnchorId(R.id.appBarLayout);
+            fab.setLayoutParams(fabLayoutParams);
+            fab.show();
+        }
     }
 
     public boolean setupFabForPage(int page){
@@ -610,120 +613,95 @@ public class MainActivity extends AppCompatActivity
                 fab.setImageResource(R.drawable.ic_enrollment);
                 fab.setContentDescription(getString(R.string.accessibility_fab_enrollnow));
 
-                if (!isLarge){
-                    /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-                        @Override
-                        public void onHidden(FloatingActionButton fab) {
-                            super.onHidden(fab);
-                            fabLayoutParams.setAnchorId(View.NO_ID);
-                            fab.setLayoutParams(fabLayoutParams);
-                        }
-                    });*/
-                    /*fab.hide();
-                    fabLayoutParams.setAnchorId(View.NO_ID);
-                    fab.setLayoutParams(fabLayoutParams);*/
-                    attachFab();
-                } else{
-                    fab.hide();
-                }
-                //fab.setVisibility(View.GONE);
-                //fab.setVisibility(View.VISIBLE);
-                //fab.show();
+                attachFab();
+
                 Log.d(TAG, "Set up FAB for Home page");
                 return true;
             case PAGE_CONTACT_US:
                 fab.setImageResource(R.drawable.ic_call);
                 fab.setContentDescription(getString(R.string.accessibility_fab_callphone));
-                //fab.setVisibility(View.VISIBLE);
-                /*fabLayoutParams.setAnchorId(R.id.appBarLayout);
-                fab.setLayoutParams(fabLayoutParams);
-                fab.show();*/
-                //attachFab();
+
                 detachFab();
                 Log.d(TAG, "Set up FAB for Contact page");
                 return true;
             case PAGE_TEACHERS:
                 fab.setImageResource(R.drawable.ic_open_externally);
                 fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
-                //fab.setVisibility(View.VISIBLE);
-                //fab.show();
-                if (!isLarge){
-                    /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-                        @Override
-                        public void onHidden(FloatingActionButton fab) {
-                            super.onHidden(fab);
-                            fabLayoutParams.setAnchorId(View.NO_ID);
-                            fab.setLayoutParams(fabLayoutParams);
-                        }
-                    });*/
-                    /*fab.hide();
-                    fabLayoutParams.setAnchorId(View.NO_ID);
-                    fab.setLayoutParams(fabLayoutParams);*/
-                    detachFab();
-                } else{
-                    fab.hide();
-                }
+
+                detachFab();
+
                 Log.d(TAG, "Set up FAB for Teachers page");
                 return true;
             case PAGE_SETTINGS:
                 fab.setImageResource(R.drawable.ic_check);
                 fab.setContentDescription(getString(R.string.accessibility_fab_done));
-                /*if (isLarge){
-                    fab.hide();
-                }*/
-                if (!isLarge){
-                    /*fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-                        @Override
-                        public void onHidden(FloatingActionButton fab) {
-                            super.onHidden(fab);
-                            fabLayoutParams.setAnchorId(View.NO_ID);
-                            fab.setLayoutParams(fabLayoutParams);
-                        }
-                    });*/
-                    /*fab.hide();
-                    fabLayoutParams.setAnchorId(View.NO_ID);
-                    fab.setLayoutParams(fabLayoutParams);*/
-                    detachFab();
-                } else{
-                    fab.hide();
-                }
+
+                detachFab();
+
                 Log.d(TAG, "Set up FAB for Settings page");
                 return true;
             case PAGE_RESOURCES:
                 fab.setImageResource(R.drawable.ic_open_externally);
                 fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
-                //fab.setVisibility(View.VISIBLE);
-                //fab.show();
-                /*fabLayoutParams.setAnchorId(R.id.appBarLayout);
-                fab.setLayoutParams(fabLayoutParams);
-                fab.show();*/
-                attachFab();
+
+                detachFab();
+
                 Log.d(TAG, "Set up FAB for Resources page");
                 return true;
             case PAGE_DEBUG:
                 fab.setImageResource(R.drawable.ic_notifications_on);
                 fab.setContentDescription("Test announcement notification");
-                //fab.setVisibility(View.VISIBLE);
-                //fab.show();
-                /*fabLayoutParams.setAnchorId(R.id.appBarLayout);
-                fab.setLayoutParams(fabLayoutParams);
-                fab.show();*/
+
                 attachFab();
+
                 Log.d(TAG, "Set up FAB for Debug page");
                 return true;
             case PAGE_NEWSLETTER:
                 fab.setImageResource(R.drawable.ic_open_externally);
                 fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
-                //fab.setVisibility(View.VISIBLE);
-                //fab.show();
-                /*fabLayoutParams.setAnchorId(R.id.appBarLayout);
-                fab.setLayoutParams(fabLayoutParams);
-                fab.show();*/
-                attachFab();
+
+                detachFab();
+
                 Log.d(TAG, "Set up FAB for Newsletter page");
                 return true;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //private int menuposition = 0;
+    //public void setMenuPosition(int position){menuposition = position;}
+
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        MenuItem openExternally = menu.findItem(R.id.menu_open_externally);
+        if (navigationPage == PAGE_RESOURCES
+                || navigationPage == PAGE_NEWSLETTER){
+            openExternally.setVisible(true);
+        } else{
+            openExternally.setVisible(false);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            default:
+                Log.d(TAG, "Unknown menu item clicked");
+                return false;
+            case R.id.menu_open_externally:
+                onFabClick(item.getActionView());
+                return true;
+        }
+    }
+
     public boolean setupAppbarForPage(int page){
         return setupAppbarForPage(page, false);
     }
