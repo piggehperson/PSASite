@@ -88,10 +88,10 @@ public class MainActivity extends AppCompatActivity
     //private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     //private FrameLayout fragmentContainer;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    //private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton fab;
     private AppBarLayout appBarLayout;
-    private ImageView appbarImage;
+    //private ImageView appbarImage;
 
     //vars
     private int navigationPage = PAGE_HOME;
@@ -113,14 +113,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
+        //collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
             fab.bringToFront();
         }
 
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
-        appbarImage = (ImageView) findViewById(R.id.appbarImage);
+        //appbarImage = (ImageView) findViewById(R.id.appbarImage);
 
         /*if (appbarState == AppBarStateChangeListener.STATE_COLLAPSED
                 || navigationPage == PAGE_SETTINGS){
@@ -128,13 +128,13 @@ public class MainActivity extends AppCompatActivity
         }*/
 
         //set listener for appbar collapsed state changes
-        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+        /*appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
-            public void onStateChanged(AppBarLayout appBarLayout, /*State*/int state) {
+            public void onStateChanged(AppBarLayout appBarLayout, *//*State*//*int state) {
                 //Log.d(TAG, "App bar collapsed state changed to " + String.valueOf(state));
                 appbarState = state;
             }
-        });
+        });*/
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             drawerLayout.setScrimColor(ContextCompat.getColor(this, android.R.color.transparent));*/
 
-            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
-            params.setScrollFlags(0);
+            /*AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+            params.setScrollFlags(0);*/
 
             //appBarLayout.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
         } else{
@@ -610,57 +610,80 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Tried to set up FAB for unknown page");
                 return false;
             case PAGE_HOME:
-                fab.setImageResource(R.drawable.ic_enrollment);
-                fab.setContentDescription(getString(R.string.accessibility_fab_enrollnow));
+                /*fab.setImageResource(R.drawable.ic_enrollment);
+                fab.setContentDescription(getString(R.string.accessibility_fab_enrollnow));*/
 
-                attachFab();
+                fab.hide();
 
                 Log.d(TAG, "Set up FAB for Home page");
                 return true;
             case PAGE_CONTACT_US:
-                fab.setImageResource(R.drawable.ic_call);
-                fab.setContentDescription(getString(R.string.accessibility_fab_callphone));
+                if (fab.getVisibility() == View.VISIBLE){
+                    fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                        @Override
+                        public void onHidden(FloatingActionButton fab) {
+                            super.onHidden(fab);
+                            fab.setImageResource(R.drawable.ic_call);
+                            fab.setContentDescription(getString(R.string.accessibility_fab_callphone));
+                            fab.show();
+                        }
+                    });
+                } else{
+                    fab.setImageResource(R.drawable.ic_call);
+                    fab.setContentDescription(getString(R.string.accessibility_fab_callphone));
+                    fab.show();
+                }
 
-                detachFab();
                 Log.d(TAG, "Set up FAB for Contact page");
                 return true;
             case PAGE_TEACHERS:
-                fab.setImageResource(R.drawable.ic_open_externally);
-                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
+                /*fab.setImageResource(R.drawable.ic_open_externally);
+                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));*/
 
-                detachFab();
+                fab.hide();
 
                 Log.d(TAG, "Set up FAB for Teachers page");
                 return true;
             case PAGE_SETTINGS:
-                fab.setImageResource(R.drawable.ic_check);
-                fab.setContentDescription(getString(R.string.accessibility_fab_done));
+                /*fab.setImageResource(R.drawable.ic_check);
+                fab.setContentDescription(getString(R.string.accessibility_fab_done));*/
 
-                detachFab();
+                fab.hide();
 
                 Log.d(TAG, "Set up FAB for Settings page");
                 return true;
             case PAGE_RESOURCES:
-                fab.setImageResource(R.drawable.ic_open_externally);
-                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
+                /*fab.setImageResource(R.drawable.ic_open_externally);
+                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));*/
 
-                detachFab();
+                fab.hide();
 
                 Log.d(TAG, "Set up FAB for Resources page");
                 return true;
             case PAGE_DEBUG:
-                fab.setImageResource(R.drawable.ic_notifications_on);
-                fab.setContentDescription("Test announcement notification");
-
-                attachFab();
+                if (fab.getVisibility() == View.VISIBLE){
+                    fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                        @Override
+                        public void onHidden(FloatingActionButton fab) {
+                            super.onHidden(fab);
+                            fab.setImageResource(R.drawable.ic_notifications_on);
+                            fab.setContentDescription("Test announcement notification");
+                            fab.show();
+                        }
+                    });
+                } else{
+                    fab.setImageResource(R.drawable.ic_notifications_on);
+                    fab.setContentDescription("Test announcement notification");
+                    fab.show();
+                }
 
                 Log.d(TAG, "Set up FAB for Debug page");
                 return true;
             case PAGE_NEWSLETTER:
-                fab.setImageResource(R.drawable.ic_open_externally);
-                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));
+                /*fab.setImageResource(R.drawable.ic_open_externally);
+                fab.setContentDescription(getString(R.string.accessibility_fab_openexternally));*/
 
-                detachFab();
+                fab.hide();
 
                 Log.d(TAG, "Set up FAB for Newsletter page");
                 return true;
@@ -707,64 +730,65 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean setupAppbarForPage(int page, boolean recreated){
-        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+        //AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
         switch (page){
             default:
                 Log.d(TAG, "Tried to set up app bar for unknown page");
                 return false;
             case PAGE_HOME:
-                collapsingToolbarLayout.setTitle(getString(R.string.toolbar_title));
-                appbarImage.setVisibility(View.INVISIBLE);
+                getSupportActionBar().setTitle(getString(R.string.toolbar_title));
+                /*appbarImage.setVisibility(View.INVISIBLE);
                 if (!isLarge){
                     params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
-                }
-                appBarLayout.setExpanded(true);
+                }*/
+                //appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Home page");
                 return true;
             case PAGE_CONTACT_US:
                 //TODO: Maybe make banner image for Contact Us page
-                appbarImage.setVisibility(View.INVISIBLE);
+                //appbarImage.setVisibility(View.INVISIBLE);
                 if (!isLarge){
-                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_contactus));
-                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                    getSupportActionBar().setTitle(getString(R.string.drawer_contactus));
+                    //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 }
-                appBarLayout.setExpanded(true);
+                //appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Contact page");
                 return true;
             case PAGE_TEACHERS:
                 //TODO: Make banner image for Teachers page
-                appbarImage.setVisibility(View.INVISIBLE);
+                //appbarImage.setVisibility(View.INVISIBLE);
                 if (!isLarge){
-                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_teachers));
-                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                    getSupportActionBar().setTitle(getString(R.string.drawer_teachers));
+                    //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 }
-                appBarLayout.setExpanded(true);
+                //appBarLayout.setExpanded(true);
                 Log.d(TAG, "Set up app bar for Teachers page");
                 return true;
             case PAGE_SETTINGS:
-                appbarImage.setVisibility(View.INVISIBLE);
-                if (isLarge){
+                //appbarImage.setVisibility(View.INVISIBLE);
+                /*if (isLarge){
                     Log.d(TAG, "Is tablet, not collapsing app bar");
                     appBarLayout.setExpanded(true);
                 } else{
-                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_settings));
-                    if (recreated){
+                    getSupportActionBar().setTitle(getString(R.string.drawer_settings));
+                    *//*if (recreated){
                         appBarLayout.setExpanded(true);
                     } else{
                         appBarLayout.setExpanded(false);
-                    }
-                }
+                    }*//*
+                }*/
                 if (!isLarge){
-                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                    getSupportActionBar().setTitle(getString(R.string.drawer_settings));
+                    //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 }
                 Log.d(TAG, "Set up app bar for Settings page");
                 return true;
             case PAGE_RESOURCES:
-                collapsingToolbarLayout.setTitle(getString(R.string.drawer_resources));
-                appBarLayout.setExpanded(true);
+                //appBarLayout.setExpanded(true);
                 if (!isLarge){
-                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
-                    appbarImage.setVisibility(View.INVISIBLE);
+                    getSupportActionBar().setTitle(getString(R.string.drawer_resources));
+                    /*params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                    appbarImage.setVisibility(View.INVISIBLE);*/
                     /*Picasso.with(this)
                             .load("http://peterglaab.com/wp-content/uploads/2016/09/Resources-small.jpg")
                             .into(appbarImage);*/
@@ -773,26 +797,26 @@ public class MainActivity extends AppCompatActivity
                 return true;
             case PAGE_DEBUG:
 
-                appbarImage.setVisibility(View.VISIBLE);
+                //appbarImage.setVisibility(View.VISIBLE);
                 if (!isLarge){
-                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_debug));
-                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+                    getSupportActionBar().setTitle(getString(R.string.drawer_debug));
+                    //params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
                 }
-                appBarLayout.setExpanded(true);
-                Picasso.with(this)
+                //appBarLayout.setExpanded(true);
+                /*Picasso.with(this)
                         .load("https://media.giphy.com/media/UHKL9BtyM4WrK/giphy.gif")
                         .fit()
                         .centerCrop()
-                        .into(appbarImage);
+                        .into(appbarImage);*/
                 Log.d(TAG, "Set up app bar for Debug page");
                 return true;
             case PAGE_NEWSLETTER:
                 if (!isLarge){
-                    collapsingToolbarLayout.setTitle(getString(R.string.drawer_newsletter));
+                    getSupportActionBar().setTitle(getString(R.string.drawer_newsletter));
                 }
-                appbarImage.setVisibility(View.INVISIBLE);
+                /*appbarImage.setVisibility(View.INVISIBLE);
                 params.setScrollFlags(0);
-                appBarLayout.setExpanded(true);
+                appBarLayout.setExpanded(true);*/
                 Log.d(TAG, "Set up app bar for Newsletter page");
                 return true;
         }
