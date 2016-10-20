@@ -169,17 +169,14 @@ public class TeacherDetailActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.toolbar_close);
         }
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                    supportFinishAfterTransition();
-                } else{
-                    finish();
-                }*/
-            }
-        });
+        if (launchedFromShortcut){
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     private void setupName(){
@@ -196,25 +193,6 @@ public class TeacherDetailActivity extends AppCompatActivity {
             collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_mr),
                     teacherName));
         }
-
-        /*switch (teacherPrefix){
-            case TeacherConstants.PREFIX_DR:
-                collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_dr),
-                        teacherName));
-                break;
-            case TeacherConstants.PREFIX_MS:
-                collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_ms),
-                        teacherName));
-                break;
-            case TeacherConstants.PREFIX_MRS:
-                collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_mrs),
-                        teacherName));
-                break;
-            case TeacherConstants.PREFIX_MR:
-                collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_mr),
-                        teacherName));
-                break;
-        }*/
     }
 
     @Override
@@ -349,34 +327,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
         };
 
         Picasso.with(this).load(teacherAvatarUrl).transform(new CircleTransform()).into(target);
-
-        /*int size = DPUtils.convertDpToPx(46);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(convertToBitmap(avatarImage.getDrawable(), ), size, size, false));
-        sendBroadcast(addIntent);
-
-        progressDialog.hide();
-        Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();*/
     }
 
-    /*public Bitmap convertToBitmap(Drawable drawable, int widthPixels, int heightPixels) {
-        Bitmap mutableBitmap = Bitmap.createBitmap(widthPixels, heightPixels, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(mutableBitmap);
-        drawable.setBounds(0, 0, widthPixels, heightPixels);
-        drawable.draw(canvas);
-
-        return mutableBitmap;
-    }*/
-
-    /*@Override
-    public void onSaveInstanceState(Bundle outState){
-        outState.putString("bio", bio);
-        super.onSaveInstanceState(outState);
-    }
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
-        super.onRestoreInstanceState(savedInstanceState);
-        bio = savedInstanceState.getString("bio");
-    }*/
     public Bitmap circleTransform(Bitmap source) {
         int size = Math.min(source.getWidth(), source.getHeight());
 
