@@ -8,10 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
-    <meta-data
-        android:name="android.app.shortcuts"
-        android:resource="@xml/quickcuts" />
-
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -31,6 +27,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/quickcuts" />
         </activity>
         <activity
             android:name=".activities.TeacherDetailActivity"
