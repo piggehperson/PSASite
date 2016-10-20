@@ -161,82 +161,8 @@ public class TeacherDetailActivity extends AppCompatActivity {
             }
         });
 
-        /*databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-
-                // A new comment has been added, add it to the displayed list
-                switch (dataSnapshot.getKey()){
-                    default:
-                        Log.d(TAG, "Unknown data tag found");
-                        break;
-                    case "name":
-                        teacherName = (String) dataSnapshot.getValue();
-                        setupName();
-                        break;
-                    case "prefix":
-                        teacherPrefix = (int) dataSnapshot.getValue();
-                        setupName();
-                        break;
-                    case "email":
-                        teacherEmail = (String) dataSnapshot.getValue();
-                        emailView.setText(teacherEmail);
-                        emailButton.setEnabled(true);
-                        break;
-                    case "bio":
-                        bio = (String) dataSnapshot.getValue();
-                        bioView.setText(bio);
-                        bioProgressBar.setVisibility(View.GONE);
-                }
-
-                // ...
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                //Comment newComment = dataSnapshot.getValue(Comment.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                //Comment movedComment = dataSnapshot.getValue(Comment.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-                Toast.makeText(getApplicationContext(), "Failed to load teacher info.", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
         //set up views
-        appBarLayout.setExpanded(true);
+        //appBarLayout.setExpanded(true);
 
         if (launchedFromShortcut){
             Log.d(TAG, "Launched from shortcut, showing X button");
