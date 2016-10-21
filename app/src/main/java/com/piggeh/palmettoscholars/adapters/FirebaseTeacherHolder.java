@@ -45,4 +45,8 @@ public class FirebaseTeacherHolder extends RecyclerView.ViewHolder {
     public CircleImageView getAvatarView(){
         return (CircleImageView) mView.findViewById(R.id.teacherAvatar);
     }
+
+    public View getListTopPadding(){
+        return mView.findViewById(R.id.recycler_list_padding_top);
+    }
 }

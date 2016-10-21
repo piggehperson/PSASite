@@ -26,6 +26,12 @@
             android:textStyle="bold" />
     </FrameLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:id="@+id/recycler_list_padding_top"
+        android:visibility="gone"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_2line_tile_height"

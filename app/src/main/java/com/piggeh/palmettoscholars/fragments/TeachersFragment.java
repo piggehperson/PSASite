@@ -89,6 +89,10 @@ public class TeachersFragment extends Fragment
                         progressBarLoadingTeachers.setVisibility(View.GONE);
                     }
 
+                    if (teacherHolder.getLayoutPosition() == 0){
+                        teacherHolder.getListTopPadding().setVisibility(View.VISIBLE);
+                    }
+
                     //name
                     if (teacherData.getPrefix() == TeacherConstants.PREFIX_MS){
                         teacherHolder.setName(String.format(
