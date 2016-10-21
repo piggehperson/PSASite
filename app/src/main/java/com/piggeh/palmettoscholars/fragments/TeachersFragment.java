@@ -28,6 +28,7 @@ import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.TeacherDetailActivity;
 import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
 import com.piggeh.palmettoscholars.classes.CircleTransform;
+import com.piggeh.palmettoscholars.classes.ConfigUtils;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.classes.TeacherData;
 import com.squareup.picasso.Picasso;
@@ -122,7 +123,13 @@ public class TeachersFragment extends Fragment
                         teacherHolder.getDivider().setVisibility(View.VISIBLE);
                     }
 
-                    Picasso.with(getContext()).load(teacherData.getAvatar()).placeholder(R.drawable.avatar_loading).error(R.drawable.avatar_failed).into(teacherHolder.getAvatarView());
+                    if (!ConfigUtils.shouldSaveData(getContext())){
+                        Picasso.with(getContext())
+                                .load(teacherData.getAvatar())
+                                .placeholder(R.drawable.avatar_loading)
+                                .error(R.drawable.avatar_failed)
+                                .into(teacherHolder.getAvatarView());
+                    }
 
                     teacherHolder.getRootview().setOnClickListener(new View.OnClickListener() {
                         @Override

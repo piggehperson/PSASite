@@ -62,7 +62,7 @@ public class ConfigUtils {
             case DATA_SAVER_METERED:
                 return false;
             case DATA_SAVER_WHITELISTED:
-                return true;
+                return false;
             case DATA_SAVER_RESTRICTED:
                 return true;
         }
