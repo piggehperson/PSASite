@@ -91,6 +91,8 @@ public class TeachersFragment extends Fragment
 
                     if (teacherHolder.getLayoutPosition() == 0){
                         teacherHolder.getListTopPadding().setVisibility(View.VISIBLE);
+                    } else{
+                        teacherHolder.getListTopPadding().setVisibility(View.GONE);
                     }
 
                     //name
