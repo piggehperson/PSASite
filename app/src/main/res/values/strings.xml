@@ -80,7 +80,6 @@
 
     <!--Strings used on Teachers screen-->
     <!--Categories-->
-    <!--TODO: Make banner images for each subject-->
     <string name="teachers_category_english">English</string>
     <string name="teachers_category_fine_arts">Fine arts</string>
     <string name="teachers_category_foreign_languages">Foreign languages</string>
@@ -108,12 +107,6 @@
 
     <!--Strings used for alerts-->
     <!--Dialogs-->
-    <string name="dialog_demo_title">Demo app</string>
-    <string name="dialog_demo_message">
-        This app is a demonstration of design and basic functionality for Peter\'s Palmetto Scholars Academy app. It is not feature complete,
-        and bugs and instability should be expected.
-    </string>
-
     <string name="dialog_action_ok">@android:string/ok</string>
     <string name="dialog_action_cancel">@android:string/cancel</string>
     <string name="dialog_permissiondenied_phone_title">Could not place call</string>
@@ -141,6 +134,8 @@
     <string name="preference_notif_newsletter_title">Newsletters</string>
     <string name="preference_notif_newsletter_summary">Notify me about new Principal\'s Desk Newsletters</string>
     <string name="preference_notif_newsletter_key">preferenceNotifNewsletters</string>
+    <string name="preference_notif_priority_title">Priority alerts</string>
+    <string name="preference_notif_priority_summary">Priority alerts are sent to all devices</string>
 
     <!--Strings used for accessibility-->
     <string name="accessibility_fab_enrollnow">Apply now</string>

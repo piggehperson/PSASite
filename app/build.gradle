@@ -8,8 +8,8 @@ android {
         applicationId "com.piggeh.palmettoscholars"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 54
-        versionName "0.41.1"
+        versionCode 55
+        versionName "0.45"
     }
     buildTypes {
         release {

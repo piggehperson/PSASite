@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     public CoordinatorLayout coordinatorLayout;
     private NavigationView navigationView;
     private FloatingActionButton fab;
-    private AppBarLayout appBarLayout;
+    //private AppBarLayout appBarLayout;
 
     //vars
     private int navigationPage = PAGE_HOME;
@@ -108,11 +108,12 @@ public class MainActivity extends AppCompatActivity
             fab.bringToFront();
         }
 
-        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        //appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         //drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        //Set up the Navigation Drawer/Panel and App Bar for large or small devices
         if (isLarge){
             //set up tablet layout
             Log.d(TAG, "Settings up tablet layout");
@@ -131,9 +132,11 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_hamburger);
         }
 
+        //Set up Navigation Drawer list
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Switch pages if the app was launcher from a shortcut or notification
         if (getIntent().getIntExtra("navigation_page", -1) != -1){
             Log.d(TAG, "Launched with page data");
             int page = getIntent().getIntExtra("navigation_page", PAGE_HOME);
@@ -184,11 +187,11 @@ public class MainActivity extends AppCompatActivity
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, bundle2);*/
                     break;
                 case PAGE_SETTINGS:
-                    if (savedInstanceState == null){
+                    /*if (savedInstanceState == null){
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, new SettingsFragment())
                                 .commit();
-                    }
+                    }*/
                     setupAppbarForPage(PAGE_SETTINGS, true);
                     setupFabForPage(PAGE_SETTINGS);
                     navigationView.setCheckedItem(R.id.drawer_settings);
@@ -283,10 +286,11 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        //set up FAB & header
+        //set up FAB & App Bar
         setupFabForPage(navigationPage);
         setupAppbarForPage(navigationPage);
 
+        //Set Firebase database to be persistable
         try{
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         } catch (DatabaseException e){
