@@ -1,5 +1,8 @@
 package com.piggeh.palmettoscholars.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +50,7 @@ public class NewsletterFragment extends Fragment {
         View mView = inflater.inflate(R.layout.fragment_newsletter, container, false);
 
         webView = (WebView) mView.findViewById(R.id.newsletterView);
+        final ProgressBar progressBar = (ProgressBar) mView.findViewById(R.id.progressBar_loadingNewsletter);
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addChildEventListener(new ChildEventListener() {
@@ -54,6 +59,25 @@ public class NewsletterFragment extends Fragment {
                 if (dataSnapshot.getKey().equals("currentnewsletter")){
                     Log.d(TAG, "Loading page");
                     webView.loadUrl((String)dataSnapshot.getValue());
+                    webView.setWebViewClient(new WebViewClient() {
+
+                        public void onPageFinished(WebView view, String url) {
+                            // do your stuff here
+                            final ObjectAnimator fadeIn = new ObjectAnimator().ofFloat(webView, View.ALPHA, 0, 1);
+                            fadeIn.setDuration(150);
+                            ObjectAnimator fadeOut = new ObjectAnimator().ofFloat(progressBar, View.ALPHA, 1, 0);
+                            fadeOut.setDuration(150);
+                            fadeOut.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    webView.setVisibility(View.VISIBLE);
+                                    fadeIn.start();
+                                }
+                            });
+                            fadeOut.start();
+                        }
+                    });
                 }
             }
 

@@ -5,9 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.piggeh.palmettoscholars.fragments.NewsletterFragment"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:id="@+id/progressBar_loadingNewsletter"/>
+
     <WebView android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/newsletterView"
-        android:scrollbars="vertical|horizontal"/>
+        android:scrollbars="vertical|horizontal"
+        android:visibility="invisible"/>
 
 </android.support.design.widget.CoordinatorLayout>
