@@ -54,9 +54,8 @@ import com.piggeh.palmettoscholars.fragments.DebugFragment;
 import com.piggeh.palmettoscholars.fragments.HomeFragment;
 import com.piggeh.palmettoscholars.fragments.NewsletterFragment;
 import com.piggeh.palmettoscholars.fragments.ResourcesFragment;
-import com.piggeh.palmettoscholars.fragments.SettingsFragment;
 import com.piggeh.palmettoscholars.fragments.TeachersFragment;
-import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
+//import com.piggeh.palmettoscholars.listeners.AppBarStateChangeListener;
 import com.piggeh.palmettoscholars.services.MyFirebaseMessagingService;
 import com.piggeh.palmettoscholars.utils.PreferenceKeys;
 //import com.squareup.picasso.Picasso;
@@ -185,28 +184,6 @@ public class MainActivity extends AppCompatActivity
                     bundle2.putString(FirebaseAnalytics.Param.ITEM_NAME, "Teachers");
                     bundle2.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, bundle2);*/
-                    break;
-                case PAGE_SETTINGS:
-                    /*if (savedInstanceState == null){
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new SettingsFragment())
-                                .commit();
-                    }*/
-                    setupAppbarForPage(PAGE_SETTINGS, true);
-                    setupFabForPage(PAGE_SETTINGS);
-                    navigationView.setCheckedItem(R.id.drawer_settings);
-                    navigationPage = PAGE_SETTINGS;
-
-                    //dismiss notifications
-                    NotificationManagerCompat notificationManager =
-                            NotificationManagerCompat.from(this);
-                    notificationManager.cancelAll();
-
-                    //analytics
-                    /*Bundle bundle3 = new Bundle();
-                    bundle3.putString(FirebaseAnalytics.Param.ITEM_NAME, "Settings");
-                    bundle3.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "navigation_page");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle3);*/
                     break;
                 case PAGE_RESOURCES:
                     if (savedInstanceState == null){
@@ -495,27 +472,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void detachFab(){
-        if (isLarge){
-            fab.hide();
-        } else{
-            CoordinatorLayout.LayoutParams fabLayoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-            fab.setVisibility(View.GONE);
-            fabLayoutParams.setAnchorId(View.NO_ID);
-            fab.setLayoutParams(fabLayoutParams);
-        }
-    }
-    private void attachFab(){
-        if (isLarge){
-            fab.show();
-        } else{
-            CoordinatorLayout.LayoutParams fabLayoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-            fabLayoutParams.setAnchorId(R.id.appBarLayout);
-            fab.setLayoutParams(fabLayoutParams);
-            fab.show();
-        }
-    }
-
     public boolean setupFabForPage(int page){
         switch (page){
             default:
@@ -549,11 +505,6 @@ public class MainActivity extends AppCompatActivity
                 fab.hide();
 
                 Log.d(TAG, "Set up FAB for Teachers page");
-                return true;
-            case PAGE_SETTINGS:
-                fab.hide();
-
-                Log.d(TAG, "Set up FAB for Settings page");
                 return true;
             case PAGE_RESOURCES:
                 fab.hide();

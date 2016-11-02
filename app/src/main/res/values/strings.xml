@@ -134,8 +134,8 @@
     <string name="preference_notif_newsletter_title">Newsletters</string>
     <string name="preference_notif_newsletter_summary">Notify me about new Principal\'s Desk Newsletters</string>
     <string name="preference_notif_newsletter_key">preferenceNotifNewsletters</string>
-    <string name="preference_notif_priority_title">Priority alerts</string>
-    <string name="preference_notif_priority_summary">Priority alerts are sent to all devices</string>
+    <string name="preference_notif_priority_title">Emergency alerts</string>
+    <string name="preference_notif_priority_summary">Emergency alerts are sent to all devices</string>
 
     <!--Strings used for accessibility-->
     <string name="accessibility_fab_enrollnow">Apply now</string>

@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.fragments.SettingsActivityFragment;
-import com.piggeh.palmettoscholars.fragments.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
