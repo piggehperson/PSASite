@@ -223,6 +223,43 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Build the notification and issues it with notification manager.
         notificationManager.notify(NOTIFICATION_ID_NEWSLETTER, notificationBuilder.build());
     }
+    public void notifyNewsletter(String title, String URL) {
+        Uri webpage = Uri.parse(URL);
+        Intent contentIntent = new Intent(Intent.ACTION_VIEW, webpage);
+        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, contentIntent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        settingsIntent.putExtra("navigation_page", MainActivity.PAGE_SETTINGS);
+        settingsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent settingsPendingIntent = PendingIntent.getActivity(this, 3 /* Request code */, settingsIntent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.BigTextStyle notifStyle = new NotificationCompat.BigTextStyle();
+        notifStyle.bigText(title);
+        notifStyle.setBigContentTitle(getString(R.string.notif_newsletter_title));
+
+
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_newsletter)
+                .setContentTitle(getString(R.string.notif_newsletter_title))
+                .setContentText(title)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setContentIntent(contentPendingIntent)
+                .setStyle(notifStyle)
+                .addAction(R.drawable.ic_notifications_off,
+                        getString(R.string.notif_action_options), settingsPendingIntent);
+
+        // Get an instance of the NotificationManager service
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
+
+        // Build the notification and issues it with notification manager.
+        notificationManager.notify(NOTIFICATION_ID_NEWSLETTER, notificationBuilder.build());
+    }
 
     //school announcement notification
     public static final int NOTIFICATION_ID_UNDEFINED = 0;

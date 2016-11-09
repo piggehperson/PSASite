@@ -92,6 +92,9 @@
     <string name="teachers_prefix_mr">Mr. %s</string>
     <string name="teachers_prefix_dr">Dr. %s</string>
 
+    <!--Strings used on Newsletters screen-->
+    <string name="newsletter_loadfailed">Couldn\'t find current newsletter</string>
+
     <!--Strings used on Teacher Details screen-->
     <string name="teacherdetail_title">Teacher</string>
     <string name="teacherdetail_room_label">Room number</string>

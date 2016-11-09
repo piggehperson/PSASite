@@ -15,12 +15,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.piggeh.palmettoscholars.R;
 
 public class NewsletterFragment extends Fragment {
@@ -43,16 +46,18 @@ public class NewsletterFragment extends Fragment {
         }
     }
 
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View mView = inflater.inflate(R.layout.fragment_newsletter, container, false);
+        final View mView = inflater.inflate(R.layout.fragment_newsletter, container, false);
 
         webView = (WebView) mView.findViewById(R.id.newsletterView);
-        final ProgressBar progressBar = (ProgressBar) mView.findViewById(R.id.progressBar_loadingNewsletter);
+        /*final ProgressBar */progressBar = (ProgressBar) mView.findViewById(R.id.progressBar_loadingNewsletter);
 
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        /*final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -92,9 +97,50 @@ public class NewsletterFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-        });
+        });*/
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFirebaseRemoteConfig.setDefaults(R.xml.defaultconfig);
+        mFirebaseRemoteConfig.fetch(3600)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // task successful. Activate the fetched data
+                            mFirebaseRemoteConfig.activateFetched();
+
+                            loadNewsletter();
+                        } else {
+                            //task failed
+                            mView.findViewById(R.id.relativeLayout_error_loading).setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
 
         return mView;
+    }
+
+    private void loadNewsletter(){
+        webView.loadUrl(mFirebaseRemoteConfig.getString("current_newsletter"));
+        webView.setWebViewClient(new WebViewClient() {
+
+            public void onPageFinished(WebView view, String url) {
+                // do your stuff here
+                final ObjectAnimator fadeIn = new ObjectAnimator().ofFloat(webView, View.ALPHA, 0, 1);
+                fadeIn.setDuration(150);
+                ObjectAnimator fadeOut = new ObjectAnimator().ofFloat(progressBar, View.ALPHA, 1, 0);
+                fadeOut.setDuration(150);
+                fadeOut.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        webView.setVisibility(View.VISIBLE);
+                        fadeIn.start();
+                    }
+                });
+                fadeOut.start();
+            }
+        });
     }
 
     @Override

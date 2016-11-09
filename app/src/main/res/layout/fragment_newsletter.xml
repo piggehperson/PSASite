@@ -19,4 +19,32 @@
         android:scrollbars="vertical|horizontal"
         android:visibility="invisible"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+
+        android:id="@+id/relativeLayout_error_loading"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:id="@+id/imageView_noConnection"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_cloud_off"
+            android:layout_marginTop="32dp"
+            android:tint="@color/iconsDarkDaynight"
+            style="@style/tintIn"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_noConnection"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageView_noConnection"
+            android:text="@string/newsletter_loadfailed"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAlignment="center"
+            /><!--android:textSize="18sp"-->
+    </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>
