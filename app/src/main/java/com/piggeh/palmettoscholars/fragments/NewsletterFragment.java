@@ -57,7 +57,7 @@ public class NewsletterFragment extends Fragment {
         webView = (WebView) mView.findViewById(R.id.newsletterView);
         /*final ProgressBar */progressBar = (ProgressBar) mView.findViewById(R.id.progressBar_loadingNewsletter);
 
-        /*final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -97,8 +97,8 @@ public class NewsletterFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-        });*/
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        });
+        /*mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         mFirebaseRemoteConfig.setDefaults(R.xml.defaultconfig);
         mFirebaseRemoteConfig.fetch(3600)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
@@ -115,7 +115,7 @@ public class NewsletterFragment extends Fragment {
                             progressBar.setVisibility(View.GONE);
                         }
                     }
-                });
+                });*/
 
         return mView;
     }
