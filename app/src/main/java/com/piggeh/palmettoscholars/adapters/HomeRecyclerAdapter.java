@@ -111,10 +111,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 viewHolder.getCardMerch().setVisibility(View.GONE);
                 viewHolder.getCardApplyNow().setVisibility(View.GONE);
                 ImageView banner = (ImageView) viewHolder.getCardOurMission().findViewById(R.id.imageView_ourMission);
-                if (ConfigUtils.shouldSaveData(mContext)){
-                    banner.setImageResource(R.drawable.ic_image);
-                    //banner.setScaleType();
-                } else{
+                if (!ConfigUtils.shouldSaveData(mContext)){
                     Picasso.with(mContext)
                             .load("http://www.palmettoscholarsacademy.org/wp-content/uploads/2016/07/school-exterior.jpg")
                             .fit()
@@ -136,10 +133,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 ImageView frontDesk = (ImageView) viewHolder.getCardOpenHours().findViewById(R.id.imageView_openHours);
                 //TODO: Get a better picture of the front desk
                 //TODO: Get a picture of nobody at the front desk
-                if (ConfigUtils.shouldSaveData(mContext)){
-                    frontDesk.setImageResource(R.drawable.ic_image);
-                    //banner.setScaleType();
-                } else{
+                if (!ConfigUtils.shouldSaveData(mContext)){
                     Picasso.with(mContext)
                             .load("http://peterglaab.com/wp-content/uploads/2016/09/BusinessHours2-small.jpg")
                             .fit()

@@ -27,7 +27,7 @@
                 app:layout_widthPercent="100%"
                 app:layout_aspectRatio="178%"
                 android:id="@+id/imageView_ourMission"
-                android:src="@color/colorAccentLighter"
+                android:src="@color/colorBackgroundDark"
                 android:contentDescription="@string/accessbility_home_banner"/>
             </android.support.percent.PercentFrameLayout>
             <TextView
@@ -75,7 +75,7 @@
                     app:layout_widthPercent="100%"
                     app:layout_aspectRatio="178%"
                     android:id="@+id/imageView_openHours"
-                    android:src="@color/colorPrimaryLight"
+                    android:src="@color/colorBackgroundDark"
                     android:contentDescription="@string/accessbility_home_hours"/>
             </android.support.percent.PercentFrameLayout>
 
