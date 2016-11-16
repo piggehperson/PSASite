@@ -74,7 +74,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }
             } else if (remoteMessage.getData().get("title").equals("New PSA newsletter")){
                 Log.d(TAG, "Message is for a Newsletter");
-                notifyNewsletter(remoteMessage.getData().get("message"));
+                if (remoteMessage.getData().get("url") != null){
+                    notifyNewsletter(remoteMessage.getData().get("message"), remoteMessage.getData().get("url"));
+                } else{
+                    notifyNewsletter(remoteMessage.getData().get("message"));
+                }
             } else{
                 Log.d(TAG, "Message type not defined");
                 if (remoteMessage.getData().get("url") != null){
