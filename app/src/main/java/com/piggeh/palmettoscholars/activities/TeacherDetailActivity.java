@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private Button emailButton;
     private RelativeLayout connectionErrorLayout;
     private RelativeLayout teacherDataLayout;
+    private FloatingActionButton fab;
     //vars
     private boolean launchedFromShortcut = false;
 
@@ -93,6 +95,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         emailButton = (Button) findViewById(R.id.button_contact_email);
         connectionErrorLayout = (RelativeLayout) findViewById(R.id.relativeLayout_error_loading);
         teacherDataLayout = (RelativeLayout) findViewById(R.id.relativeLayout_teacherInfo);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         //get data from Intent
         launchedFromShortcut = getIntent().getBooleanExtra("launched_from_shortcut", false);
@@ -120,6 +123,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         teacherEmail = (String) dataSnapshot.getValue();
                         emailView.setText(teacherEmail);
                         emailButton.setEnabled(true);
+                        fab.show();
                         break;
                     case "bio":
                         bio = (String) dataSnapshot.getValue();
@@ -169,13 +173,38 @@ public class TeacherDetailActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.toolbar_close);
         }
 
-        if (launchedFromShortcut){
+        if (!launchedFromShortcut){
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onBackPressed();
+                    /*if (fab.getVisibility() == View.VISIBLE){
+                        fab.hide(*//*new FloatingActionButton.OnVisibilityChangedListener() {
+                            @Override
+                            public void onHidden(FloatingActionButton fab) {
+                                super.onHidden(fab);
+                                onBackPressed();
+                            }
+                        }*//*);
+                        onBackPressed();
+                    } else{
+                        onBackPressed();
+                    }*/
                 }
             });
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            if (isInMultiWindowMode()){
+                finish();
+            } else{
+                supportFinishAfterTransition();
+            }
+        } else{
+            supportFinishAfterTransition();
         }
     }
 
