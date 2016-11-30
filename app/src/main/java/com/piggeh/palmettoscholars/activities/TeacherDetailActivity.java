@@ -201,9 +201,15 @@ public class TeacherDetailActivity extends AppCompatActivity {
             if (isInMultiWindowMode()){
                 finish();
             } else{
+                if (fab.getVisibility() == View.VISIBLE){
+                    fab.setVisibility(View.INVISIBLE);
+                }
                 supportFinishAfterTransition();
             }
         } else{
+            if (fab.getVisibility() == View.VISIBLE){
+                fab.setVisibility(View.INVISIBLE);
+            }
             supportFinishAfterTransition();
         }
     }
