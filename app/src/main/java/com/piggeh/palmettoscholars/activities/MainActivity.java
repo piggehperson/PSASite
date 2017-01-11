@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_HOME);
                     navigationView.setCheckedItem(R.id.drawer_home);
                     navigationPage = PAGE_HOME;
+                    fab.hide();
                     break;
                 case PAGE_CONTACT_US:
                     if (savedInstanceState == null){
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_CONTACT_US);
                     navigationView.setCheckedItem(R.id.drawer_contactus);
                     navigationPage = PAGE_CONTACT_US;
+                    fab.hide();
 
                     //analytics
                     /*Bundle bundle = new Bundle();
@@ -178,6 +180,7 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_TEACHERS);
                     navigationView.setCheckedItem(R.id.drawer_teachers);
                     navigationPage = PAGE_TEACHERS;
+                    fab.hide();
 
                     //analytics
                     /*Bundle bundle2 = new Bundle();
@@ -195,6 +198,7 @@ public class MainActivity extends AppCompatActivity
                     setupFabForPage(PAGE_RESOURCES);
                     navigationView.setCheckedItem(R.id.drawer_resources);
                     navigationPage = PAGE_RESOURCES;
+                    fab.hide();
 
                     //analytics
                     /*Bundle bundle4 = new Bundle();
@@ -243,7 +247,7 @@ public class MainActivity extends AppCompatActivity
                     NotificationManagerCompat notificationManager3 =
                             NotificationManagerCompat.from(this);
                     notificationManager3.cancel(MyFirebaseMessagingService.NOTIFICATION_ID_NEWSLETTER);
-
+                    fab.hide();
                     //analytics
                     /*Bundle bundle6 = new Bundle();
                     bundle6.putString(FirebaseAnalytics.Param.ITEM_NAME, "Newsletter");
@@ -332,6 +336,7 @@ public class MainActivity extends AppCompatActivity
                 //configure FAB & header for new page
                 setupFabForPage(PAGE_HOME);
                 setupAppbarForPage(PAGE_HOME);
+                fab.hide();
 
                 //set selected item in drawer, for switching pages programmatically
                 navigationView.setCheckedItem(R.id.drawer_home);
@@ -380,6 +385,7 @@ public class MainActivity extends AppCompatActivity
                 //configure FAB & header for new page
                 setupFabForPage(PAGE_TEACHERS);
                 setupAppbarForPage(PAGE_TEACHERS);
+                fab.hide();
 
                 //set selected item in drawer, for switching pages programmatically
                 navigationView.setCheckedItem(R.id.drawer_teachers);
@@ -415,6 +421,7 @@ public class MainActivity extends AppCompatActivity
                 //configure FAB & header for new page
                 setupFabForPage(PAGE_RESOURCES);
                 setupAppbarForPage(PAGE_RESOURCES);
+                fab.hide();
 
                 //set selected item in drawer, for switching pages programmatically
                 navigationView.setCheckedItem(R.id.drawer_resources);
@@ -439,6 +446,7 @@ public class MainActivity extends AppCompatActivity
                 //configure FAB & header for new page
                 setupFabForPage(PAGE_DEBUG);
                 setupAppbarForPage(PAGE_DEBUG);
+                fab.hide();
 
                 //set selected item in drawer, for switching pages programmatically
                 navigationView.setCheckedItem(R.id.drawer_debug);
@@ -457,6 +465,7 @@ public class MainActivity extends AppCompatActivity
                 //configure FAB & header for new page
                 setupFabForPage(PAGE_NEWSLETTER);
                 setupAppbarForPage(PAGE_NEWSLETTER);
+                fab.hide();
 
                 //set selected item in drawer, for switching pages programmatically
                 navigationView.setCheckedItem(R.id.drawer_newsletter);
@@ -472,7 +481,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public boolean setupFabForPage(int page){
+    public boolean
+
+    setupFabForPage(int page){
         switch (page){
             default:
                 Log.d(TAG, "Tried to set up FAB for unknown page");
