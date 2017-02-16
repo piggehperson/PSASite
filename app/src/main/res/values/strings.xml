@@ -1,5 +1,7 @@
 <resources>
+    <!--Common-->
     <string name="app_name">Palmetto Scholars</string>
+    <string name="common_error_try_again">Something went wrong, try again later</string>
 
     <!--app bar & tabs-->
     <string name="toolbar_title_full">Palmetto Scholars Academy</string>

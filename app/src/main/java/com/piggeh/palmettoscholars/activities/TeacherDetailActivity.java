@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -317,7 +318,30 @@ public class TeacherDetailActivity extends AppCompatActivity {
 
         final int size = DPUtils.convertDpToPx(44);
 
-        Target target = new Target() {
+        try {
+            BitmapDrawable drawable = (BitmapDrawable) avatarImage.getDrawable();
+            Bitmap bitmap = (new CircleTransform()).transform(drawable.getBitmap());
+
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
+            sendBroadcast(addIntent);
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+        } catch (ClassCastException cce){
+            cce.printStackTrace();
+            try {
+                addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(this,
+                        R.mipmap.shortcut_no_avatar));
+
+                sendBroadcast(addIntent);
+                progressDialog.dismiss();
+                Toast.makeText(this, formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(this, getString(R.string.common_error_try_again), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        /*Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 try{
@@ -339,13 +363,13 @@ public class TeacherDetailActivity extends AppCompatActivity {
                     addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(getApplicationContext(),
                             R.mipmap.shortcut_no_avatar));
                     //int size2 = DPUtils.convertDpToPx(44);
-                    /*addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
+                    *//*addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
                             Bitmap.createScaledBitmap(circleTransform(BitmapFactory.decodeResource(
                                     getResources(),
                                     R.drawable.avatar_loading)),
                                     size,
                                     size,
-                                    false));*/
+                                    false));*//*
 
                     sendBroadcast(addIntent);
 
@@ -361,7 +385,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
             }
         };
 
-        Picasso.with(this).load(teacherAvatarUrl).transform(new CircleTransform()).into(target);
+        Picasso.with(this).load(teacherAvatarUrl).transform(new CircleTransform()).into(target);*/
     }
 
     public Bitmap circleTransform(Bitmap source) {
