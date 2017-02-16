@@ -136,6 +136,9 @@
     <string name="preference_notif_announcements_title">Announcements</string>
     <string name="preference_notif_announcements_summary">Notify me about school announcements</string>
     <string name="preference_notif_announcements_key">preferenceNotifAnnouncements</string>
+    <string name="preference_notif_promos_title">Promotions</string>
+    <string name="preference_notif_promos_summary">Notify me about events like school auctions</string>
+    <string name="preference_notif_promos_key">preferenceNotifPromotions</string>
     <string name="preference_notif_newsletter_title">Newsletters</string>
     <string name="preference_notif_newsletter_summary">Notify me about new Principal\'s Desk Newsletters</string>
     <string name="preference_notif_newsletter_key">preferenceNotifNewsletters</string>
