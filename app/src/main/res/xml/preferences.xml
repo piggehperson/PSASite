@@ -14,8 +14,10 @@
             android:key="@string/preference_notif_newsletter_key"
             android:defaultValue="@bool/preference_notif_newsletter_default"/>
 
-        <Preference
+        <SwitchPreference
             android:title="@string/preference_notif_priority_title"
-            android:summary="@string/preference_notif_priority_summary"/>
+            android:summary="@string/preference_notif_priority_summary"
+            android:enabled="false"
+            android:defaultValue="true"/>
     </PreferenceCategory>
 </PreferenceScreen>
