@@ -122,7 +122,7 @@
     <string name="dialog_errorinternet_message">There are no installed apps that can open web links.</string>
     <string name="dialog_adding_shortcut">Adding to Home screen</string>
     <!--Notifications-->
-    <string name="notif_action_options">Options</string>
+    <string name="notif_action_options">Settings</string>
     <string name="notif_announcement_title">New PSA announcement</string>
     <string name="notif_announcement_text">PSA announcement</string>
     <string name="notif_newsletter_title">New PSA newsletter</string>
