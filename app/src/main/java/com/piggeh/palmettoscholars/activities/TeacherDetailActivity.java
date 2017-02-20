@@ -321,6 +321,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         try {
             BitmapDrawable drawable = (BitmapDrawable) avatarImage.getDrawable();
             Bitmap bitmap = (new CircleTransform()).transform(drawable.getBitmap());
+            bitmap = Bitmap.createScaledBitmap(bitmap, size, size, false);
 
             addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
             sendBroadcast(addIntent);
