@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -321,7 +322,16 @@ public class TeacherDetailActivity extends AppCompatActivity {
         try {
             BitmapDrawable drawable = (BitmapDrawable) avatarImage.getDrawable();
             Bitmap bitmap = (new CircleTransform()).transform(drawable.getBitmap());
-            bitmap = Bitmap.createScaledBitmap(bitmap, size, size, false);
+            //bitmap = Bitmap.createScaledBitmap(bitmap, size, size, false);
+
+            /*int finalSize = DPUtils.convertDpToPx(48);
+
+            RectF targetRect = new RectF(DPUtils.convertDpToPx(48), DPUtils.convertDpToPx(48), *//*left + scaledWidth, top + scaledHeight*//*);
+            new RectF(0, 0, finalSize, finalSize);
+            Bitmap dest = Bitmap.createBitmap(finalSize, finalSize, bitmap.getConfig());
+            Canvas canvas = new Canvas(dest);
+            //canvas.drawColor(Color.WHITE);
+            canvas.drawBitmap(bitmap, null, targetRect, null);*/
 
             addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
             sendBroadcast(addIntent);
