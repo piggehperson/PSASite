@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/relativeLayout_teacherInfo"
+    android:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ClickableIconTiny"
+        android:layout_margin="16dp"
+        android:layout_alignParentTop="true"
+        android:tint="@color/iconsDarkDaynight"
+        android:src="@drawable/ic_email"
+        android:clickable="false"
+        android:contentDescription="@string/accessibility_icon_email"
+        android:id="@+id/icon_teacherdetail"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/textView_detailHeader"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="@string/contact_email"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="72dp"
+        android:gravity="center_vertical|start"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/firebase_loading"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:id="@+id/textView_detailText"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_below="@id/textView_emailHeader" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_detailAction"
+        android:text="@string/contact_email_send"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:onClick="onFabClick"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:enabled="false"
+        android:layout_below="@id/textView_emailAddress" /><!--android:pointerIcon="hand"-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividers"
+        android:layout_below="@id/button_contact_email"
+        android:id="@+id/divider"
+        android:layout_marginStart="72dp" />
+</RelativeLayout>

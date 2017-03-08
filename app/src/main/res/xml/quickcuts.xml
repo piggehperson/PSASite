@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut android:shortcutId="quickcut_announcements"
+        android:icon="@mipmap/quickcut_fab_announcements"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/drawer_notifications"
+        android:shortcutLongLabel="@string/drawer_notifications"
+        >
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.piggeh.palmettoscholars"
+            android:targetClass="com.piggeh.palmettoscholars.activities.MainActivity">
+            <extra android:name="navigation_page" android:value="1" />
+        </intent>
+        <categories android:name="android.shortcut.main" />
+    </shortcut>
+    <shortcut android:shortcutId="quickcut_teachers"
+        android:icon="@mipmap/quickcut_fab_teachers"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/drawer_teachers"
+        android:shortcutLongLabel="@string/drawer_teachers">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.piggeh.palmettoscholars"
+            android:targetClass="com.piggeh.palmettoscholars.activities.MainActivity">
+            <extra android:name="navigation_page" android:value="2" />
+        </intent>
+        <categories android:name="android.shortcut.main" />
+    </shortcut>
+    <shortcut android:shortcutId="quickcut_resources"
+        android:icon="@mipmap/quickcut_fab_resources"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/drawer_resources"
+        android:shortcutLongLabel="@string/drawer_resources">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.piggeh.palmettoscholars"
+            android:targetClass="com.piggeh.palmettoscholars.activities.MainActivity">
+            <extra android:name="navigation_page" android:value="3" />
+        </intent>
+        <categories android:name="android.shortcut.main" />
+    </shortcut>
+    <shortcut android:shortcutId="quickcut_newsletter"
+        android:icon="@mipmap/quickcut_fab_newsletter"
+        android:enabled="true"
+        android:shortcutShortLabel="@string/drawer_newsletter"
+        android:shortcutLongLabel="@string/drawer_newsletter">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.piggeh.palmettoscholars"
+            android:targetClass="com.piggeh.palmettoscholars.activities.MainActivity">
+            <extra android:name="navigation_page" android:value="5" />
+        </intent>
+        <categories android:name="android.shortcut.main" />
+    </shortcut>
+</shortcuts>

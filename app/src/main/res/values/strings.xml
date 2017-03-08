@@ -1,5 +1,7 @@
 <resources>
+    <!--Common-->
     <string name="app_name">Palmetto Scholars</string>
+    <string name="common_error_try_again">Something went wrong, try again later</string>
 
     <!--app bar & tabs-->
     <string name="toolbar_title_full">Palmetto Scholars Academy</string>
@@ -30,12 +32,33 @@
     <string name="menu_sort">Sort by</string>
     <string name="menu_sort_name">Alphabetically</string>
     <string name="menu_sort_category">By subject</string>
+    <string name="menu_add_shortcut">Add to Home screen</string>
+    <string name="menu_open_externally">Open externally</string>
+    <string name="menu_open_in_browser">Open in browser</string>
 
     <!--Strings used in home fragment layout-->
     <string name="home_ourmission">Our mission</string>
     <string name="home_missiontext">Palmetto Scholars Academy will provide a differentiated program designed to meet the educational needs
         of intellectually gifted learners, address their distinctive social and emotional needs, promote individual character development,
     and instill a life-long love of learning.</string>
+
+    <string name="home_psa_is_open">Business office is open</string>
+    <string name="home_psa_is_closed">Business office is closed</string>
+    <string name="home_openhours">Open hours</string>
+    <string name="home_openhours_text">Open 8:00 A.M. to 4:00 P.M. Monday-Friday\nClosed on weekends</string>
+
+    <string name="home_apply_title">Enroll for 6th-12th grade</string>
+    <string name="home_apply_text">PSA is open to all students in SC who are eligible for 6th – 12th grade</string>
+    <string name="home_apply_now">Apply now</string>
+
+    <string name="home_newsletter_title">School newsletter</string>
+    <string name="home_newsletter_text">To stay updated, sign up for the weekly Principal\'s Desk Newsletter</string>
+    <string name="home_newsletter_email">Alert me by email</string>
+    <string name="home_newsletter_push">Alert me with app notifications</string>
+
+    <string name="home_merch_title">PSA merchandise</string>
+    <string name="home_merch_text">Support our Parent Community Association by buying spirit items such as sweaters, jackets, and  t-shirts</string>
+    <string name="home_merch_open">PSA store</string>
 
     <!--Strings used on Contact Us screen-->
     <string name="contact_phone">Phone</string>
@@ -53,12 +76,12 @@
     <string name="contact_location">Address</string>
     <string name="contact_location_address_street">7499 Dorchester Road</string>
     <string name="contact_location_address_city">North Charleston, SC 29418</string>
+    <string name="contact_location_address_full">7499 Dorchester Road\nNorth Charleston, SC 29418</string>
     <string name="contact_fax">Fax</string>
     <string name="contact_fax_number">843&#8211;300&#8211;4123</string>
 
     <!--Strings used on Teachers screen-->
     <!--Categories-->
-    <!--TODO: Make banner images for each subject-->
     <string name="teachers_category_english">English</string>
     <string name="teachers_category_fine_arts">Fine arts</string>
     <string name="teachers_category_foreign_languages">Foreign languages</string>
@@ -70,7 +93,10 @@
     <string name="teachers_prefix_mrs">Mrs. %s</string>
     <string name="teachers_prefix_mr">Mr. %s</string>
     <string name="teachers_prefix_dr">Dr. %s</string>
-    
+
+    <!--Strings used on Newsletters screen-->
+    <string name="newsletter_loadfailed">Couldn\'t find current newsletter</string>
+
     <!--Strings used on Teacher Details screen-->
     <string name="teacherdetail_title">Teacher</string>
     <string name="teacherdetail_room_label">Room number</string>
@@ -86,39 +112,41 @@
 
     <!--Strings used for alerts-->
     <!--Dialogs-->
-    <string name="dialog_demo_title">Demo app</string>
-    <string name="dialog_demo_message">
-        This app is a demonstration of design and basic functionality for Peter\'s Palmetto Scholars Academy app. It is not feature complete,
-        and bugs and instability should be expected.
-    </string>
-
     <string name="dialog_action_ok">@android:string/ok</string>
+    <string name="dialog_action_cancel">@android:string/cancel</string>
     <string name="dialog_permissiondenied_phone_title">Could not place call</string>
     <string name="dialog_permissiondenied_phone_message">The Phone permission is required to place a call.</string>
     <string name="dialog_errorcalling_title">Something went wrong</string>
     <string name="dialog_errorcalling_message">There are no installed apps that can make phone calls.</string>
     <string name="dialog_erroremailing_message">There are no installed apps that can send emails.</string>
     <string name="dialog_errorinternet_message">There are no installed apps that can open web links.</string>
+    <string name="dialog_adding_shortcut">Adding to Home screen</string>
     <!--Notifications-->
-    <string name="notif_action_options">Options</string>
+    <string name="notif_action_options">Settings</string>
     <string name="notif_announcement_title">New PSA announcement</string>
     <string name="notif_announcement_text">PSA announcement</string>
     <string name="notif_newsletter_title">New PSA newsletter</string>
     <string name="notif_newsletter_action_open_externally">Open in browser</string>
     <!--Snackbars & Toasts-->
     <string name="popup_demo_comingsoon">Coming soon</string>
+    <string name="toast_shortcut_added"> added to Home screen</string>
 
     <!--Strings used for Settings-->
     <string name="preferencegroup_notif_title">Notifications</string>
     <string name="preference_notif_announcements_title">Announcements</string>
     <string name="preference_notif_announcements_summary">Notify me about school announcements</string>
     <string name="preference_notif_announcements_key">preferenceNotifAnnouncements</string>
+    <string name="preference_notif_promos_title">Promotions</string>
+    <string name="preference_notif_promos_summary">Notify me about events like school auctions</string>
+    <string name="preference_notif_promos_key">preferenceNotifPromotions</string>
     <string name="preference_notif_newsletter_title">Newsletters</string>
     <string name="preference_notif_newsletter_summary">Notify me about new Principal\'s Desk Newsletters</string>
     <string name="preference_notif_newsletter_key">preferenceNotifNewsletters</string>
+    <string name="preference_notif_priority_title">Urgent alerts</string>
+    <string name="preference_notif_priority_summary">Urgent alerts are sent to all devices</string>
 
     <!--Strings used for accessibility-->
-    <string name="accessibility_fab_enrollnow">Enroll now</string>
+    <string name="accessibility_fab_enrollnow">Apply now</string>
     <string name="accessibility_fab_callphone">Call PSA</string>
     <string name="accessibility_fab_noaction">No action</string>
     <string name="accessibility_fab_done">Done</string>
@@ -128,4 +156,9 @@
     <string name="accessiblity_fab_refresh">Refresh</string>
 
     <string name="accessiblity_appbarimage">App bar background image</string>
+    <string name="accessbility_home_banner">Front of school building</string>
+    <string name="accessbility_home_hours">Front desk</string>
+
+    <string name="accessibility_icon_email">Email icon</string>
+    <string name="accessibility_icon_person">Person icon</string>
 </resources>

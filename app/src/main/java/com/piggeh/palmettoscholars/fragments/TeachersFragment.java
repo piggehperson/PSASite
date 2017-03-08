@@ -2,16 +2,12 @@ package com.piggeh.palmettoscholars.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.os.ParcelableCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,32 +15,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.TeacherDetailActivity;
 import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
-import com.piggeh.palmettoscholars.adapters.TeachersRecyclerAdapter;
+import com.piggeh.palmettoscholars.classes.CircleTransform;
+import com.piggeh.palmettoscholars.classes.ConfigUtils;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
 import com.piggeh.palmettoscholars.classes.TeacherData;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class TeachersFragment extends Fragment
-implements TeachersRecyclerAdapter.RecyclerItemClickListener {
+/*implements TeachersRecyclerAdapter.RecyclerItemClickListener*/ {
     private static final String TAG = "TeachersFragment";
 
     private OnTeacherClickListener mListener;
@@ -99,6 +89,12 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                         progressBarLoadingTeachers.setVisibility(View.GONE);
                     }
 
+                    if (teacherHolder.getLayoutPosition() == 0){
+                        teacherHolder.getListTopPadding().setVisibility(View.VISIBLE);
+                    } else{
+                        teacherHolder.getListTopPadding().setVisibility(View.GONE);
+                    }
+
                     //name
                     if (teacherData.getPrefix() == TeacherConstants.PREFIX_MS){
                         teacherHolder.setName(String.format(
@@ -133,7 +129,13 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                         teacherHolder.getDivider().setVisibility(View.VISIBLE);
                     }
 
-                    Picasso.with(getContext()).load(teacherData.getAvatar()).placeholder(R.drawable.avatar_missing).error(R.drawable.avatar_failed).into(teacherHolder.getAvatarView());
+                    if (!ConfigUtils.shouldSaveData(getContext())){
+                        Picasso.with(getContext())
+                                .load(teacherData.getAvatar())
+                                .placeholder(R.drawable.avatar_loading)
+                                .error(R.drawable.avatar_failed)
+                                .into(teacherHolder.getAvatarView());
+                    }
 
                     teacherHolder.getRootview().setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -245,7 +247,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
     public static final String SORT_MODE_NAME = "name";
     public static final String SORT_MODE_CATEGORY = "category";
 
-    private ArrayList<Bundle> queryTeachers(String sortBy){
+    /*private ArrayList<Bundle> queryTeachers(String sortBy){
         ArrayList<Bundle> bundles = new ArrayList<>();
         String[] names;
         int[] categories;
@@ -258,7 +260,7 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
             //sort by name
             Query teachersNameQuery = teachersDatabaseReference.orderByChild("name");
 
-            /*teachersNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            *//*teachersNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot teacherSnapshot: dataSnapshot.getChildren()) {
@@ -274,15 +276,15 @@ implements TeachersRecyclerAdapter.RecyclerItemClickListener {
                     Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                     // ...
                 }
-            });*/
+            });*//*
         }
         return bundles;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onRecyclerItemClick(View view, int position, String teacherName){
         mListener.onTeacherClick(view, position);
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {

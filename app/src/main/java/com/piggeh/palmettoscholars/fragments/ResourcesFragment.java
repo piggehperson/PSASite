@@ -1,44 +1,26 @@
 package com.piggeh.palmettoscholars.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.piggeh.palmettoscholars.R;
 import com.piggeh.palmettoscholars.activities.MainActivity;
-import com.piggeh.palmettoscholars.activities.TeacherDetailActivity;
 import com.piggeh.palmettoscholars.adapters.FirebaseResourceHolder;
-import com.piggeh.palmettoscholars.adapters.FirebaseTeacherHolder;
-import com.piggeh.palmettoscholars.adapters.ResourcesRecyclerAdapter;
 import com.piggeh.palmettoscholars.classes.ResourceData;
-import com.piggeh.palmettoscholars.classes.TeacherConstants;
-import com.piggeh.palmettoscholars.classes.TeacherData;
-
-import java.util.ArrayList;
 
 public class ResourcesFragment extends Fragment
-        implements ResourcesRecyclerAdapter.RecyclerItemClickListener {
+        /*implements ResourcesRecyclerAdapter.RecyclerItemClickListener*/ {
     private static final String TAG = "ContactFragment";
 
     private OnResourceClickListener mListener;
@@ -150,10 +132,10 @@ public class ResourcesFragment extends Fragment
         }
     }
 
-    @Override
+    /*@Override
     public void onRecyclerItemClick(View view, int position, String url){
         mListener.onResourceClick(view, position, url);
-    }
+    }*/
 
     /*@Override
     public void onStart(){

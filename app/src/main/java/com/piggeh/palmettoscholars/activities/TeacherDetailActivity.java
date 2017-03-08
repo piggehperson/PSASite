@@ -2,18 +2,29 @@ package com.piggeh.palmettoscholars.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,15 +36,12 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.classes.CircleTransform;
 import com.piggeh.palmettoscholars.classes.TeacherConstants;
-import com.piggeh.palmettoscholars.fragments.TeachersFragment;
+import com.piggeh.palmettoscholars.utils.DPUtils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -52,17 +60,18 @@ public class TeacherDetailActivity extends AppCompatActivity {
     private Button emailButton;
     private RelativeLayout connectionErrorLayout;
     private RelativeLayout teacherDataLayout;
+    private FloatingActionButton fab;
     //vars
     private boolean launchedFromShortcut = false;
 
-    private DatabaseReference databaseReference;
+    /*private DatabaseReference databaseReference;*/
 
-    private int teacherIndex;
+    /*private int teacherIndex;*/
     private String teacherName;
     private long teacherPrefix = 3;
-    private int teacherCategory;
+    /*private int teacherCategory;*/
     private String teacherEmail;
-    private Bundle teacherDataBundle;
+    //private Bundle teacherDataBundle;
     private String teacherAvatarUrl;
     private String bio;
 
@@ -88,6 +97,7 @@ public class TeacherDetailActivity extends AppCompatActivity {
         emailButton = (Button) findViewById(R.id.button_contact_email);
         connectionErrorLayout = (RelativeLayout) findViewById(R.id.relativeLayout_error_loading);
         teacherDataLayout = (RelativeLayout) findViewById(R.id.relativeLayout_teacherInfo);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         //get data from Intent
         launchedFromShortcut = getIntent().getBooleanExtra("launched_from_shortcut", false);
@@ -115,14 +125,21 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         teacherEmail = (String) dataSnapshot.getValue();
                         emailView.setText(teacherEmail);
                         emailButton.setEnabled(true);
+                        fab.show();
                         break;
                     case "bio":
                         bio = (String) dataSnapshot.getValue();
-                        bioView.setText(bio);
+                        //bioView.setText(bio);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                            bioView.setText(Html.fromHtml((String)dataSnapshot.getValue(), Html.FROM_HTML_MODE_COMPACT));
+                        } else{
+                            bioView.setText(Html.fromHtml((String)dataSnapshot.getValue()));
+                        }
                         bioProgressBar.setVisibility(View.GONE);
                         break;
                     case "avatar":
-                        Picasso.with(context).load((String) dataSnapshot.getValue()).placeholder(R.drawable.avatar_missing).error(R.drawable.avatar_failed).into(avatarImage);
+                        teacherAvatarUrl = (String) dataSnapshot.getValue();
+                        Picasso.with(context).load((String) dataSnapshot.getValue()).placeholder(R.drawable.avatar_loading).error(R.drawable.avatar_failed).into(avatarImage);
                         break;
                 }
             }
@@ -150,125 +167,53 @@ public class TeacherDetailActivity extends AppCompatActivity {
             }
         });
 
-        /*databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-
-                // A new comment has been added, add it to the displayed list
-                switch (dataSnapshot.getKey()){
-                    default:
-                        Log.d(TAG, "Unknown data tag found");
-                        break;
-                    case "name":
-                        teacherName = (String) dataSnapshot.getValue();
-                        setupName();
-                        break;
-                    case "prefix":
-                        teacherPrefix = (int) dataSnapshot.getValue();
-                        setupName();
-                        break;
-                    case "email":
-                        teacherEmail = (String) dataSnapshot.getValue();
-                        emailView.setText(teacherEmail);
-                        emailButton.setEnabled(true);
-                        break;
-                    case "bio":
-                        bio = (String) dataSnapshot.getValue();
-                        bioView.setText(bio);
-                        bioProgressBar.setVisibility(View.GONE);
-                }
-
-                // ...
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                //Comment newComment = dataSnapshot.getValue(Comment.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                //Comment movedComment = dataSnapshot.getValue(Comment.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-                Toast.makeText(getApplicationContext(), "Failed to load teacher info.", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-        //teacherIndex = getIntent().getIntExtra(TeacherConstants.KEY_INDEX, 0);
-        //get data from bundle
-        /*teacherDataBundle = TeachersFragment.getTeachersFromIndex(this).get(teacherIndex);
-        teacherName = teacherDataBundle.getString(TeacherConstants.KEY_NAME);
-        teacherPrefix = teacherDataBundle.getInt(TeacherConstants.KEY_PREFIX);
-        teacherCategory = teacherDataBundle.getInt(TeacherConstants.KEY_CATEGORY);
-        teacherEmail = teacherDataBundle.getString(TeacherConstants.KEY_EMAIL);
-        teacherAvatarId = teacherDataBundle.getInt(TeacherConstants.KEY_AVATAR);*/
-
         //set up views
-        appBarLayout.setExpanded(true);
+        //appBarLayout.setExpanded(true);
 
         if (launchedFromShortcut){
             Log.d(TAG, "Launched from shortcut, showing X button");
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.toolbar_close);
         }
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                    supportFinishAfterTransition();
-                } else{
-                    finish();
-                }*/
-            }
-        });
-
-        //emailView.setText(teacherEmail);
-        //avatarImage.setImageDrawable(ContextCompat.getDrawable(this, teacherAvatarId));
-        /*avatarImage.setImageResource(teacherAvatarId);*/
-        /*if (savedInstanceState == null){
-            new Handler().postDelayed(new Runnable() {
+        if (!launchedFromShortcut){
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
-                public void run() {
-                    bioProgressBar.setVisibility(View.GONE);
-                    bioView.setVisibility(View.VISIBLE);
+                public void onClick(View view) {
+                    onBackPressed();
+                    /*if (fab.getVisibility() == View.VISIBLE){
+                        fab.hide(*//*new FloatingActionButton.OnVisibilityChangedListener() {
+                            @Override
+                            public void onHidden(FloatingActionButton fab) {
+                                super.onHidden(fab);
+                                onBackPressed();
+                            }
+                        }*//*);
+                        onBackPressed();
+                    } else{
+                        onBackPressed();
+                    }*/
                 }
-            }, 1000);
+            });
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            if (isInMultiWindowMode()){
+                finish();
+            } else{
+                if (fab.getVisibility() == View.VISIBLE){
+                    fab.setVisibility(View.INVISIBLE);
+                }
+                supportFinishAfterTransition();
+            }
         } else{
-            bioProgressBar.setVisibility(View.GONE);
-            bioView.setVisibility(View.VISIBLE);
-            bioView.setText(savedInstanceState.getString("bio")*//*bio*//*);
-        }*/
+            if (fab.getVisibility() == View.VISIBLE){
+                fab.setVisibility(View.INVISIBLE);
+            }
+            supportFinishAfterTransition();
+        }
     }
 
     private void setupName(){
@@ -285,25 +230,40 @@ public class TeacherDetailActivity extends AppCompatActivity {
             collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_mr),
                     teacherName));
         }
+    }
 
-        /*switch (teacherPrefix){
-            case TeacherConstants.PREFIX_DR:
-                collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_dr),
-                        teacherName));
-                break;
-            case TeacherConstants.PREFIX_MS:
-                collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_ms),
-                        teacherName));
-                break;
-            case TeacherConstants.PREFIX_MRS:
-                collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_mrs),
-                        teacherName));
-                break;
-            case TeacherConstants.PREFIX_MR:
-                collapsingToolbarLayout.setTitle(String.format(getString(R.string.teachers_prefix_mr),
-                        teacherName));
-                break;
-        }*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_teacher_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menu_add_shortcut_teacher:
+                addShortcut();
+                return true;
+        }
+
+        return false;
+    }
+
+    private String formatName(){
+            if (teacherPrefix == TeacherConstants.PREFIX_DR){
+                return String.format(getString(R.string.teachers_prefix_dr),
+                        teacherName);
+            } else if (teacherPrefix == TeacherConstants.PREFIX_MS){
+                return String.format(getString(R.string.teachers_prefix_ms),
+                        teacherName);
+            } else if (teacherPrefix == TeacherConstants.PREFIX_MRS){
+                return String.format(getString(R.string.teachers_prefix_mrs),
+                        teacherName);
+            } else{
+                return String.format(getString(R.string.teachers_prefix_mr),
+                        teacherName);
+            }
     }
 
     public void onFabClick(View view){
@@ -330,14 +290,138 @@ public class TeacherDetailActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    public void onSaveInstanceState(Bundle outState){
-        outState.putString("bio", bio);
-        super.onSaveInstanceState(outState);
+    public Intent addIntent;
+    private void addShortcut(){
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(getString(R.string.dialog_adding_shortcut));
+        progressDialog.setCancelable(false);
+
+        Intent shortcutIntent = new Intent(this, TeacherDetailActivity.class);
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+        shortcutIntent.putExtra(TeacherConstants.KEY_INDEX, getIntent().getStringExtra(TeacherConstants.KEY_INDEX));
+        shortcutIntent.putExtra("launched_from_shortcut", true);
+
+        /*final Intent */addIntent = new Intent();
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, formatName());
+        addIntent.putExtra("duplicate", false);
+        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+
+        progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getString(R.string.dialog_action_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                addIntent = null;
+                progressDialog.dismiss();
+            }
+        });
+        progressDialog.show();
+
+        final int size = DPUtils.convertDpToPx(44);
+
+        try {
+            BitmapDrawable drawable = (BitmapDrawable) avatarImage.getDrawable();
+            Bitmap bitmap = (new CircleTransform()).transform(drawable.getBitmap());
+            //bitmap = Bitmap.createScaledBitmap(bitmap, size, size, false);
+
+            /*int finalSize = DPUtils.convertDpToPx(48);
+
+            RectF targetRect = new RectF(DPUtils.convertDpToPx(48), DPUtils.convertDpToPx(48), *//*left + scaledWidth, top + scaledHeight*//*);
+            new RectF(0, 0, finalSize, finalSize);
+            Bitmap dest = Bitmap.createBitmap(finalSize, finalSize, bitmap.getConfig());
+            Canvas canvas = new Canvas(dest);
+            //canvas.drawColor(Color.WHITE);
+            canvas.drawBitmap(bitmap, null, targetRect, null);*/
+
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
+            sendBroadcast(addIntent);
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+        } catch (ClassCastException cce){
+            cce.printStackTrace();
+            try {
+                addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(this,
+                        R.mipmap.shortcut_no_avatar));
+
+                sendBroadcast(addIntent);
+                progressDialog.dismiss();
+                Toast.makeText(this, formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(this, getString(R.string.common_error_try_again), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        /*Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                try{
+                    //int size = DPUtils.convertDpToPx(44);
+                    addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, Bitmap.createScaledBitmap(bitmap, size, size, false));
+                    sendBroadcast(addIntent);
+
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                //int size = DPUtils.convertDpToPx(44);
+                try{
+                    addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                            R.mipmap.shortcut_no_avatar));
+                    //int size2 = DPUtils.convertDpToPx(44);
+                    *//*addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
+                            Bitmap.createScaledBitmap(circleTransform(BitmapFactory.decodeResource(
+                                    getResources(),
+                                    R.drawable.avatar_loading)),
+                                    size,
+                                    size,
+                                    false));*//*
+
+                    sendBroadcast(addIntent);
+
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), formatName() + " " + getString(R.string.toast_shortcut_added), Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            }
+        };
+
+        Picasso.with(this).load(teacherAvatarUrl).transform(new CircleTransform()).into(target);*/
     }
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
-        super.onRestoreInstanceState(savedInstanceState);
-        bio = savedInstanceState.getString("bio");
-    }*/
+
+    public Bitmap circleTransform(Bitmap source) {
+        int size = Math.min(source.getWidth(), source.getHeight());
+
+        int x = (source.getWidth() - size) / 2;
+        int y = (source.getHeight() - size) / 2;
+
+        Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+        if (squaredBitmap != source) {
+            source.recycle();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+        paint.setShader(shader);
+        paint.setAntiAlias(true);
+
+        float r = size/2f;
+        canvas.drawCircle(r, r, r, paint);
+
+        squaredBitmap.recycle();
+        return bitmap;
+    }
 }

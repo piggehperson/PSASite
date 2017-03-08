@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="list_2line_top_padding">@dimen/list_2line_top_padding_compact</dimen>
     <dimen name="list_2line_tile_height">@dimen/list_2line_tile_height_compact</dimen>
     <dimen name="list_2line_title_textsize">@dimen/list_2line_title_textsize_compact</dimen>
     <dimen name="list_2line_subtitle_textsize">@dimen/list_2line_subtitle_textsize_compact</dimen>

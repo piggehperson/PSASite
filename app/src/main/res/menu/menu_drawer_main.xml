@@ -33,18 +33,18 @@
             android:icon="@drawable/ic_send"
             android:title="@string/drawer_contactus"/>
 
-        <item android:id="@+id/drawer_settings"
+        <!--<item android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings"
-            android:title="@string/drawer_settings"/>
+            android:title="@string/drawer_settings"/>-->
         <item android:id="@+id/drawer_debug"
             android:icon="@drawable/ic_debug"
             android:title="@string/drawer_debug"
             android:visible="@bool/debug_mode"/>
     </group>
-    <!--<group android:id="@+id/drawer_settingsgroup"
+    <group android:id="@+id/drawer_settingsgroup"
         android:checkableBehavior="none">
         <item android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/drawer_settings"/>
-    </group>-->
+    </group>
 </menu>

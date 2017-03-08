@@ -3,6 +3,7 @@ package com.piggeh.palmettoscholars.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,5 +44,9 @@ public class FirebaseTeacherHolder extends RecyclerView.ViewHolder {
 
     public CircleImageView getAvatarView(){
         return (CircleImageView) mView.findViewById(R.id.teacherAvatar);
+    }
+
+    public View getListTopPadding(){
+        return mView.findViewById(R.id.recycler_list_padding_top);
     }
 }

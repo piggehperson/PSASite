@@ -21,6 +21,10 @@
     <dimen name="appbar_fullheight_normal">136dp</dimen>
     <dimen name="appbar_fullheight_large">144dp</dimen>
 
+    <dimen name="list_2line_top_padding">@dimen/list_2line_top_padding_full</dimen>
+    <dimen name="list_2line_top_padding_full">8dp</dimen>
+    <dimen name="list_2line_top_padding_compact">4dp</dimen>
+
     <dimen name="list_2line_tile_height">@dimen/list_2line_tile_height_full</dimen>
     <dimen name="list_2line_tile_height_full">72dp</dimen>
     <dimen name="list_2line_tile_height_compact">60dp</dimen>
