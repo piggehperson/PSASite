@@ -14,14 +14,16 @@
         android:orientation="vertical">
         <android.support.percent.PercentFrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
             <ImageView
                 android:layout_width="match_parent"
                 app:layout_widthPercent="100%"
                 app:layout_aspectRatio="178%"
                 android:id="@+id/imageView_homeCard"
                 android:src="@color/colorBackgroundDark"
-                android:contentDescription="@string/accessbility_home_banner"/>
+                android:contentDescription="@string/accessbility_home_banner"
+                android:visibility="gone"/>
         </android.support.percent.PercentFrameLayout>
         <TextView
             android:layout_width="match_parent"
