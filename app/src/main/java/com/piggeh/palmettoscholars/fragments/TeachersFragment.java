@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -130,7 +131,7 @@ public class TeachersFragment extends Fragment
                     }
 
                     if (!ConfigUtils.shouldSaveData(getContext())){
-                        Picasso.with(getContext())
+                        Glide.with(getContext())
                                 .load(teacherData.getAvatar())
                                 .placeholder(R.drawable.avatar_loading)
                                 .error(R.drawable.avatar_failed)
