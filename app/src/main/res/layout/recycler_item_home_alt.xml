@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView_homeText"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:text="item text. If you see this in prod that's very bad"
+            android:text="item text. If you see this text in prod that's very bad"
             android:textSize="16sp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
