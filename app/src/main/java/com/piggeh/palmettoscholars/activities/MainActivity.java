@@ -776,7 +776,8 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "Navigation drawer item clicked");
         switch (item.getItemId()){
             default:
-                Toast.makeText(this, R.string.popup_demo_comingsoon, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Item doesn't exist", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "User tried to select a page that doesn't exist");
                 return false;
             case R.id.drawer_home:
                 switchNavigationPage(PAGE_HOME);
