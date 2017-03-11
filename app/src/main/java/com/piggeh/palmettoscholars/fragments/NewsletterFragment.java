@@ -5,11 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -25,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.piggeh.palmettoscholars.R;
+import com.piggeh.palmettoscholars.utils.DPUtils;
 
 public class NewsletterFragment extends Fragment {
     private static final String TAG = "NewsletterFragment";
@@ -67,20 +70,36 @@ public class NewsletterFragment extends Fragment {
                     webView.setWebViewClient(new WebViewClient() {
 
                         public void onPageFinished(WebView view, String url) {
-                            // do your stuff here
-                            final ObjectAnimator fadeIn = new ObjectAnimator().ofFloat(webView, View.ALPHA, 0, 1);
-                            fadeIn.setDuration(150);
-                            ObjectAnimator fadeOut = new ObjectAnimator().ofFloat(progressBar, View.ALPHA, 1, 0);
-                            fadeOut.setDuration(150);
-                            fadeOut.addListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    webView.setVisibility(View.VISIBLE);
-                                    fadeIn.start();
-                                }
-                            });
-                            fadeOut.start();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                                int cx = webView.getWidth() / 2;
+                                int cy = DPUtils.convertDpToPx(44);
+                                Animator anim =
+                                        ViewAnimationUtils.createCircularReveal(webView, cx, cy, 0, Math.max(webView.getWidth(), webView.getHeight()));
+                                anim.setDuration(250);
+                                anim.addListener(new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+                                webView.setVisibility(View.VISIBLE);
+                                anim.start();
+                            } else{
+                                final ObjectAnimator fadeIn = new ObjectAnimator().ofFloat(webView, View.ALPHA, 0, 1);
+                                fadeIn.setDuration(150);
+                                ObjectAnimator fadeOut = new ObjectAnimator().ofFloat(progressBar, View.ALPHA, 1, 0);
+                                fadeOut.setDuration(150);
+                                fadeOut.addListener(new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
+                                        webView.setVisibility(View.VISIBLE);
+                                        fadeIn.start();
+                                    }
+                                });
+                                fadeOut.start();
+                            }
                         }
                     });
                 }
