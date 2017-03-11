@@ -271,9 +271,11 @@ public class MainActivity extends AppCompatActivity
         setupFabForPage(navigationPage);
         setupAppbarForPage(navigationPage);
 
-        //Set Firebase database to be persistable
+        //Set Firebase database to be not persistable
         try{
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            FirebaseDatabase.getInstance().setPersistenceEnabled(false);
+            //Maybe I'll re-enable this when I can figure out how to make sure the database is fresh,
+            //but for now the app isn't useful offline anyway
         } catch (DatabaseException e){
             e.printStackTrace();
         }
