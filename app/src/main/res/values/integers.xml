@@ -15,4 +15,7 @@
     <integer name="teachervals_category_math">3</integer>
     <integer name="teachervals_category_science">4</integer>
     <integer name="teachervals_category_social_science">5</integer>
+
+    <!--Animation durations-->
+    <integer name="duration_fullscreen">375</integer>
 </resources>
