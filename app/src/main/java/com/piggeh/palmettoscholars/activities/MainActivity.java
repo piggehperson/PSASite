@@ -271,9 +271,11 @@ public class MainActivity extends AppCompatActivity
         setupFabForPage(navigationPage);
         setupAppbarForPage(navigationPage);
 
-        //Set Firebase database to be persistable
+        //Set Firebase database to be not persistable
         try{
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            FirebaseDatabase.getInstance().setPersistenceEnabled(false);
+            //Maybe I'll re-enable this when I can figure out how to make sure the database is fresh,
+            //but for now the app isn't useful offline anyway
         } catch (DatabaseException e){
             e.printStackTrace();
         }
@@ -680,7 +682,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case PAGE_CONTACT_US:
                 Log.d(TAG, "Calling phone");
-                tryToCallPhone();
+                placeCall();
                 break;
             case PAGE_SETTINGS:
                 Log.d(TAG, "Going back");
@@ -776,7 +778,8 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "Navigation drawer item clicked");
         switch (item.getItemId()){
             default:
-                Toast.makeText(this, R.string.popup_demo_comingsoon, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Item doesn't exist", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "User tried to select a page that doesn't exist");
                 return false;
             case R.id.drawer_home:
                 switchNavigationPage(PAGE_HOME);
@@ -882,8 +885,6 @@ public class MainActivity extends AppCompatActivity
         customTabsIntent.launchUrl(activity, webpage);
     }
 
-    private static final int PERMISSION_REQUEST_PHONE = 1;
-
     public void contactButtonClicked(View view){
         switch(view.getId()){
             default:
@@ -891,7 +892,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.button_contact_call:
                 Log.d(TAG, "Call button clicked");
-                tryToCallPhone();
+                placeCall();
                 break;
             case R.id.button_contact_email:
                 Log.d(TAG, "Email button clicked");
@@ -937,23 +938,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void tryToCallPhone(){
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            //request Phone permission
-            Log.d(TAG, "Requesting Phone permission");
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CALL_PHONE},
-                    PERMISSION_REQUEST_PHONE);
-        } else{
-            //app has Phone permission
-            Log.d(TAG, "App has Phone permission, placing call");
-            placeCall();
-        }
-    }
-
     public void placeCall(){
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:8433004118"));
@@ -969,35 +953,6 @@ public class MainActivity extends AppCompatActivity
                     .setMessage(R.string.dialog_errorcalling_message)
                     .setPositiveButton(R.string.dialog_action_ok, null)
                     .show();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_PHONE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay!
-                    placeCall();
-
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    AlertDialog.Builder phoneDenied = new AlertDialog.Builder(this);
-                    phoneDenied.setTitle(R.string.dialog_permissiondenied_phone_title)
-                            .setMessage(R.string.dialog_permissiondenied_phone_message)
-                            .setPositiveButton(R.string.dialog_action_ok, null)
-                            .show();
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 }
