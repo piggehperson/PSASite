@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +76,7 @@ public class NewsletterFragment extends Fragment {
                                 int cy = DPUtils.convertDpToPx(44);
                                 Animator anim =
                                         ViewAnimationUtils.createCircularReveal(webView, cx, cy, 0, Math.max(webView.getWidth(), webView.getHeight()));
-                                anim.setDuration(250);
+                                anim.setDuration(getResources().getInteger(R.integer.duration_fullscreen));
                                 anim.addListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
@@ -83,6 +84,7 @@ public class NewsletterFragment extends Fragment {
                                         progressBar.setVisibility(View.GONE);
                                     }
                                 });
+                                anim.setInterpolator(new FastOutSlowInInterpolator());
                                 webView.setVisibility(View.VISIBLE);
                                 anim.start();
                             } else{
