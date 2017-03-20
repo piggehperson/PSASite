@@ -36,6 +36,7 @@ public class NewsletterFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     WebView webView;
+    private boolean didShowRipple = false;
 
     public NewsletterFragment() {
         // Required empty public constructor
@@ -71,36 +72,40 @@ public class NewsletterFragment extends Fragment {
                     webView.setWebViewClient(new WebViewClient() {
 
                         public void onPageFinished(WebView view, String url) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                                int cx = webView.getWidth() / 2;
-                                int cy = DPUtils.convertDpToPx(44);
-                                Animator anim =
-                                        ViewAnimationUtils.createCircularReveal(webView, cx, cy, 0, Math.max(webView.getWidth(), webView.getHeight()));
-                                anim.setDuration(getResources().getInteger(R.integer.duration_fullscreen));
-                                anim.addListener(new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        super.onAnimationEnd(animation);
-                                        progressBar.setVisibility(View.GONE);
-                                    }
-                                });
-                                anim.setInterpolator(new FastOutSlowInInterpolator());
-                                webView.setVisibility(View.VISIBLE);
-                                anim.start();
-                            } else{
-                                final ObjectAnimator fadeIn = new ObjectAnimator().ofFloat(webView, View.ALPHA, 0, 1);
-                                fadeIn.setDuration(150);
-                                ObjectAnimator fadeOut = new ObjectAnimator().ofFloat(progressBar, View.ALPHA, 1, 0);
-                                fadeOut.setDuration(150);
-                                fadeOut.addListener(new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        super.onAnimationEnd(animation);
-                                        webView.setVisibility(View.VISIBLE);
-                                        fadeIn.start();
-                                    }
-                                });
-                                fadeOut.start();
+                            if (!didShowRipple){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                                    int cx = webView.getWidth() / 2;
+                                    int cy = DPUtils.convertDpToPx(44);
+                                    Animator anim =
+                                            ViewAnimationUtils.createCircularReveal(webView, cx, cy, 0, Math.max(webView.getWidth(), webView.getHeight()));
+                                    anim.setDuration(getResources().getInteger(R.integer.duration_fullscreen));
+                                    anim.addListener(new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            super.onAnimationEnd(animation);
+                                            progressBar.setVisibility(View.GONE);
+                                            didShowRipple = true;
+                                        }
+                                    });
+                                    anim.setInterpolator(new FastOutSlowInInterpolator());
+                                    webView.setVisibility(View.VISIBLE);
+                                    anim.start();
+                                } else{
+                                    final ObjectAnimator fadeIn = new ObjectAnimator().ofFloat(webView, View.ALPHA, 0, 1);
+                                    fadeIn.setDuration(150);
+                                    ObjectAnimator fadeOut = new ObjectAnimator().ofFloat(progressBar, View.ALPHA, 1, 0);
+                                    fadeOut.setDuration(150);
+                                    fadeOut.addListener(new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            super.onAnimationEnd(animation);
+                                            webView.setVisibility(View.VISIBLE);
+                                            fadeIn.start();
+                                            didShowRipple = true;
+                                        }
+                                    });
+                                    fadeOut.start();
+                                }
                             }
                         }
                     });
