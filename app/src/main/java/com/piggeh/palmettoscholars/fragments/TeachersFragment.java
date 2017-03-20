@@ -133,7 +133,6 @@ public class TeachersFragment extends Fragment
                     if (!ConfigUtils.shouldSaveData(getContext())){
                         Glide.with(getContext())
                                 .load(teacherData.getAvatar())
-                                .placeholder(R.drawable.avatar_loading)
                                 .error(R.drawable.avatar_failed)
                                 .into(teacherHolder.getAvatarView());
                     }
