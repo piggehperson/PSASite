@@ -127,6 +127,9 @@
     <string name="notif_announcement_text">PSA announcement</string>
     <string name="notif_newsletter_title">New PSA newsletter</string>
     <string name="notif_newsletter_action_open_externally">Open in browser</string>
+
+    <string name="notif_channel_announcements">Announcements</string>
+    <string name="notif_channel_newsletters">Newsletters</string>
     <!--Snackbars & Toasts-->
     <string name="toast_shortcut_added"> added to Home screen</string>
 
