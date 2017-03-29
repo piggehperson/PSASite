@@ -6,6 +6,7 @@ import android.app.ActivityManager;
 /*import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;*/
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -301,21 +302,19 @@ public class MainActivity extends AppCompatActivity
         }
 
         //set up notification channels for Android O
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-// The id of the channel.
-        String id = "channel_announcements";
-        String name = getString(R.string.notif_channel_announcements);
-// The user visible name of the channel.
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel mChannel = new NotificationChannel(id, name, importance);
-// Configure the notification channel.
-        mChannel.enableLights(true);
-// Sets the notification light color for notifications posted to this
-// channel, if the device supports this feature.
-        mChannel.setLightColor(Color.BLUE);
-        mChannel.enableVibration(true);
-        mNotificationManager.createNotificationChannel(mChannel);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1){
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            String id = "channel_announcements";
+            NotificationChannel mChannel = new NotificationChannel(
+                    id,
+                    getString(R.string.notif_channel_announcements),
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.BLUE);
+            mChannel.enableVibration(true);
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
 
         //set up Overview screen on Lollipop+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
