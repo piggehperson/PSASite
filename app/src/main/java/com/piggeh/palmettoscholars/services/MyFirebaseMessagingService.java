@@ -130,7 +130,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notifStyle.bigText(announcement);
         notifStyle.setBigContentTitle(getString(R.string.notif_announcement_title));
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.notification_icon_nodpi)
                 .setContentTitle(getString(R.string.notif_announcement_title))
                 .setContentText(announcement)
@@ -140,14 +140,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(contentPendingIntent)
                 .setStyle(notifStyle)
                 .addAction(R.drawable.ic_notifications_off,
-                        getString(R.string.notif_action_options), settingsPendingIntent);
+                        getString(R.string.notif_action_options), settingsPendingIntent)
+                .setChannel("channel_announcements")
+                .build();
 
         // Get an instance of the NotificationManager service
         NotificationManagerCompat notificationManager =
                 NotificationManagerCompat.from(this);
 
         // Build the notification and issues it with notification manager.
-        notificationManager.notify(NOTIFICATION_ID_ANNOUNCEMENT, notificationBuilder.build());
+        notificationManager.notify(NOTIFICATION_ID_ANNOUNCEMENT, notification);
     }
     public void notifyAnnouncement(String announcement, String URL) {
         Uri webpage = Uri.parse(URL);
