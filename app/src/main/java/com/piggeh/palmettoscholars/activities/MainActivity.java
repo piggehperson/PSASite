@@ -306,15 +306,23 @@ public class MainActivity extends AppCompatActivity
             Log.d(TAG, "Creating notification channels");
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            String id = "channel_announcements";
-            NotificationChannel mChannel = new NotificationChannel(
-                    id,
+            NotificationChannel channelAnnouncements = new NotificationChannel(
+                    "channel_announcements",
                     getString(R.string.notif_channel_announcements),
                     NotificationManager.IMPORTANCE_DEFAULT);
-            mChannel.enableLights(true);
-            mChannel.setLightColor(Color.BLUE);
-            mChannel.enableVibration(true);
-            mNotificationManager.createNotificationChannel(mChannel);
+            channelAnnouncements.enableLights(true);
+            channelAnnouncements.setLightColor(Color.BLUE);
+            channelAnnouncements.enableVibration(true);
+            mNotificationManager.createNotificationChannel(channelAnnouncements);
+
+            NotificationChannel channelNewsletters = new NotificationChannel(
+                    "channel_announcements",
+                    getString(R.string.notif_channel_announcements),
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channelNewsletters.enableLights(true);
+            channelNewsletters.setLightColor(Color.BLUE);
+            channelNewsletters.enableVibration(true);
+            mNotificationManager.createNotificationChannel(channelNewsletters);
             Log.d(TAG, "Created notification channels");
         }
 
