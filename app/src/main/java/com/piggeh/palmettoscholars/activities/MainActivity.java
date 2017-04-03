@@ -302,7 +302,8 @@ public class MainActivity extends AppCompatActivity
         }
 
         //set up notification channels for Android O
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            Log.d(TAG, "Creating notification channels");
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             String id = "channel_announcements";
@@ -314,6 +315,7 @@ public class MainActivity extends AppCompatActivity
             mChannel.setLightColor(Color.BLUE);
             mChannel.enableVibration(true);
             mNotificationManager.createNotificationChannel(mChannel);
+            Log.d(TAG, "Created notification channels");
         }
 
         //set up Overview screen on Lollipop+
