@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         //set up notification channels for Android O
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (/*Build.VERSION.SDK_INT >= Build.VERSION_CODES.O*/true){
             Log.d(TAG, "Creating notification channels");
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -316,8 +316,8 @@ public class MainActivity extends AppCompatActivity
             mNotificationManager.createNotificationChannel(channelAnnouncements);
 
             NotificationChannel channelNewsletters = new NotificationChannel(
-                    "channel_announcements",
-                    getString(R.string.notif_channel_announcements),
+                    "channel_newsletters",
+                    getString(R.string.notif_channel_newsletters),
                     NotificationManager.IMPORTANCE_DEFAULT);
             channelNewsletters.enableLights(true);
             channelNewsletters.setLightColor(Color.BLUE);
