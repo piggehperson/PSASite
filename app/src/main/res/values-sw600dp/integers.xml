@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Animation durations-->
+    <integer name="duration_fullscreen">488</integer>
+</resources>

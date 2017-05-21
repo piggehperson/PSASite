@@ -33,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
@@ -102,6 +103,12 @@ public class TeacherDetailActivity extends AppCompatActivity {
         //get data from Intent
         launchedFromShortcut = getIntent().getBooleanExtra("launched_from_shortcut", false);
 
+        Glide.with(this)
+                .load(getIntent().getStringExtra("avatar_url"))
+                .error(R.drawable.avatar_failed)
+                .into(avatarImage);
+
+
         //databaseReference = FirebaseDatabase.getInstance().getReference(getIntent().getStringExtra(TeacherConstants.KEY_INDEX));
         Firebase myFirebaseRef = new Firebase(getIntent().getStringExtra(TeacherConstants.KEY_INDEX));
         Query queryRef = myFirebaseRef;
@@ -137,10 +144,14 @@ public class TeacherDetailActivity extends AppCompatActivity {
                         }
                         bioProgressBar.setVisibility(View.GONE);
                         break;
-                    case "avatar":
+                    //don't need this anymore
+                    /*case "avatar":
                         teacherAvatarUrl = (String) dataSnapshot.getValue();
-                        Picasso.with(context).load((String) dataSnapshot.getValue()).placeholder(R.drawable.avatar_loading).error(R.drawable.avatar_failed).into(avatarImage);
-                        break;
+                        Glide.with(context)
+                                .load((String) dataSnapshot.getValue())
+                                .error(R.drawable.avatar_failed)
+                                .into(avatarImage);
+                        break;*/
                 }
             }
 

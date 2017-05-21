@@ -133,7 +133,6 @@ public class TeachersFragment extends Fragment
                     if (!ConfigUtils.shouldSaveData(getContext())){
                         Glide.with(getContext())
                                 .load(teacherData.getAvatar())
-                                .placeholder(R.drawable.avatar_loading)
                                 .error(R.drawable.avatar_failed)
                                 .into(teacherHolder.getAvatarView());
                     }
@@ -152,6 +151,7 @@ public class TeachersFragment extends Fragment
                                     //teacherDetail.putExtra(TeacherConstants.KEY_INDEX, teacherId);
                                     teacherDetail.putExtra(TeacherConstants.KEY_INDEX, snapshot.getRef().toString());
                                     teacherDetail.putExtra("launched_from_shortcut", false);
+                                    teacherDetail.putExtra("avatar_url", teacherData.getAvatar());
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                                         getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
