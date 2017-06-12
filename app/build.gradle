@@ -8,8 +8,8 @@ android {
         applicationId "com.piggeh.palmettoscholars"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 68
-        versionName "0.63.1"
+        versionCode 69
+        versionName "0.64"
     }
     buildTypes {
         release {
@@ -54,7 +54,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:25.2.0'
+    compile 'com.android.support:support-v4:25.3.1'
     /*compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'*/
 }
 
