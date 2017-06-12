@@ -794,7 +794,7 @@ public class MainActivity extends AppCompatActivity
                 switchNavigationPage(PAGE_TEACHERS);
                 break;
             case R.id.drawer_calendar:
-                openWebUrl("https://calendar.google.com/calendar/embed?src=pvnh2dgi9jetb22q9ldj26co1k@group.calendar.google.com&ctz=America/New_York");
+                openWebUrl("http://www.palmettoscholarsacademy.org/wp-content/uploads/2016/10/2017-2018-PSA-Calendar-Official.pdf");
                 return false;
             case R.id.drawer_resources:
                 switchNavigationPage(PAGE_RESOURCES);
