@@ -678,7 +678,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case PAGE_HOME:
                 Log.d(TAG, "Enroll now");
-                openWebUrl("http://www.palmettoscholarsacademy.org/attend-psa/");
+                openWebUrl("http://www.palmettoscholarsacademy.org/enrollment/");
                 break;
             case PAGE_CONTACT_US:
                 Log.d(TAG, "Calling phone");
