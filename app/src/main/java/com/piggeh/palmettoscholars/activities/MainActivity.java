@@ -6,12 +6,15 @@ import android.app.ActivityManager;
 /*import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;*/
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -296,6 +299,31 @@ public class MainActivity extends AppCompatActivity
         } else{
             Log.d(TAG, "Unsubscribing from Newsletter");
             FirebaseMessaging.getInstance().unsubscribeFromTopic("newsletters");
+        }
+
+        //set up notification channels for Android O
+        if (Build.VERSION.SDK_INT >= 26){
+            Log.d(TAG, "Creating notification channels");
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel channelAnnouncements = new NotificationChannel(
+                    "channel_announcements",
+                    getString(R.string.notif_channel_announcements),
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channelAnnouncements.enableLights(true);
+            channelAnnouncements.setLightColor(Color.BLUE);
+            channelAnnouncements.enableVibration(true);
+            mNotificationManager.createNotificationChannel(channelAnnouncements);
+
+            NotificationChannel channelNewsletters = new NotificationChannel(
+                    "channel_newsletters",
+                    getString(R.string.notif_channel_newsletters),
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channelNewsletters.enableLights(true);
+            channelNewsletters.setLightColor(Color.BLUE);
+            channelNewsletters.enableVibration(true);
+            mNotificationManager.createNotificationChannel(channelNewsletters);
+            Log.d(TAG, "Created notification channels");
         }
 
         //set up Overview screen on Lollipop+
